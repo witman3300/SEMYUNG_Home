@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>세명 - SEMYUNG Co., Ltd.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== UTILITY BAR ===== -->
+  <div class="util-bar">
+    <div class="container">
+      <ul class="util-links">
+        <li><a href="#">회사소개</a></li>
+        <li><a href="#">채용정보</a></li>
+        <li><a href="#">고객지원</a></li>
+        <li><a href="#">사이트맵</a></li>
+      </ul>
+      <ul class="util-links util-right">
+        <li><a href="#" class="btn-login">로그인</a></li>
+        <li class="lang-switch"><a href="#">KOR</a> | <a href="#">ENG</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-text">SEMYUNG</span>
+        <span class="logo-sub">세명</span>
+      </a>
+
+      <nav class="gnb" id="gnb">
+        <ul class="gnb-list">
+          <li class="gnb-item has-sub">
+            <a href="#" class="gnb-link">회사소개</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="#">CEO 인사말</a></li>
+                <li><a href="#">경영이념/비전</a></li>
+                <li><a href="#">회사 연혁</a></li>
+                <li><a href="#">조직도</a></li>
+                <li><a href="#">오시는 길</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="gnb-item has-sub">
+            <a href="#" class="gnb-link">사업영역</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="#">사업 소개</a></li>
+                <li><a href="#">제품/서비스</a></li>
+                <li><a href="#">기술력</a></li>
+                <li><a href="#">납품실적</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="gnb-item has-sub">
+            <a href="#" class="gnb-link">연구개발</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="#">R&amp;D 현황</a></li>
+                <li><a href="#">특허/인증</a></li>
+                <li><a href="#">기술 파트너십</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="gnb-item has-sub">
+            <a href="#" class="gnb-link">고객지원</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">뉴스룸</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">문의하기</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="gnb-item has-sub">
+            <a href="#" class="gnb-link">채용정보</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="#">인재상</a></li>
+                <li><a href="#">복리후생</a></li>
+                <li><a href="#">채용공고</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="gnb-overlay" id="gnbOverlay"></div>
+  </header>
+
+  <!-- ===== HERO SLIDER ===== -->
+  <section class="hero" id="hero">
+    <div class="slider" id="slider">
+      <div class="slide slide-1 active">
+        <div class="slide-content">
+          <p class="slide-tag">Innovation &amp; Trust</p>
+          <h2 class="slide-title">더 나은 미래를<br>함께 만들어갑니다</h2>
+          <p class="slide-desc">세명은 혁신적인 기술과 신뢰를 바탕으로<br>고객과 함께 성장하는 기업입니다.</p>
+          <a href="#" class="btn-primary">자세히 보기</a>
+        </div>
+      </div>
+      <div class="slide slide-2">
+        <div class="slide-content">
+          <p class="slide-tag">Global Business</p>
+          <h2 class="slide-title">세계로 나아가는<br>대한민국 기술</h2>
+          <p class="slide-desc">국내를 넘어 글로벌 시장에서<br>세명의 기술력을 입증하고 있습니다.</p>
+          <a href="#" class="btn-primary">사업영역 보기</a>
+        </div>
+      </div>
+      <div class="slide slide-3">
+        <div class="slide-content">
+          <p class="slide-tag">Sustainability</p>
+          <h2 class="slide-title">지속가능한 성장,<br>책임있는 경영</h2>
+          <p class="slide-desc">환경과 사회에 대한 책임을 다하며<br>지속가능한 미래를 준비합니다.</p>
+          <a href="#" class="btn-primary">ESG 활동 보기</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider Controls -->
+    <div class="slider-controls">
+      <button class="slider-btn prev" id="prevBtn" aria-label="이전 슬라이드">&#8249;</button>
+      <div class="slider-dots" id="sliderDots">
+        <button class="dot active" data-index="0" aria-label="슬라이드 1"></button>
+        <button class="dot" data-index="1" aria-label="슬라이드 2"></button>
+        <button class="dot" data-index="2" aria-label="슬라이드 3"></button>
+      </div>
+      <button class="slider-btn next" id="nextBtn" aria-label="다음 슬라이드">&#8250;</button>
+      <button class="slider-pause" id="pauseBtn" aria-label="자동재생 중지">&#9646;&#9646;</button>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-down">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===== QUICK MENU ===== -->
+  <section class="quick-menu">
+    <div class="container">
+      <ul class="quick-list">
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/><path d="M24 14v10l6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <span>회사연혁</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M16 32h10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M16 16h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <span>제품/서비스</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 4l5.09 10.26L40 15.82l-8 7.79 1.89 10.97L24 29.27l-9.89 5.31L16 23.61 8 15.82l10.91-1.56L24 4z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <span>특허/인증</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M8 40V20l16-14 16 14v20H30V28H18v12H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <span>오시는 길</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C17.37 4 12 9.37 12 16c0 8 12 26 12 26s12-18 12-26c0-6.63-5.37-12-12-12z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="16" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <span>채용공고</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2"/><path d="M6 18h36" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="28" r="3" stroke="currentColor" stroke-width="2"/><path d="M24 25h12M24 31h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <span>공지사항</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / NUMBERS ===== -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-label">ABOUT SEMYUNG</p>
+          <h2 class="section-title">신뢰와 혁신으로<br>성장하는 기업</h2>
+          <p class="about-desc">1995년 창립 이후 세명은 끊임없는 연구개발과 기술혁신을 통해 국내 산업 발전에 기여해왔습니다. 고객의 신뢰를 바탕으로 지속적인 성장을 이어가며, 글로벌 경쟁력을 갖춘 기업으로 도약하고 있습니다.</p>
+          <a href="#" class="btn-outline">회사소개 보기</a>
+        </div>
+        <div class="about-numbers">
+          <div class="number-item">
+            <strong class="num" data-target="29">0</strong>
+            <span class="num-unit">년</span>
+            <p>업력</p>
+          </div>
+          <div class="number-item">
+            <strong class="num" data-target="1200">0</strong>
+            <span class="num-unit">명+</span>
+            <p>임직원</p>
+          </div>
+          <div class="number-item">
+            <strong class="num" data-target="48">0</strong>
+            <span class="num-unit">개국</span>
+            <p>수출국</p>
+          </div>
+          <div class="number-item">
+            <strong class="num" data-target="320">0</strong>
+            <span class="num-unit">건+</span>
+            <p>특허보유</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BUSINESS AREA ===== -->
+  <section class="business-section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">BUSINESS AREA</p>
+        <h2 class="section-title">사업영역</h2>
+        <p class="section-desc">세명의 핵심 사업 분야를 소개합니다</p>
+      </div>
+      <div class="business-grid">
+        <div class="business-card">
+          <div class="card-bg bg-1"></div>
+          <div class="card-content">
+            <div class="card-num">01</div>
+            <h3>제조·생산</h3>
+            <p>최첨단 자동화 생산 시스템을 통해 고품질 제품을 안정적으로 공급합니다.</p>
+            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+          </div>
+        </div>
+        <div class="business-card">
+          <div class="card-bg bg-2"></div>
+          <div class="card-content">
+            <div class="card-num">02</div>
+            <h3>IT·솔루션</h3>
+            <p>디지털 전환 시대에 맞는 스마트 솔루션으로 고객사의 경쟁력을 높입니다.</p>
+            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+          </div>
+        </div>
+        <div class="business-card">
+          <div class="card-bg bg-3"></div>
+          <div class="card-content">
+            <div class="card-num">03</div>
+            <h3>R&amp;D·기술</h3>
+            <p>지속적인 연구개발 투자를 통해 미래 기술을 선도합니다.</p>
+            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+          </div>
+        </div>
+        <div class="business-card">
+          <div class="card-bg bg-4"></div>
+          <div class="card-content">
+            <div class="card-num">04</div>
+            <h3>글로벌사업</h3>
+            <p>48개국 수출 네트워크를 기반으로 글로벌 시장을 공략합니다.</p>
+            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWS & NOTICE ===== -->
+  <section class="news-section">
+    <div class="container">
+      <div class="news-wrapper">
+        <!-- Notice -->
+        <div class="news-col">
+          <div class="news-header">
+            <h3>공지사항</h3>
+            <a href="#" class="more-link">더보기 +</a>
+          </div>
+          <ul class="news-list">
+            <li>
+              <a href="#">
+                <span class="news-badge badge-important">중요</span>
+                <span class="news-title">2025년 하반기 신제품 출시 안내</span>
+                <span class="news-date">2026.06.03</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-badge badge-new">NEW</span>
+                <span class="news-title">개인정보처리방침 개정 안내</span>
+                <span class="news-date">2026.05.28</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">2026년 상반기 사업 성과 발표</span>
+                <span class="news-date">2026.05.20</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">세명 창립 31주년 기념 행사 안내</span>
+                <span class="news-date">2026.05.15</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">ISO 9001:2025 인증 취득 완료</span>
+                <span class="news-date">2026.04.30</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- News -->
+        <div class="news-col">
+          <div class="news-header">
+            <h3>뉴스룸</h3>
+            <a href="#" class="more-link">더보기 +</a>
+          </div>
+          <ul class="news-list">
+            <li>
+              <a href="#">
+                <span class="news-title">세명, 글로벌 혁신기업 Top 100 선정</span>
+                <span class="news-date">2026.06.02</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">스마트팩토리 솔루션 수출 계약 체결</span>
+                <span class="news-date">2026.05.25</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">2026 산업기술혁신 대상 수상</span>
+                <span class="news-date">2026.05.18</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">유럽 현지법인 설립으로 글로벌 확장</span>
+                <span class="news-date">2026.05.10</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="news-title">R&amp;D 연구센터 신설 및 운영 개시</span>
+                <span class="news-date">2026.04.22</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Recruit -->
+        <div class="news-col recruit-col">
+          <div class="news-header">
+            <h3>채용정보</h3>
+            <a href="#" class="more-link">더보기 +</a>
+          </div>
+          <div class="recruit-content">
+            <div class="recruit-banner">
+              <p class="recruit-title">함께 성장할<br>인재를 찾습니다</p>
+              <p class="recruit-sub">세명의 가족이 되어<br>미래를 함께 만들어 가세요</p>
+              <a href="#" class="btn-recruit">채용공고 보기</a>
+            </div>
+            <div class="recruit-current">
+              <p class="current-label">현재 채용 중</p>
+              <ul>
+                <li><span>연구개발팀</span><span class="badge-open">채용중</span></li>
+                <li><span>영업마케팅팀</span><span class="badge-open">채용중</span></li>
+                <li><span>IT개발팀</span><span class="badge-deadline">마감임박</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VISION / SUSTAINABILITY ===== -->
+  <section class="vision-section">
+    <div class="vision-inner">
+      <div class="container">
+        <p class="section-label light">SUSTAINABILITY</p>
+        <h2 class="section-title light">지속가능한 미래를 향한<br>세명의 약속</h2>
+        <div class="vision-cards">
+          <div class="vision-card">
+            <div class="vision-icon">E</div>
+            <h4>Environment</h4>
+            <p>탄소중립을 목표로 친환경 생산 공정과 재생에너지 도입을 추진합니다.</p>
+          </div>
+          <div class="vision-card">
+            <div class="vision-icon">S</div>
+            <h4>Social</h4>
+            <p>지역사회와의 상생, 임직원의 안전과 복지를 최우선으로 생각합니다.</p>
+          </div>
+          <div class="vision-card">
+            <div class="vision-icon">G</div>
+            <h4>Governance</h4>
+            <p>투명하고 윤리적인 경영으로 모든 이해관계자의 신뢰를 확보합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container footer-top-inner">
+        <div class="footer-logo">
+          <span class="logo-text">SEMYUNG</span>
+          <span class="logo-sub">세명</span>
+        </div>
+        <nav class="footer-nav">
+          <ul>
+            <li><a href="#">개인정보처리방침</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">이메일무단수집거부</a></li>
+            <li><a href="#">사이트맵</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <div class="footer-info">
+          <address>
+            <span>(주)세명</span>
+            <span>대표이사: 홍길동</span>
+            <span>사업자등록번호: 123-45-67890</span>
+            <br>
+            <span>주소: 서울특별시 강남구 테헤란로 123, 세명빌딩</span>
+            <span>대표전화: 02-1234-5678</span>
+            <span>FAX: 02-1234-5679</span>
+            <span>E-mail: info@semyung.co.kr</span>
+          </address>
+          <p class="copyright">Copyright &copy; 2024 SEMYUNG Co., Ltd. All Rights Reserved.</p>
+        </div>
+        <div class="footer-sns">
+          <a href="#" class="sns-btn" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.4 3.58 12 3.58 12 3.58s-7.4 0-9.38.47A3.02 3.02 0 0 0 .5 6.19C.03 8.2.03 12 .03 12s0 3.8.47 5.81a3.02 3.02 0 0 0 2.12 2.14C4.6 20.42 12 20.42 12 20.42s7.4 0 9.38-.47a3.02 3.02 0 0 0 2.12-2.14C24 15.8 24 12 24 12s0-3.8-.5-5.81zM9.75 15.52V8.48L15.5 12l-5.75 3.52z"/></svg>
+          </a>
+          <a href="#" class="sns-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="sns-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="sns-btn" aria-label="Blog">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9 3 10.5 3.5 12 5c1.5-1.5 3-2 4.5-2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-inner">
+      <ul class="mobile-nav-list">
+        <li><a href="#">회사소개</a></li>
+        <li><a href="#">사업영역</a></li>
+        <li><a href="#">연구개발</a></li>
+        <li><a href="#">고객지원</a></li>
+        <li><a href="#">채용정보</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
