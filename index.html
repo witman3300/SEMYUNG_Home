@@ -1,27 +1,301 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
+<!-- saved from url=(0043)file:///C:/Users/lsj/Downloads/index_1.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>세명 - SEMYUNG Co., Ltd.</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <title>세명장교 비즈니스센터 - Semyungjanggyo Business Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link href="./세명장교 비즈니스센터 - Semyungjanggyo Business Center_files/css2" rel="stylesheet">
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #152240;
+      --blue: #1a3a6e;
+      --gold: #c8a84b;
+      --gold-light: #e8c96a;
+      --white: #ffffff;
+      --gray-light: #f5f6f8;
+      --gray: #888;
+      --text: #222;
+      --text-light: #555;
+      --border: #e0e4ec;
+      --font-ko: 'Noto Sans KR', sans-serif;
+      --font-serif: 'Noto Serif KR', serif;
+      --font-en: 'Oswald', sans-serif;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-ko); color: var(--text); background: var(--white); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; }
+    address { font-style: normal; }
+
+    /* ===== UTILITY ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label { font-family: var(--font-en); font-size: 13px; letter-spacing: 3px; color: var(--gold); font-weight: 600; margin-bottom: 12px; display: block; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.3; color: var(--navy); }
+    .section-title.light { color: var(--white); }
+    .section-desc { color: var(--text-light); margin-top: 16px; line-height: 1.8; }
+
+    /* ===== UTIL BAR ===== */
+    .util-bar { background: var(--navy); padding: 8px 0; }
+    .util-bar .container { display: flex; justify-content: space-between; align-items: center; }
+    .util-links { display: flex; gap: 20px; }
+    .util-links a { font-size: 12px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .util-links a:hover { color: var(--gold); }
+    .util-links.util-right { gap: 16px; }
+    .btn-login { background: var(--gold); color: var(--navy) !important; padding: 4px 14px; border-radius: 3px; font-weight: 700; font-size: 12px !important; }
+
+    /* ===== HEADER ===== */
+    #header { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; flex-direction: column; line-height: 1; }
+    .logo-text { font-family: var(--font-en); font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: 2px; }
+    .logo-sub { font-size: 11px; color: var(--gold); font-weight: 500; letter-spacing: 1px; margin-top: 2px; }
+    .logo-badge { font-size: 9px; color: var(--gray); letter-spacing: 0.5px; }
+
+    /* GNB */
+    .gnb { display: flex; }
+    .gnb-list { display: flex; gap: 0; }
+    .gnb-item { position: relative; }
+    .gnb-link { display: flex; align-items: center; height: 72px; padding: 0 20px; font-size: 15px; font-weight: 500; color: var(--navy); transition: color 0.2s; white-space: nowrap; }
+    .gnb-link:hover { color: var(--gold); }
+    .gnb-item:hover .sub-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .sub-menu { position: absolute; top: 100%; left: 0; min-width: 160px; background: var(--white); box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-top: 2px solid var(--gold); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 200; }
+    .sub-menu ul { padding: 8px 0; }
+    .sub-menu li a { display: block; padding: 10px 20px; font-size: 14px; color: var(--text); transition: all 0.2s; }
+    .sub-menu li a:hover { color: var(--gold); background: var(--gray-light); padding-left: 24px; }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; height: calc(100vh - 108px); min-height: 560px; overflow: hidden; }
+    .slider { height: 100%; }
+    .slide { position: absolute; inset: 0; display: flex; align-items: center; opacity: 0; transition: opacity 1s ease; }
+    .slide.active { opacity: 1; z-index: 1; }
+
+    /* Slide backgrounds */
+    .slide-1 { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 50%, #0d2847 100%); }
+    .slide-1::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .slide-2 { background: linear-gradient(135deg, #1a2f4a 0%, #0e3352 50%, #1a3a6e 100%); }
+    .slide-2::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(200,168,75,0.15) 0%, transparent 60%); }
+    .slide-3 { background: linear-gradient(135deg, #0d1f3a 0%, var(--navy-mid) 50%, #102035 100%); }
+    .slide-3::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 60%, rgba(26,58,110,0.5) 0%, transparent 60%); }
+
+    .slide-content { position: relative; z-index: 2; max-width: 680px; padding: 0 60px; animation: slideIn 0.8s ease forwards; }
+    .slide:not(.active) .slide-content { animation: none; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+    .slide-tag { font-family: var(--font-en); font-size: 13px; letter-spacing: 4px; color: var(--gold); font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .slide-tag::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+    .slide-title { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 900; color: var(--white); line-height: 1.25; margin-bottom: 20px; word-break: keep-all; }
+    .slide-desc { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.9; margin-bottom: 36px; word-break: keep-all; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 14px; padding: 14px 32px; letter-spacing: 1px; transition: all 0.3s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateX(4px); }
+    .btn-primary::after { content: '→'; }
+
+    /* Slider controls */
+    .slider-controls { position: absolute; bottom: 40px; left: 60px; z-index: 10; display: flex; align-items: center; gap: 16px; }
+    .slider-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all 0.3s; }
+    .slider-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+    .slider-dots { display: flex; gap: 8px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s; }
+    .dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+    .slider-pause { background: none; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 10px; transition: all 0.3s; }
+    .slider-pause:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Scroll indicator */
+    .scroll-down { position: absolute; right: 48px; bottom: 40px; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .scroll-down span { font-family: var(--font-en); font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.5); writing-mode: vertical-rl; }
+    .scroll-arrow { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease infinite; }
+    @keyframes scrollPulse { 0%,100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.4; transform: scaleY(0.6); } }
+
+    /* ===== QUICK MENU ===== */
+    .quick-menu { background: var(--white); border-bottom: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .quick-list { display: flex; justify-content: center; flex-wrap: wrap; }
+    .quick-list li a { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 24px 36px; font-size: 13px; color: var(--text-light); font-weight: 500; transition: all 0.3s; border-right: 1px solid var(--border); }
+    .quick-list li:first-child a { border-left: 1px solid var(--border); }
+    .quick-list li a:hover { color: var(--gold); background: var(--gray-light); }
+    .quick-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--blue); transition: color 0.3s; }
+    .quick-list li a:hover .quick-icon { color: var(--gold); }
+    .quick-icon svg { width: 36px; height: 36px; }
+
+    /* ===== ABOUT ===== */
+    .about-section { padding: 100px 0; background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-text .section-title { margin-bottom: 20px; }
+    .about-desc { color: var(--text-light); line-height: 1.9; font-size: 15px; margin-bottom: 32px; word-break: keep-all; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--navy); color: var(--navy); font-weight: 700; font-size: 14px; padding: 12px 28px; transition: all 0.3s; letter-spacing: 0.5px; }
+    .btn-outline:hover { background: var(--navy); color: var(--white); }
+    .btn-outline::after { content: '→'; }
+
+    .about-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+    .number-item { background: var(--white); padding: 36px; text-align: center; }
+    .number-item strong { font-family: var(--font-en); font-size: 48px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .num-unit { font-family: var(--font-en); font-size: 20px; color: var(--gold); font-weight: 600; }
+    .number-item p { font-size: 13px; color: var(--gray); margin-top: 8px; font-weight: 500; }
+
+    /* ===== BUSINESS ===== */
+    .business-section { padding: 100px 0; background: var(--gray-light); }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header .section-label { justify-content: center; display: flex; }
+    .section-header .section-desc { max-width: 500px; margin: 16px auto 0; }
+    .business-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .business-card { position: relative; overflow: hidden; cursor: pointer; }
+    .card-bg { height: 320px; transition: transform 0.5s ease; }
+    .business-card:hover .card-bg { transform: scale(1.05); }
+    .bg-1 { background: linear-gradient(160deg, #1a3a6e 0%, #0a1628 100%); }
+    .bg-2 { background: linear-gradient(160deg, #2a4a7e 0%, #0e2540 100%); }
+    .bg-3 { background: linear-gradient(160deg, #c8a84b 0%, #8a6a20 100%); }
+    .bg-4 { background: linear-gradient(160deg, #152240 0%, #0a1628 100%); }
+    .card-content { position: absolute; inset: 0; padding: 32px 28px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--white); }
+    .card-num { font-family: var(--font-en); font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.12); line-height: 1; margin-bottom: 8px; }
+    .card-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .card-content p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 16px; word-break: keep-all; }
+    .card-link { font-family: var(--font-en); font-size: 12px; letter-spacing: 2px; color: var(--gold); display: flex; align-items: center; gap: 8px; font-weight: 600; transition: gap 0.3s; }
+    .business-card:hover .card-link { gap: 14px; }
+
+    /* ===== NEWS ===== */
+    .news-section { padding: 100px 0; background: var(--white); }
+    .news-wrapper { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+    .news-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 2px solid var(--navy); margin-bottom: 20px; }
+    .news-header h3 { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .more-link { font-size: 12px; color: var(--gray); transition: color 0.2s; }
+    .more-link:hover { color: var(--gold); }
+    .news-list li { border-bottom: 1px solid var(--border); }
+    .news-list li a { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 12px 0; font-size: 14px; transition: color 0.2s; }
+    .news-list li a:hover { color: var(--gold); }
+    .news-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .news-date { font-size: 12px; color: var(--gray); margin-left: auto; flex-shrink: 0; }
+    .news-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 2px; flex-shrink: 0; }
+    .badge-important { background: var(--navy); color: var(--white); }
+    .badge-new { background: var(--gold); color: var(--navy); }
+
+    /* Recruit */
+    .recruit-banner { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); padding: 28px; margin-bottom: 16px; }
+    .recruit-title { font-size: 18px; font-weight: 700; color: var(--white); line-height: 1.4; margin-bottom: 8px; }
+    .recruit-sub { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 20px; }
+    .btn-recruit { display: inline-block; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 13px; padding: 10px 24px; transition: background 0.3s; }
+    .btn-recruit:hover { background: var(--gold-light); }
+    .current-label { font-size: 12px; color: var(--gray); margin-bottom: 10px; font-weight: 500; }
+    .recruit-current ul li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .badge-open { font-size: 11px; background: #e8f4e8; color: #2d7a2d; padding: 3px 10px; border-radius: 2px; font-weight: 700; }
+    .badge-deadline { font-size: 11px; background: #fff0e8; color: #c85a00; padding: 3px 10px; border-radius: 2px; font-weight: 700; }
+
+    /* ===== VISION ===== */
+    .vision-section { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 50%, #0d2847 100%); padding: 100px 0; position: relative; overflow: hidden; }
+    .vision-section::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15 8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15z'/%3E%3C/g%3E%3C/svg%3E"); }
+    .vision-section .container { position: relative; z-index: 1; }
+    .vision-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+    .vision-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 40px 32px; transition: all 0.3s; }
+    .vision-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
+    .vision-icon { width: 56px; height: 56px; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 20px; }
+    .vision-card h4 { font-family: var(--font-en); font-size: 16px; letter-spacing: 2px; color: var(--gold); margin-bottom: 12px; font-weight: 600; }
+    .vision-card p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.8; word-break: keep-all; }
+
+    /* ===== FOOTER ===== */
+    #footer { background: #0a0f1a; }
+    .footer-top { border-bottom: 1px solid rgba(255,255,255,0.1); padding: 28px 0; }
+    .footer-top-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-logo .logo-text { color: var(--white); font-size: 18px; }
+    .footer-logo .logo-sub { color: var(--gold); }
+    .footer-nav ul { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-nav a { font-size: 12px; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+    .footer-nav a:hover { color: var(--gold); }
+    .footer-bottom { padding: 36px 0; }
+    .footer-bottom-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; }
+    .footer-info address { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 2; }
+    .footer-info address span { margin-right: 20px; }
+    .copyright { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 12px; }
+    .footer-sns { display: flex; gap: 12px; align-items: center; }
+    .sns-btn { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); transition: all 0.3s; }
+    .sns-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .sns-btn svg { width: 18px; height: 18px; }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-nav { position: fixed; inset: 0; background: var(--navy); z-index: 999; transform: translateX(100%); transition: transform 0.4s ease; }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav-inner { padding: 100px 40px 40px; }
+    .mobile-nav-list li { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .mobile-nav-list li a { display: block; padding: 18px 0; font-size: 18px; font-weight: 500; color: var(--white); transition: color 0.2s; }
+    .mobile-nav-list li a:hover { color: var(--gold); }
+    .mobile-nav-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--white); font-size: 32px; cursor: pointer; }
+
+    /* ===== AI BADGE ===== */
+    .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #1a3a6e, #0a1628); color: var(--gold); font-size: 11px; font-weight: 700; padding: 4px 12px; border: 1px solid var(--gold); letter-spacing: 1px; margin-bottom: 20px; }
+    .ai-badge::before { content: '⚡'; }
+
+    /* ===== SUBWAY SLIDE ===== */
+    .slide-4 { background: linear-gradient(135deg, #e8f0fc 0%, #c8daf8 40%, #ddeeff 100%); }
+    .slide-4::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.2) 100%); }
+    .slide-4 .slide-tag { color: var(--blue); }
+    .slide-4 .slide-tag::before { background: var(--blue); }
+    .slide-4 .slide-title { color: var(--navy); font-size: clamp(1.8rem, 4vw, 3rem); }
+    .slide-content-subway { justify-content: flex-start; }
+    .subway-lines { display: flex; flex-direction: column; gap: 8px; margin: 20px 0; }
+    .subway-badge { display: inline-flex; align-items: center; font-size: 14px; font-weight: 700; padding: 6px 18px; border-radius: 20px; width: fit-content; }
+    .line1 { background: #0052A4; color: white; }
+    .line2 { background: #00A84D; color: white; }
+    .line3 { background: #EF7C1C; color: white; }
+    .line4 { background: #00A5DE; color: white; }
+    .line5 { background: #996CAC; color: white; }
+    .subway-desc { color: var(--navy) !important; font-size: 15px !important; }
+    .slide-4 .btn-primary { background: var(--navy); color: var(--white); }
+    .slide-4 .btn-primary:hover { background: var(--blue); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .business-grid { grid-template-columns: repeat(2, 1fr); }
+      .news-wrapper { grid-template-columns: 1fr 1fr; }
+      .recruit-col { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      .util-bar { display: none; }
+      .gnb { display: none; }
+      .hamburger { display: flex; }
+      .slide-content { padding: 0 24px; }
+      .slider-controls { left: 24px; bottom: 24px; }
+      .scroll-down { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .business-grid { grid-template-columns: 1fr 1fr; }
+      .news-wrapper { grid-template-columns: 1fr; }
+      .vision-cards { grid-template-columns: 1fr; }
+      .quick-list li a { padding: 16px 20px; }
+      .section-title { font-size: 1.8rem; }
+      .about-section, .business-section, .news-section, .vision-section { padding: 60px 0; }
+      .number-item { padding: 24px; }
+      .number-item strong { font-size: 36px; }
+      .footer-bottom-inner { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .business-grid { grid-template-columns: 1fr; }
+      .gnb-link { font-size: 14px; padding: 0 12px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ===== UTILITY BAR ===== -->
+  <!-- ===== UTIL BAR ===== -->
   <div class="util-bar">
     <div class="container">
       <ul class="util-links">
-        <li><a href="#">회사소개</a></li>
-        <li><a href="#">채용정보</a></li>
-        <li><a href="#">고객지원</a></li>
-        <li><a href="#">사이트맵</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">회사소개</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">입주문의</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">고객지원</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">사이트맵</a></li>
       </ul>
       <ul class="util-links util-right">
-        <li><a href="#" class="btn-login">로그인</a></li>
-        <li class="lang-switch"><a href="#">KOR</a> | <a href="#">ENG</a></li>
+        <li><a href="tel:027623009" class="btn-login">📞 02-762-3009</a></li>
+        <li class="lang-switch"><a href="file:///C:/Users/lsj/Downloads/index_1.html#">KOR</a> | <a href="file:///C:/Users/lsj/Downloads/index_1.html#">ENG</a></li>
       </ul>
     </div>
   </div>
@@ -29,64 +303,74 @@
   <!-- ===== HEADER ===== -->
   <header id="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
+      <a href="file:///C:/Users/lsj/Downloads/index.html" class="logo">
         <span class="logo-text">SEMYUNG</span>
-        <span class="logo-sub">세명</span>
+        <span class="logo-sub">세명장교 비즈니스센터</span>
       </a>
 
       <nav class="gnb" id="gnb">
         <ul class="gnb-list">
           <li class="gnb-item has-sub">
-            <a href="#" class="gnb-link">회사소개</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">회사소개</a>
             <div class="sub-menu">
               <ul>
-                <li><a href="#">CEO 인사말</a></li>
-                <li><a href="#">경영이념/비전</a></li>
-                <li><a href="#">회사 연혁</a></li>
-                <li><a href="#">조직도</a></li>
-                <li><a href="#">오시는 길</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">CEO 인사말</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">경영이념/비전</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">연혁</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">오시는 길</a></li>
               </ul>
             </div>
           </li>
           <li class="gnb-item has-sub">
-            <a href="#" class="gnb-link">사업영역</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">비상주사무실</a>
             <div class="sub-menu">
               <ul>
-                <li><a href="#">사업 소개</a></li>
-                <li><a href="#">제품/서비스</a></li>
-                <li><a href="#">기술력</a></li>
-                <li><a href="#">납품실적</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">서비스 소개</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">요금안내</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">입주절차</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">입주신청</a></li>
               </ul>
             </div>
           </li>
           <li class="gnb-item has-sub">
-            <a href="#" class="gnb-link">연구개발</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">창업컨설팅</a>
             <div class="sub-menu">
               <ul>
-                <li><a href="#">R&amp;D 현황</a></li>
-                <li><a href="#">특허/인증</a></li>
-                <li><a href="#">기술 파트너십</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">창업 상담</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">사업계획서</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">법인설립</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">정부지원 안내</a></li>
               </ul>
             </div>
           </li>
           <li class="gnb-item has-sub">
-            <a href="#" class="gnb-link">고객지원</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">AI교육</a>
             <div class="sub-menu">
               <ul>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">뉴스룸</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">문의하기</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">AI 마케팅</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">AI 자동화</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">교육 신청</a></li>
               </ul>
             </div>
           </li>
           <li class="gnb-item has-sub">
-            <a href="#" class="gnb-link">채용정보</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">금융컨설팅</a>
             <div class="sub-menu">
               <ul>
-                <li><a href="#">인재상</a></li>
-                <li><a href="#">복리후생</a></li>
-                <li><a href="#">채용공고</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">보험 컨설팅</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">재무 설계</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">창업 자금</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="gnb-item has-sub">
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="gnb-link">고객지원</a>
+            <div class="sub-menu">
+              <ul>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">공지사항</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">블로그</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">FAQ</a></li>
+                <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">문의하기</a></li>
               </ul>
             </div>
           </li>
@@ -97,51 +381,65 @@
         <span></span><span></span><span></span>
       </button>
     </div>
-    <div class="gnb-overlay" id="gnbOverlay"></div>
   </header>
 
   <!-- ===== HERO SLIDER ===== -->
   <section class="hero" id="hero">
     <div class="slider" id="slider">
-      <div class="slide slide-1 active">
+      <div class="slide slide-1">
         <div class="slide-content">
-          <p class="slide-tag">Innovation &amp; Trust</p>
-          <h2 class="slide-title">더 나은 미래를<br>함께 만들어갑니다</h2>
-          <p class="slide-desc">세명은 혁신적인 기술과 신뢰를 바탕으로<br>고객과 함께 성장하는 기업입니다.</p>
-          <a href="#" class="btn-primary">자세히 보기</a>
+          <div class="ai-badge">AI-POWERED BUSINESS CENTER</div>
+          <p class="slide-tag">비상주사무실 · 가상오피스</p>
+          <h2 class="slide-title">서울 중심,<br>을지로2가에서<br>사업을 시작하세요</h2>
+          <p class="slide-desc">세명장교 비즈니스센터는 서울 최중심 장교빌딩에 위치한<br>AI 특화 비즈니스센터입니다.</p>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="btn-primary">입주 문의하기</a>
         </div>
       </div>
       <div class="slide slide-2">
         <div class="slide-content">
-          <p class="slide-tag">Global Business</p>
-          <h2 class="slide-title">세계로 나아가는<br>대한민국 기술</h2>
-          <p class="slide-desc">국내를 넘어 글로벌 시장에서<br>세명의 기술력을 입증하고 있습니다.</p>
-          <a href="#" class="btn-primary">사업영역 보기</a>
+          <p class="slide-tag">창업 컨설팅 · AI 교육</p>
+          <h2 class="slide-title">실패 없는 창업,<br>AI로 시작하는<br>스마트 비즈니스</h2>
+          <p class="slide-desc">25년 금융보험 전문가와 함께<br>창업부터 마케팅까지 One-Stop으로 지원합니다.</p>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="btn-primary">창업 상담 신청</a>
         </div>
       </div>
-      <div class="slide slide-3">
+      <div class="slide slide-3 active">
         <div class="slide-content">
-          <p class="slide-tag">Sustainability</p>
-          <h2 class="slide-title">지속가능한 성장,<br>책임있는 경영</h2>
-          <p class="slide-desc">환경과 사회에 대한 책임을 다하며<br>지속가능한 미래를 준비합니다.</p>
-          <a href="#" class="btn-primary">ESG 활동 보기</a>
+          <p class="slide-tag">고객만족 · 행복추구 · 초지일관</p>
+          <h2 class="slide-title">1,000개 기업과<br>함께 성장하는<br>비즈니스센터</h2>
+          <p class="slide-desc">세명의 목표는 1,000개 입주 기업이<br>성공하고 행복해지는 것입니다.</p>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="btn-primary">센터 소개 보기</a>
+        </div>
+      </div>
+      <div class="slide slide-4">
+        <div class="slide-content slide-content-subway">
+          <p class="slide-tag">최적의 입지 · 교통 편의성</p>
+          <h2 class="slide-title">서울의 중심에 서다!<br>일의 중심을 찾다!</h2>
+          <div class="subway-lines">
+            <span class="subway-badge line1">① 종각</span>
+            <span class="subway-badge line2">② 을지로3가</span>
+            <span class="subway-badge line3">③ 을지로3가</span>
+            <span class="subway-badge line4">④ 명동</span>
+            <span class="subway-badge line5">⑤ 종로3가</span>
+          </div>
+          <p class="slide-desc subway-desc">최적의 입지! 지하철 초역세권<br><strong style="color:var(--gold)">지하철 1,2,3,4,5호선</strong> 이용 가능</p>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="btn-primary">오시는 길 보기</a>
         </div>
       </div>
     </div>
 
-    <!-- Slider Controls -->
     <div class="slider-controls">
-      <button class="slider-btn prev" id="prevBtn" aria-label="이전 슬라이드">&#8249;</button>
+      <button class="slider-btn prev" id="prevBtn" aria-label="이전 슬라이드">‹</button>
       <div class="slider-dots" id="sliderDots">
-        <button class="dot active" data-index="0" aria-label="슬라이드 1"></button>
-        <button class="dot" data-index="1" aria-label="슬라이드 2"></button>
-        <button class="dot" data-index="2" aria-label="슬라이드 3"></button>
+        <button class="dot" data-index="0"></button>
+        <button class="dot" data-index="1"></button>
+        <button class="dot active" data-index="2"></button>
+        <button class="dot" data-index="3"></button>
       </div>
-      <button class="slider-btn next" id="nextBtn" aria-label="다음 슬라이드">&#8250;</button>
-      <button class="slider-pause" id="pauseBtn" aria-label="자동재생 중지">&#9646;&#9646;</button>
+      <button class="slider-btn next" id="nextBtn" aria-label="다음 슬라이드">›</button>
+      <button class="slider-pause" id="pauseBtn">▮▮</button>
     </div>
 
-    <!-- Scroll indicator -->
     <div class="scroll-down">
       <span>SCROLL</span>
       <div class="scroll-arrow"></div>
@@ -153,49 +451,49 @@
     <div class="container">
       <ul class="quick-list">
         <li>
-          <a href="#">
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
             <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/><path d="M24 14v10l6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M16 18h16M16 24h16M16 30h10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>
             </div>
-            <span>회사연혁</span>
+            <span>비상주사무실</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
             <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 24h16M16 32h10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M16 16h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 8l4 8 9 1.3-6.5 6.4L32 33 24 29l-8 4 1.5-9.3L11 17.3l9-1.3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
             </div>
-            <span>제품/서비스</span>
+            <span>창업컨설팅</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
             <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M24 4l5.09 10.26L40 15.82l-8 7.79 1.89 10.97L24 29.27l-9.89 5.31L16 23.61 8 15.82l10.91-1.56L24 4z" stroke="currentColor" stroke-width="2"/></svg>
+              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="2"></circle><path d="M8 40c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M30 14l4-4M18 14l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
             </div>
-            <span>특허/인증</span>
+            <span>AI교육</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
             <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M8 40V20l16-14 16 14v20H30V28H18v12H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="12" width="36" height="26" rx="3" stroke="currentColor" stroke-width="2"></rect><path d="M16 12V8M32 12V8M6 22h36" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><circle cx="16" cy="32" r="3" fill="currentColor"></circle><circle cx="24" cy="32" r="3" fill="currentColor"></circle></svg>
+            </div>
+            <span>금융컨설팅</span>
+          </a>
+        </li>
+        <li>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+            <div class="quick-icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C17.37 4 12 9.37 12 16c0 8 12 26 12 26s12-18 12-26c0-6.63-5.37-12-12-12z" stroke="currentColor" stroke-width="2"></path><circle cx="24" cy="16" r="4" stroke="currentColor" stroke-width="2"></circle></svg>
             </div>
             <span>오시는 길</span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
             <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M24 4C17.37 4 12 9.37 12 16c0 8 12 26 12 26s12-18 12-26c0-6.63-5.37-12-12-12z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="16" r="4" stroke="currentColor" stroke-width="2"/></svg>
-            </div>
-            <span>채용공고</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <div class="quick-icon">
-              <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2"/><path d="M6 18h36" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="28" r="3" stroke="currentColor" stroke-width="2"/><path d="M24 25h12M24 31h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 48 48" fill="none"><path d="M8 8h32v4l-12 12v16l-8-4V24L8 12V8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
             </div>
             <span>공지사항</span>
           </a>
@@ -204,195 +502,192 @@
     </div>
   </section>
 
-  <!-- ===== ABOUT / NUMBERS ===== -->
+  <!-- ===== ABOUT ===== -->
   <section class="about-section">
     <div class="container">
       <div class="about-grid">
         <div class="about-text">
           <p class="section-label">ABOUT SEMYUNG</p>
-          <h2 class="section-title">신뢰와 혁신으로<br>성장하는 기업</h2>
-          <p class="about-desc">1995년 창립 이후 세명은 끊임없는 연구개발과 기술혁신을 통해 국내 산업 발전에 기여해왔습니다. 고객의 신뢰를 바탕으로 지속적인 성장을 이어가며, 글로벌 경쟁력을 갖춘 기업으로 도약하고 있습니다.</p>
-          <a href="#" class="btn-outline">회사소개 보기</a>
+          <h2 class="section-title">세상을 밝히는<br>비즈니스센터</h2>
+          <p class="about-desc">2016년 서울 을지로2가 장교빌딩 810호에 설립된 세명장교 비즈니스센터는 '세상을 밝게 하는 비즈니스'를 경영철학으로 삼고 있습니다. 고용노동부·서울고용노동청이 입주한 노무 특화 건물에 위치하여 창업 기업에 최적의 비즈니스 환경을 제공합니다. 25년 금융보험 전문가의 노하우와 최신 AI 기술을 접목해 고객의 성공을 돕습니다.</p>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="btn-outline">센터 소개 보기</a>
         </div>
         <div class="about-numbers">
           <div class="number-item">
-            <strong class="num" data-target="29">0</strong>
+            <strong class="num" data-target="10">0</strong>
+            <span class="num-unit">년+</span>
+            <p>센터 운영</p>
+          </div>
+          <div class="number-item">
+            <strong class="num" data-target="25">0</strong>
             <span class="num-unit">년</span>
-            <p>업력</p>
+            <p>금융 전문성</p>
           </div>
           <div class="number-item">
-            <strong class="num" data-target="1200">0</strong>
-            <span class="num-unit">명+</span>
-            <p>임직원</p>
+            <strong class="num" data-target="1000">0</strong>
+            <span class="num-unit">개</span>
+            <p>입주 목표</p>
           </div>
           <div class="number-item">
-            <strong class="num" data-target="48">0</strong>
-            <span class="num-unit">개국</span>
-            <p>수출국</p>
-          </div>
-          <div class="number-item">
-            <strong class="num" data-target="320">0</strong>
-            <span class="num-unit">건+</span>
-            <p>특허보유</p>
+            <strong class="num" data-target="4">0</strong>
+            <span class="num-unit">개</span>
+            <p>핵심 서비스</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== BUSINESS AREA ===== -->
+  <!-- ===== BUSINESS ===== -->
   <section class="business-section">
     <div class="container">
       <div class="section-header">
         <p class="section-label">BUSINESS AREA</p>
-        <h2 class="section-title">사업영역</h2>
-        <p class="section-desc">세명의 핵심 사업 분야를 소개합니다</p>
+        <h2 class="section-title">핵심 서비스</h2>
+        <p class="section-desc">세명장교 비즈니스센터의 4가지 핵심 서비스를 소개합니다</p>
       </div>
       <div class="business-grid">
         <div class="business-card">
           <div class="card-bg bg-1"></div>
           <div class="card-content">
             <div class="card-num">01</div>
-            <h3>제조·생산</h3>
-            <p>최첨단 자동화 생산 시스템을 통해 고품질 제품을 안정적으로 공급합니다.</p>
-            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+            <h3>비상주사무실</h3>
+            <p>서울 중심 프리미엄 비즈니스 주소로 법인·개인사업자 등록. 우편물 수취 및 비서 서비스 포함.</p>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="card-link">자세히 보기 →</a>
           </div>
         </div>
         <div class="business-card">
           <div class="card-bg bg-2"></div>
           <div class="card-content">
             <div class="card-num">02</div>
-            <h3>IT·솔루션</h3>
-            <p>디지털 전환 시대에 맞는 스마트 솔루션으로 고객사의 경쟁력을 높입니다.</p>
-            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+            <h3>창업 컨설팅</h3>
+            <p>아이디어부터 법인설립, 사업계획서, 정부지원까지. 실패 없는 창업을 위한 전문 컨설팅.</p>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="card-link">자세히 보기 →</a>
           </div>
         </div>
         <div class="business-card">
           <div class="card-bg bg-3"></div>
           <div class="card-content">
             <div class="card-num">03</div>
-            <h3>R&amp;D·기술</h3>
-            <p>지속적인 연구개발 투자를 통해 미래 기술을 선도합니다.</p>
-            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+            <h3>AI 교육</h3>
+            <p>AI 마케팅, 업무 자동화, 콘텐츠 제작. 소상공인도 쉽게 배우는 실전 AI 활용 교육.</p>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="card-link">자세히 보기 →</a>
           </div>
         </div>
         <div class="business-card">
           <div class="card-bg bg-4"></div>
           <div class="card-content">
             <div class="card-num">04</div>
-            <h3>글로벌사업</h3>
-            <p>48개국 수출 네트워크를 기반으로 글로벌 시장을 공략합니다.</p>
-            <a href="#" class="card-link">자세히 보기 <span>&#8594;</span></a>
+            <h3>금융·보험 컨설팅</h3>
+            <p>삼성생명 25년 전문가의 보험·재무 설계. 창업 자금 조달부터 리스크 관리까지.</p>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="card-link">자세히 보기 →</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== NEWS & NOTICE ===== -->
+  <!-- ===== NEWS ===== -->
   <section class="news-section">
     <div class="container">
       <div class="news-wrapper">
-        <!-- Notice -->
         <div class="news-col">
           <div class="news-header">
             <h3>공지사항</h3>
-            <a href="#" class="more-link">더보기 +</a>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="more-link">더보기 +</a>
           </div>
           <ul class="news-list">
             <li>
-              <a href="#">
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
                 <span class="news-badge badge-important">중요</span>
-                <span class="news-title">2025년 하반기 신제품 출시 안내</span>
+                <span class="news-title">2026년 하반기 비상주사무실 특별 할인 안내</span>
                 <span class="news-date">2026.06.03</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
                 <span class="news-badge badge-new">NEW</span>
-                <span class="news-title">개인정보처리방침 개정 안내</span>
+                <span class="news-title">AI 마케팅 교육 6월 신규 과정 오픈</span>
                 <span class="news-date">2026.05.28</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">2026년 상반기 사업 성과 발표</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">장교빌딩 주차 안내 변경 공지</span>
                 <span class="news-date">2026.05.20</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">세명 창립 31주년 기념 행사 안내</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">세명장교 비즈니스센터 10주년 기념 이벤트</span>
                 <span class="news-date">2026.05.15</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">ISO 9001:2025 인증 취득 완료</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">혁신 소상공인 AI활용지원 사업 안내</span>
                 <span class="news-date">2026.04.30</span>
               </a>
             </li>
           </ul>
         </div>
 
-        <!-- News -->
         <div class="news-col">
           <div class="news-header">
-            <h3>뉴스룸</h3>
-            <a href="#" class="more-link">더보기 +</a>
+            <h3>센터 소식</h3>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="more-link">더보기 +</a>
           </div>
           <ul class="news-list">
             <li>
-              <a href="#">
-                <span class="news-title">세명, 글로벌 혁신기업 Top 100 선정</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">입주 기업 성공사례 – AI 자동화로 매출 3배 달성</span>
                 <span class="news-date">2026.06.02</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">스마트팩토리 솔루션 수출 계약 체결</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">창업 컨설팅 상담 100건 돌파 기념 이벤트</span>
                 <span class="news-date">2026.05.25</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">2026 산업기술혁신 대상 수상</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">아마존(AI 마케터 Zone) 커뮤니티 회원 모집</span>
                 <span class="news-date">2026.05.18</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">유럽 현지법인 설립으로 글로벌 확장</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">을지로2가 창업 네트워킹 데이 개최</span>
                 <span class="news-date">2026.05.10</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <span class="news-title">R&amp;D 연구센터 신설 및 운영 개시</span>
+              <a href="file:///C:/Users/lsj/Downloads/index_1.html#">
+                <span class="news-title">사업하자(사주+AI 창업컨설팅) 서비스 출시</span>
                 <span class="news-date">2026.04.22</span>
               </a>
             </li>
           </ul>
         </div>
 
-        <!-- Recruit -->
         <div class="news-col recruit-col">
           <div class="news-header">
-            <h3>채용정보</h3>
-            <a href="#" class="more-link">더보기 +</a>
+            <h3>입주 문의</h3>
+            <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="more-link">바로가기 +</a>
           </div>
           <div class="recruit-content">
             <div class="recruit-banner">
-              <p class="recruit-title">함께 성장할<br>인재를 찾습니다</p>
-              <p class="recruit-sub">세명의 가족이 되어<br>미래를 함께 만들어 가세요</p>
-              <a href="#" class="btn-recruit">채용공고 보기</a>
+              <p class="recruit-title">지금 바로<br>입주 상담 받으세요</p>
+              <p class="recruit-sub">월 저렴한 비용으로<br>서울 중심 비즈니스 주소를 확보하세요</p>
+              <a href="tel:027623009" class="btn-recruit">📞 02-762-3009</a>
             </div>
             <div class="recruit-current">
-              <p class="current-label">현재 채용 중</p>
+              <p class="current-label">현재 입주 가능</p>
               <ul>
-                <li><span>연구개발팀</span><span class="badge-open">채용중</span></li>
-                <li><span>영업마케팅팀</span><span class="badge-open">채용중</span></li>
-                <li><span>IT개발팀</span><span class="badge-deadline">마감임박</span></li>
+                <li><span>비상주사무실 (기본형)</span><span class="badge-open">입주가능</span></li>
+                <li><span>비상주사무실 (프리미엄)</span><span class="badge-open">입주가능</span></li>
+                <li><span>소호사무실</span><span class="badge-deadline">잔여1실</span></li>
               </ul>
             </div>
           </div>
@@ -401,28 +696,26 @@
     </div>
   </section>
 
-  <!-- ===== VISION / SUSTAINABILITY ===== -->
+  <!-- ===== VISION ===== -->
   <section class="vision-section">
-    <div class="vision-inner">
-      <div class="container">
-        <p class="section-label light">SUSTAINABILITY</p>
-        <h2 class="section-title light">지속가능한 미래를 향한<br>세명의 약속</h2>
-        <div class="vision-cards">
-          <div class="vision-card">
-            <div class="vision-icon">E</div>
-            <h4>Environment</h4>
-            <p>탄소중립을 목표로 친환경 생산 공정과 재생에너지 도입을 추진합니다.</p>
-          </div>
-          <div class="vision-card">
-            <div class="vision-icon">S</div>
-            <h4>Social</h4>
-            <p>지역사회와의 상생, 임직원의 안전과 복지를 최우선으로 생각합니다.</p>
-          </div>
-          <div class="vision-card">
-            <div class="vision-icon">G</div>
-            <h4>Governance</h4>
-            <p>투명하고 윤리적인 경영으로 모든 이해관계자의 신뢰를 확보합니다.</p>
-          </div>
+    <div class="container">
+      <p class="section-label light">MANAGEMENT PHILOSOPHY</p>
+      <h2 class="section-title light">세명의 경영이념</h2>
+      <div class="vision-cards">
+        <div class="vision-card">
+          <div class="vision-icon">顧</div>
+          <h4>고객만족</h4>
+          <p>입주 고객 한 분 한 분의 사업 성공이 세명의 성공입니다. 고객의 필요를 먼저 생각하고 최선의 서비스를 제공합니다.</p>
+        </div>
+        <div class="vision-card">
+          <div class="vision-icon">幸</div>
+          <h4>행복추구</h4>
+          <p>1,000개 기업과 함께 성장하며 모든 고객이 웃으며 행복해하는 모습을 보는 것이 진정한 목표입니다.</p>
+        </div>
+        <div class="vision-card">
+          <div class="vision-icon">一</div>
+          <h4>초지일관</h4>
+          <p>積小成大(적소성대) – 작은 실천을 꾸준히 쌓아 큰 성과를 이루는 변함없는 자세로 고객과 함께합니다.</p>
         </div>
       </div>
     </div>
@@ -432,16 +725,16 @@
   <footer id="footer">
     <div class="footer-top">
       <div class="container footer-top-inner">
-        <div class="footer-logo">
+        <div class="footer-logo logo">
           <span class="logo-text">SEMYUNG</span>
-          <span class="logo-sub">세명</span>
+          <span class="logo-sub">세명장교 비즈니스센터</span>
         </div>
         <nav class="footer-nav">
           <ul>
-            <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">이용약관</a></li>
-            <li><a href="#">이메일무단수집거부</a></li>
-            <li><a href="#">사이트맵</a></li>
+            <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">개인정보처리방침</a></li>
+            <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">이용약관</a></li>
+            <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">이메일무단수집거부</a></li>
+            <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">사이트맵</a></li>
           </ul>
         </nav>
       </div>
@@ -450,48 +743,116 @@
       <div class="container footer-bottom-inner">
         <div class="footer-info">
           <address>
-            <span>(주)세명</span>
-            <span>대표이사: 홍길동</span>
-            <span>사업자등록번호: 123-45-67890</span>
-            <br>
-            <span>주소: 서울특별시 강남구 테헤란로 123, 세명빌딩</span>
-            <span>대표전화: 02-1234-5678</span>
-            <span>FAX: 02-1234-5679</span>
-            <span>E-mail: info@semyung.co.kr</span>
+            <span>세명장교 비즈니스센터 (世明長橋 Business Center)</span>
+            <span>대표: 이승주</span><br>
+            <span>주소: 서울특별시 중구 삼일대로 363, 장교빌딩 810호 (을지로2가)</span><br>
+            <span>대표전화: 02-762-3009</span>
+            <span>휴대폰: 010-8955-3300</span>
+            <span>E-mail: info@semyung.co.kr</span><br>
+            <span>홈페이지: semyung.co.kr</span>
           </address>
-          <p class="copyright">Copyright &copy; 2024 SEMYUNG Co., Ltd. All Rights Reserved.</p>
+          <p class="copyright">Copyright © 2024 세명장교 비즈니스센터 Semyungjanggyo Business Center. All Rights Reserved.</p>
         </div>
         <div class="footer-sns">
-          <a href="#" class="sns-btn" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.4 3.58 12 3.58 12 3.58s-7.4 0-9.38.47A3.02 3.02 0 0 0 .5 6.19C.03 8.2.03 12 .03 12s0 3.8.47 5.81a3.02 3.02 0 0 0 2.12 2.14C4.6 20.42 12 20.42 12 20.42s7.4 0 9.38-.47a3.02 3.02 0 0 0 2.12-2.14C24 15.8 24 12 24 12s0-3.8-.5-5.81zM9.75 15.52V8.48L15.5 12l-5.75 3.52z"/></svg>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="sns-btn" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.4 3.58 12 3.58 12 3.58s-7.4 0-9.38.47A3.02 3.02 0 0 0 .5 6.19C.03 8.2.03 12 .03 12s0 3.8.47 5.81a3.02 3.02 0 0 0 2.12 2.14C4.6 20.42 12 20.42 12 20.42s7.4 0 9.38-.47a3.02 3.02 0 0 0 2.12-2.14C24 15.8 24 12 24 12s0-3.8-.5-5.81zM9.75 15.52V8.48L15.5 12l-5.75 3.52z"></path></svg>
           </a>
-          <a href="#" class="sns-btn" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="sns-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
           </a>
-          <a href="#" class="sns-btn" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="sns-btn" aria-label="Blog">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9 3 10.5 3.5 12 5c1.5-1.5 3-2 4.5-2z"></path></svg>
           </a>
-          <a href="#" class="sns-btn" aria-label="Blog">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9 3 10.5 3.5 12 5c1.5-1.5 3-2 4.5-2z"/></svg>
+          <a href="file:///C:/Users/lsj/Downloads/index_1.html#" class="sns-btn" aria-label="KakaoTalk">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.8 1.74 5.26 4.37 6.67L5.5 21l4.24-2.82c.74.1 1.5.16 2.26.16 5.523 0 10-3.477 10-7.54C22 6.477 17.523 3 12 3z"></path></svg>
           </a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Mobile Nav Overlay -->
+  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileNavClose">✕</button>
     <div class="mobile-nav-inner">
       <ul class="mobile-nav-list">
-        <li><a href="#">회사소개</a></li>
-        <li><a href="#">사업영역</a></li>
-        <li><a href="#">연구개발</a></li>
-        <li><a href="#">고객지원</a></li>
-        <li><a href="#">채용정보</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">회사소개</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">비상주사무실</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">창업컨설팅</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">AI교육</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">금융컨설팅</a></li>
+        <li><a href="file:///C:/Users/lsj/Downloads/index_1.html#">고객지원</a></li>
       </ul>
     </div>
   </div>
 
-  <script src="js/main.js"></script>
-</body>
-</html>
+  <script>
+    // ===== HERO SLIDER =====
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0;
+    let paused = false;
+    let timer;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function autoPlay() {
+      if (!paused) timer = setTimeout(() => { goTo(current + 1); autoPlay(); }, 5000);
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => { clearTimeout(timer); goTo(current - 1); autoPlay(); });
+    document.getElementById('nextBtn').addEventListener('click', () => { clearTimeout(timer); goTo(current + 1); autoPlay(); });
+    dots.forEach(dot => dot.addEventListener('click', () => { clearTimeout(timer); goTo(+dot.dataset.index); autoPlay(); }));
+    document.getElementById('pauseBtn').addEventListener('click', function() {
+      paused = !paused;
+      this.textContent = paused ? '▶' : '❚❚';
+      if (!paused) autoPlay(); else clearTimeout(timer);
+    });
+
+    autoPlay();
+
+    // ===== HAMBURGER =====
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    document.getElementById('mobileNavClose').addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+
+    // ===== COUNT UP =====
+    const nums = document.querySelectorAll('.num');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = +entry.target.dataset.target;
+          let count = 0;
+          const step = Math.ceil(target / 60);
+          const interval = setInterval(() => {
+            count = Math.min(count + step, target);
+            entry.target.textContent = count.toLocaleString();
+            if (count >= target) clearInterval(interval);
+          }, 30);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    nums.forEach(n => observer.observe(n));
+
+    // ===== STICKY HEADER SHADOW =====
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').style.boxShadow = window.scrollY > 10 ? '0 4px 30px rgba(0,0,0,0.12)' : '0 2px 20px rgba(0,0,0,0.08)';
+    });
+  </script>
+
+
+</body></html>
