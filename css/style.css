@@ -632,6 +632,12 @@ input, textarea, select { font-family: inherit; font-size: 15px; }
 .fade-in.visible { opacity: 1; transform: none; }
 @keyframes revealSafety { to { opacity: 1; transform: none; } }
 
+/* 상단 메뉴 6개 — 중간 폭에서 줄바꿈 없이 들어가도록 밀도 조정 */
+@media (max-width: 1240px) and (min-width: 1025px) {
+  .header-inner { gap: 14px; }
+  .gnb-link { padding: 10px 11px; font-size: 14.5px; }
+  .logo-text b { font-size: 17px; }
+}
 @media (max-width: 1024px) {
   .gnb { display: none; }
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }

@@ -25,6 +25,12 @@
     'nav.consulting': ['창업컨설팅', 'Startup Consulting'],
     'nav.aiedu': ['AI교육', 'AI Training'],
     'nav.insurance': ['금융컨설팅', 'Finance'],
+    'nav.office': ['사무실안내', 'Offices'],
+    'nav.pricing': ['이용요금 안내', 'Pricing'],
+    'nav.gallery': ['시설 갤러리', 'Facilities'],
+    'nav.addon': ['부가서비스 (회의실·OA)', 'Add-on Services'],
+    'nav.aichat': ['AI 상담·창업진단', 'AI Advisor'],
+    'nav.location': ['오시는 길', 'Location'],
     'nav.blog': ['블로그', 'Blog'],
     'nav.contact': ['고객지원', 'Contact'],
     'cta.inquire': ['입주 문의하기', 'Get Started'],
@@ -156,14 +162,23 @@
   window.SJ.lang = () => lang;
 
   /* ---------- nav ---------- */
+  /* 상단 메뉴 — semyung.co.kr의 정보구조(회사소개·사무실안내·부가서비스·오시는 길·블로그)를
+     현재 페이지 구성에 맞춰 반영. 앵커는 index.html의 실제 섹션 id를 가리킨다. */
   const NAV = [
     { key: 'nav.about', href: 'about.html' },
-    { key: 'nav.services', href: '#', children: [
+    { key: 'nav.office', href: '#', children: [
       { key: 'nav.virtual', href: 'virtual.html' },
+      { key: 'nav.pricing', href: 'index.html#pricing' },
+      { key: 'nav.gallery', href: 'index.html#gallery' },
+    ]},
+    { key: 'nav.services', href: '#', children: [
       { key: 'nav.consulting', href: 'consulting.html' },
       { key: 'nav.aiedu', href: 'ai-edu.html' },
       { key: 'nav.insurance', href: 'insurance.html' },
+      { key: 'nav.addon', href: 'index.html#free' },
+      { key: 'nav.aichat', href: 'index.html#ai' },
     ]},
+    { key: 'nav.location', href: 'index.html#location' },
     { key: 'nav.blog', href: 'blog.html' },
     { key: 'nav.contact', href: 'contact.html' },
   ];
