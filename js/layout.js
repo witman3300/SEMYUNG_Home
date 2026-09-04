@@ -10,6 +10,7 @@
     tel: '027623009', telDisp: '02-762-3009',
     kakao: 'https://pf.kakao.com/', sauphaja: 'https://sauphaja.ai.kr',
     addr: '서울특별시 중구 삼일대로 363, 장교빌딩 810호',
+    ceo: '이상진', email: 'witman@naver.com', bizNo: '168-45-00331',
     motto: '고객만족 · 행복추구 · 초지일관',
   };
   window.SJ = window.SJ || {};
@@ -31,6 +32,9 @@
     'footer.quick': ['바로가기', 'Quick Links'],
     'footer.diag': ['사업하자 진단 ↗', 'Business Diagnosis ↗'],
     'footer.bizname': ['상호: 세명장교 비즈니스센터', 'Semyung Janggyo Business Center'],
+    'footer.ceo': [`대표: ${CFG.ceo}`, `CEO: Lee Sang-jin`],
+    'footer.email': [`이메일: <a href="mailto:${CFG.email}">${CFG.email}</a>`, `Email: <a href="mailto:${CFG.email}">${CFG.email}</a>`],
+    'footer.bizno': [`사업자등록번호: ${CFG.bizNo}`, `Business Reg. No. ${CFG.bizNo}`],
     'footer.motto': ['고객만족 · 행복추구 · 초지일관', 'Satisfaction · Happiness · Commitment'],
     'chat.title': ['세명장교 AI 상담원', 'Semyung Janggyo AI'],
     'chat.greeting': ['안녕하세요! 세명장교 비즈니스센터입니다. 요금·입주·창업진단 등 무엇이든 물어보세요. 😊',
@@ -221,7 +225,11 @@
         <div class="footer-logo">${LOGO_SVG}<span class="logo-text"><b>${CFG.brand}</b><em data-i18n="brand.sub">${CFG.sub}</em></span></div>
         <p class="footer-motto" data-i18n="footer.motto">${CFG.motto}</p>
         <address><span data-i18n="footer.bizname">상호: 세명장교 비즈니스센터</span><br>
-          <span>${CFG.addr}</span><br><span>전화: <a href="tel:${CFG.tel}">${CFG.telDisp}</a></span></address>
+          <span data-i18n="footer.ceo">대표: ${CFG.ceo}</span><br>
+          <span>${CFG.addr}</span><br>
+          <span>전화: <a href="tel:${CFG.tel}">${CFG.telDisp}</a></span><br>
+          <span data-i18n="footer.email">이메일: <a href="mailto:${CFG.email}">${CFG.email}</a></span><br>
+          <span data-i18n="footer.bizno">사업자등록번호: ${CFG.bizNo}</span></address>
       </div>
       <div class="footer-col"><h4 data-i18n="footer.services">서비스</h4><ul>
         <li><a href="virtual.html" data-i18n="nav.virtual">비상주사무실</a></li>
