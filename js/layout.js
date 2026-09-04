@@ -168,7 +168,7 @@
     { key: 'nav.contact', href: 'contact.html' },
   ];
   const LOGO_SVG = `<svg class="logo-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-    <circle cx="24" cy="24" r="20" stroke="#B8960C" stroke-width="2"/>
+    <circle cx="24" cy="24" r="20" stroke="#1B5CFF" stroke-width="2"/>
     <path d="M31 17c-1.6-2-4-3-7-3-4.4 0-7 2.2-7 5.4 0 6.5 13 3.5 13 9.6 0 3.2-2.8 5.4-7 5.4-3.3 0-5.8-1.2-7.4-3.4" stroke="#CC0000" stroke-width="3.4" stroke-linecap="round" fill="none"/></svg>`;
   const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
