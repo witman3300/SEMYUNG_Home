@@ -1,0 +1,27 @@
+# 환경변수 / 시크릿
+.env
+backend/.env
+*.env
+!*.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 로그
+*.log
+
+# 검증 산출물
+.playwright-mcp/
+*.jpeg
