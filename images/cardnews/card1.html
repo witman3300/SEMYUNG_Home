@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F5F7FA; --navy:#1A2B4C; --blue:#2563EB;
+    --coral:#FDEAE2; --orange:#F0663F; --card:#FFFFFF;
+    --num:#E4E9F1; --desc:#5A6675; --line:#E7ECF3;
+  }
+  html,body{background:var(--bg)}
+  body{font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
+  .canvas{
+    width:1080px;height:1350px;background:var(--bg);position:relative;overflow:hidden;
+    padding:76px 72px 132px;display:flex;flex-direction:column;
+  }
+  /* decorative accent */
+  .blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55}
+  .blob-1{width:420px;height:420px;background:radial-gradient(circle at 30% 30%,#e8effc,transparent 70%);top:-120px;right:-120px}
+
+  .eyebrow{
+    font-size:20px;font-weight:800;letter-spacing:7px;color:var(--orange);
+    text-transform:uppercase;margin-bottom:22px;position:relative;
+  }
+  .title-1{font-size:44px;font-weight:800;color:var(--navy);line-height:1.28;letter-spacing:-1px}
+  .title-2{font-size:60px;font-weight:900;color:var(--navy);line-height:1.15;letter-spacing:-1.5px;margin-top:4px}
+  .title-2 .circ{color:var(--blue)}
+  .subtitle{
+    font-size:23px;font-weight:500;color:var(--desc);line-height:1.62;margin-top:24px;
+    max-width:900px;
+  }
+  .subtitle b{color:var(--blue);font-weight:700}
+
+  .cards{display:flex;flex-direction:column;flex:1;justify-content:space-between;margin-top:44px;padding-bottom:8px}
+  .feat{
+    position:relative;background:var(--card);border-radius:26px;
+    padding:44px 40px;display:flex;align-items:flex-start;gap:30px;
+    box-shadow:0 14px 34px -20px rgba(26,43,76,.28);
+  }
+  .icon{
+    flex-shrink:0;width:92px;height:92px;border-radius:24px;background:var(--coral);
+    display:grid;place-items:center;color:var(--orange);
+  }
+  .icon svg{width:48px;height:48px}
+  .body{flex:1;padding-top:4px}
+  .body h3{font-size:31px;font-weight:800;color:var(--navy);letter-spacing:-.8px}
+  .body p{font-size:20.5px;font-weight:500;color:var(--desc);line-height:1.55;margin-top:11px;max-width:680px}
+  .no{
+    position:absolute;top:22px;right:36px;font-size:86px;font-weight:900;
+    color:var(--num);line-height:1;letter-spacing:-3px;
+  }
+
+  .footer{
+    position:absolute;left:0;bottom:0;width:100%;padding:30px 72px 34px;
+    border-top:1px solid var(--line);
+  }
+  .footer p{font-size:20px;font-weight:600;color:var(--navy);text-align:center;letter-spacing:-.3px}
+  .footer .sep{color:var(--blue);margin:0 10px;font-weight:800}
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="blob blob-1"></div>
+
+    <p class="eyebrow">SEMYUNGJANGGYO BUSINESS CENTER</p>
+    <h1 class="title-1">세명장교 비즈니스센터</h1>
+    <h2 class="title-2">10대 특장점 <span class="circ">①</span></h2>
+    <p class="subtitle">서울 을지로·명동 <b>초역세권</b>, 비상주부터 1·2·3인 고정실까지<br>사업의 시작을 완성하는 프리미엄 공유오피스</p>
+
+    <div class="cards">
+      <div class="feat">
+        <span class="no">01</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><path d="M24 6C16.8 6 11 11.8 11 19c0 9 13 23 13 23s13-14 13-23C37 11.8 31.2 6 24 6z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="24" cy="19" r="4.6" stroke="currentColor" stroke-width="2.6"/></svg></div>
+        <div class="body">
+          <h3>도심 초역세권 입지</h3>
+          <p>서울 을지로2가·명동 도심 한복판. 비상주·고정석·1·2·3인실을 갖춘 프리미엄 공유오피스</p>
+        </div>
+      </div>
+
+      <div class="feat">
+        <span class="no">02</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><path d="M9 42V16l15-8 15 8v26" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M6 42h36" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><rect x="20" y="28" width="8" height="14" stroke="currentColor" stroke-width="2.6"/><path d="M16 18h4M28 18h4M16 24h4M28 24h4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+        <div class="body">
+          <h3>프리미엄 주소지</h3>
+          <p>서울 중구 장교동 1번지 장교빌딩 810호. 신뢰도 높은 최고의 주소로 사업자등록 가능</p>
+        </div>
+      </div>
+
+      <div class="feat">
+        <span class="no">03</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><rect x="12" y="6" width="24" height="30" rx="4" stroke="currentColor" stroke-width="2.6"/><path d="M12 14h24M12 28h24" stroke="currentColor" stroke-width="2.6"/><circle cx="18" cy="32" r="1.9" fill="currentColor"/><circle cx="30" cy="32" r="1.9" fill="currentColor"/><path d="M16 36l-3 6M32 36l3 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+        <div class="body">
+          <h3>최고의 교통 연결성</h3>
+          <p>지하철 1·2·3·4·5호선 10분 거리, 일반버스·광역버스까지 사통팔달 문전 연결</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>세명장교 비즈니스센터<span class="sep">|</span>서울 중구 삼일대로 363, 장교빌딩 810호<span class="sep">|</span>☎ 02-762-3009</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>고객지원 · 문의 | 세명장교 비즈니스센터</title>
+  <meta name="description" content="세명장교 비즈니스센터 입주·상담 문의. 전화 02-762-3009, 카카오톡, 문의폼. 을지로2가 장교빌딩 810호.">
+  <meta name="theme-color" content="#0D1B3E">
+  <link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.ico" sizes="any"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="site-header"></div>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumb"><a href="index.html">홈</a> · 고객지원</p>
+      <h1>무엇이든 <em>문의</em>하세요</h1>
+      <p>입주, 요금, 창업·금융 상담까지. 전화·카카오톡·문의폼 중 편한 방법으로 연락 주세요.</p>
+    </div>
+  </section>
+
+  <section class="section contact-section">
+    <div class="container contact-grid">
+      <div class="contact-intro">
+        <p class="section-label light">CONTACT</p>
+        <h2 class="section-title light">연락처 안내</h2>
+        <p class="contact-desc">평일·주말 상관없이 24시간 문의를 받습니다. 빠르게 답변드리겠습니다.</p>
+        <div class="contact-methods">
+          <a href="tel:027623009" class="cm-btn cm-call"><span class="cm-ic">📞</span><span class="cm-t"><b>전화 상담</b><em>02-762-3009</em></span></a>
+          <a href="https://pf.kakao.com/" target="_blank" rel="noopener" class="cm-btn cm-kakao"><span class="cm-ic">💬</span><span class="cm-t"><b>카카오톡 상담</b><em>채널 문의하기</em></span></a>
+          <a href="https://maps.google.com/maps?q=서울특별시 중구 삼일대로 363 장교빌딩" target="_blank" rel="noopener" class="cm-btn"><span class="cm-ic">📍</span><span class="cm-t"><b>오시는 길</b><em>삼일대로 363, 장교빌딩 810호</em></span></a>
+        </div>
+      </div>
+      <form class="form-card" id="contactForm" novalidate>
+        <h3>입주 · 상담 문의</h3>
+        <div class="form-row">
+          <label><span>이름 <i>*</i></span><input type="text" name="name" required placeholder="홍길동"></label>
+          <label><span>연락처 <i>*</i></span><input type="tel" name="phone" required placeholder="010-0000-0000"></label>
+        </div>
+        <label><span>이메일</span><input type="email" name="email" placeholder="name@example.com"></label>
+        <label><span>관심 서비스</span>
+          <select name="interest"><option>비상주사무실</option><option>창업컨설팅</option><option>AI교육</option><option>금융컨설팅</option><option>기타</option></select>
+        </label>
+        <label><span>문의 내용 <i>*</i></span><textarea name="message" rows="4" required placeholder="문의하실 내용을 입력해 주세요."></textarea></label>
+        <label class="agree"><input type="checkbox" name="agree" required><span>개인정보 수집 및 이용에 동의합니다. <i>*</i></span></label>
+        <button type="submit" class="btn btn-gold btn-block">문의 보내기</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="map-wrap" style="min-height:400px">
+        <iframe title="세명장교 비즈니스센터 지도" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EC%A4%91%EA%B5%AC%20%EC%82%BC%EC%9D%BC%EB%8C%80%EB%A1%9C%20363%20%EC%9E%A5%EA%B5%90%EB%B9%8C%EB%94%A9&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/layout.js"></script>
+</body>
+</html>

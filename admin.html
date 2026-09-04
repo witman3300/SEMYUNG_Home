@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 | 세명장교 비즈니스센터</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0D1B3E">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="site-header"></div>
+  <div id="no-chat"></div>
+
+  <section class="section">
+    <div class="container admin-wrap">
+      <!-- 로그인 -->
+      <div id="loginView">
+        <form class="admin-login" id="loginForm">
+          <h2>🔐 관리자 로그인</h2>
+          <input type="email" id="email" placeholder="관리자 이메일" autocomplete="username" required>
+          <input type="password" id="pw" placeholder="비밀번호" autocomplete="current-password" required>
+          <button type="submit" class="btn btn-red btn-block">로그인</button>
+          <p class="form-status" id="loginStatus" role="status" aria-live="polite"></p>
+          <p style="font-size:12px;color:var(--text-light);margin-top:12px;text-align:center">Supabase Auth 계정으로 로그인합니다.</p>
+        </form>
+      </div>
+
+      <!-- 대시보드 -->
+      <div id="dashView" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h1 style="font-size:26px;font-weight:900;color:var(--blue)">관리자 대시보드</h1>
+          <button class="btn btn-outline" id="logoutBtn" style="padding:10px 20px">로그아웃</button>
+        </div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="dash">📊 대시보드</button>
+          <button class="admin-tab" data-tab="customers">🏢 고객 현황</button>
+          <button class="admin-tab" data-tab="payments">💳 계약·결제</button>
+          <button class="admin-tab" data-tab="contacts">📥 문의 처리</button>
+          <button class="admin-tab" data-tab="posts">📝 블로그</button>
+        </div>
+
+        <!-- 대시보드 -->
+        <div id="tab-dash">
+          <div class="stat-grid" id="statGrid"></div>
+          <div class="progress-card" id="progressCard"></div>
+        </div>
+
+        <!-- 고객 -->
+        <div id="tab-customers" hidden>
+          <form class="admin-form" id="customerForm">
+            <h3>고객 등록</h3>
+            <div class="admin-form-row">
+              <label><span>이름 *</span><input id="cName" required></label>
+              <label><span>연락처</span><input id="cPhone"></label>
+              <label><span>플랜</span><input id="cPlan" placeholder="비상주/고정석/고정실"></label>
+              <label><span>월 요금(원)</span><input id="cFee" type="number" value="0"></label>
+            </div>
+            <div class="admin-form-row">
+              <label><span>상태</span><select id="cStatus"><option>이용중</option><option>대기</option><option>해지</option></select></label>
+              <label><span>시작일</span><input id="cStart" type="date"></label>
+              <label style="grid-column:span 2"><span>메모</span><input id="cNote"></label>
+            </div>
+            <button type="submit" class="btn btn-red" style="padding:12px 26px">고객 추가</button>
+            <p class="form-status" id="cStatusMsg"></p>
+          </form>
+          <div id="customersWrap"></div>
+        </div>
+
+        <!-- 결제 -->
+        <div id="tab-payments" hidden>
+          <form class="admin-form" id="paymentForm">
+            <h3>결제 등록</h3>
+            <div class="admin-form-row">
+              <label><span>고객명</span><input id="pName"></label>
+              <label><span>금액(원) *</span><input id="pAmount" type="number" required value="0"></label>
+              <label><span>결제수단</span><select id="pMethod"><option>카드</option><option>계좌이체</option><option>현금</option></select></label>
+              <label><span>결제일</span><input id="pPaid" type="date"></label>
+            </div>
+            <label><span>메모</span><input id="pNote"></label>
+            <button type="submit" class="btn btn-red" style="padding:12px 26px">결제 추가</button>
+            <p class="form-status" id="pStatusMsg"></p>
+          </form>
+          <div id="paymentsWrap"></div>
+        </div>
+
+        <!-- 문의 -->
+        <div id="tab-contacts" hidden><div id="contactsWrap"></div></div>
+
+        <!-- 블로그 -->
+        <div id="tab-posts" hidden>
+          <form class="admin-form" id="postForm">
+            <h3 id="postFormTitle">새 글 작성</h3>
+            <input type="hidden" id="postId">
+            <div class="admin-form-row" style="grid-template-columns:2fr 1fr">
+              <label><span>제목 *</span><input id="postTitle" required></label>
+              <label><span>카테고리</span><input id="postCat"></label>
+            </div>
+            <label><span>요약</span><input id="postExcerpt"></label>
+            <label><span>내용 *</span><textarea id="postContent" rows="7" required></textarea></label>
+            <label class="agree" style="color:var(--text)"><input type="checkbox" id="postPublished" checked><span>공개(게시)</span></label>
+            <div style="display:flex;gap:10px">
+              <button type="submit" class="btn btn-red" style="padding:12px 26px">저장</button>
+              <button type="button" class="btn btn-outline" id="postReset" style="padding:12px 26px">초기화</button>
+            </div>
+            <p class="form-status" id="postStatus"></p>
+          </form>
+          <div id="postsWrap"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/layout.js"></script>
+  <script>
+  (function () {
+    const TK = 'sj-token';
+    let token = sessionStorage.getItem(TK) || '';
+    let cfg = null;
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const won = (n) => (Number(n) || 0).toLocaleString('ko-KR') + '원';
+    const fmt = (d) => { try { return new Date(d).toLocaleString('ko-KR'); } catch { return ''; } };
+    const fday = (d) => d ? String(d).slice(0, 10) : '';
+    const hdr = () => ({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+
+    async function getConfig() { if (!cfg) cfg = await (await fetch('/api/config')).json(); return cfg; }
+    async function api(path, opts) {
+      const r = await fetch(path, { headers: hdr(), ...(opts || {}) });
+      if (r.status === 401) { logout(); throw new Error('401'); }
+      if (!r.ok) throw new Error(r.status);
+      return r.status === 204 ? null : r.json();
+    }
+    function logout() { sessionStorage.removeItem(TK); token = ''; $('dashView').hidden = true; $('loginView').hidden = false; }
+
+    // ---- 로그인 (Supabase Auth) ----
+    $('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      $('loginStatus').className = 'form-status'; $('loginStatus').textContent = '로그인 중...';
+      try {
+        const c = await getConfig();
+        if (!c.supabaseUrl || !c.supabaseAnonKey) { $('loginStatus').className = 'form-status err'; $('loginStatus').textContent = 'Supabase Auth가 설정되지 않았습니다. (SUPABASE_URL / SUPABASE_ANON_KEY)'; return; }
+        const r = await fetch(c.supabaseUrl + '/auth/v1/token?grant_type=password', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': c.supabaseAnonKey },
+          body: JSON.stringify({ email: $('email').value, password: $('pw').value })
+        });
+        const d = await r.json();
+        if (!r.ok || !d.access_token) { $('loginStatus').className = 'form-status err'; $('loginStatus').textContent = '이메일 또는 비밀번호가 올바르지 않습니다.'; return; }
+        token = d.access_token; sessionStorage.setItem(TK, token); showDash();
+      } catch { $('loginStatus').className = 'form-status err'; $('loginStatus').textContent = '로그인 오류가 발생했습니다.'; }
+    });
+    $('logoutBtn').addEventListener('click', logout);
+
+    function showDash() { $('loginView').hidden = true; $('dashView').hidden = false; loadDash(); loadCustomers(); loadPayments(); loadContacts(); loadPosts(); }
+
+    // ---- 탭 ----
+    document.querySelectorAll('.admin-tab').forEach(t => t.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active')); t.classList.add('active');
+      ['dash','customers','payments','contacts','posts'].forEach(k => $('tab-' + k).hidden = (k !== t.dataset.tab));
+    }));
+
+    // ---- 대시보드 ----
+    async function loadDash() {
+      try {
+        const s = await api('/api/admin/summary');
+        $('statGrid').innerHTML =
+          `<div class="stat-card"><div class="lbl">총 매출</div><div class="val red">${won(s.revenue_total)}</div></div>
+           <div class="stat-card"><div class="lbl">이번 달 매출</div><div class="val gold">${won(s.revenue_month)}</div></div>
+           <div class="stat-card"><div class="lbl">전체 고객</div><div class="val">${s.customer_count.toLocaleString()}명<small>이용중 ${s.active_count}명</small></div></div>
+           <div class="stat-card"><div class="lbl">목표 진척률</div><div class="val">${s.progress}%<small>목표 ${s.target.toLocaleString()}개</small></div></div>`;
+        $('progressCard').innerHTML =
+          `<div class="ph"><b>1,000개 입주 목표 진척률</b><span>${s.customer_count.toLocaleString()} / ${s.target.toLocaleString()}</span></div>
+           <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(s.progress, 100)}%"></div></div>`;
+      } catch (e) { if (e.message !== '401') $('statGrid').innerHTML = '<p style="color:var(--red)">요약을 불러오지 못했습니다. (Supabase 설정 확인)</p>'; }
+    }
+
+    // ---- 고객 ----
+    async function loadCustomers() {
+      const wrap = $('customersWrap');
+      try {
+        const rows = await api('/api/admin/customers');
+        wrap.innerHTML = !rows.length ? '<p style="color:var(--text-muted)">등록된 고객이 없습니다.</p>' :
+          '<table class="admin-table"><thead><tr><th>ID</th><th>이름</th><th>연락처</th><th>플랜</th><th>월요금</th><th>상태</th><th>시작일</th><th>관리</th></tr></thead><tbody>' +
+          rows.map(c => `<tr><td>${c.id}</td><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.plan)}</td><td>${won(c.monthly_fee)}</td><td>${esc(c.status)}</td><td>${fday(c.start_date)}</td>
+            <td><div class="admin-actions"><button class="btn-del" data-del="${c.id}">삭제</button></div></td></tr>`).join('') + '</tbody></table>';
+        wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => { if (confirm('삭제하시겠습니까?')) { await api('/api/admin/customers/' + b.dataset.del, { method: 'DELETE' }); loadCustomers(); loadDash(); } }));
+      } catch (e) { if (e.message !== '401') wrap.innerHTML = '<p style="color:var(--red)">불러오기 실패 (Supabase 설정 확인)</p>'; }
+    }
+    $('customerForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); $('cStatusMsg').className = 'form-status'; $('cStatusMsg').textContent = '저장 중...';
+      try {
+        await api('/api/admin/customers', { method: 'POST', body: JSON.stringify({
+          name: $('cName').value, phone: $('cPhone').value, plan: $('cPlan').value,
+          monthly_fee: Number($('cFee').value) || 0, status: $('cStatus').value,
+          start_date: $('cStart').value || null, note: $('cNote').value }) });
+        $('cStatusMsg').className = 'form-status ok'; $('cStatusMsg').textContent = '✓ 추가되었습니다.';
+        $('customerForm').reset(); loadCustomers(); loadDash();
+      } catch (e2) { if (e2.message !== '401') { $('cStatusMsg').className = 'form-status err'; $('cStatusMsg').textContent = '저장 실패'; } }
+    });
+
+    // ---- 결제 ----
+    async function loadPayments() {
+      const wrap = $('paymentsWrap');
+      try {
+        const rows = await api('/api/admin/payments');
+        const total = rows.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+        wrap.innerHTML = (!rows.length ? '<p style="color:var(--text-muted)">결제 내역이 없습니다.</p>' :
+          '<table class="admin-table"><thead><tr><th>ID</th><th>고객</th><th>금액</th><th>수단</th><th>결제일</th><th>메모</th><th>관리</th></tr></thead><tbody>' +
+          rows.map(p => `<tr><td>${p.id}</td><td>${esc(p.customer_name)}</td><td>${won(p.amount)}</td><td>${esc(p.method)}</td><td>${fday(p.paid_at)}</td><td>${esc(p.note)}</td>
+            <td><div class="admin-actions"><button class="btn-del" data-del="${p.id}">삭제</button></div></td></tr>`).join('') + '</tbody></table>') +
+          `<p style="margin-top:14px;font-weight:800;color:var(--blue)">합계 매출: <span style="color:var(--red)">${won(total)}</span></p>`;
+        wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => { if (confirm('삭제하시겠습니까?')) { await api('/api/admin/payments/' + b.dataset.del, { method: 'DELETE' }); loadPayments(); loadDash(); } }));
+      } catch (e) { if (e.message !== '401') wrap.innerHTML = '<p style="color:var(--red)">불러오기 실패</p>'; }
+    }
+    $('paymentForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); $('pStatusMsg').className = 'form-status'; $('pStatusMsg').textContent = '저장 중...';
+      try {
+        await api('/api/admin/payments', { method: 'POST', body: JSON.stringify({
+          customer_name: $('pName').value, amount: Number($('pAmount').value) || 0,
+          method: $('pMethod').value, paid_at: $('pPaid').value || null, note: $('pNote').value }) });
+        $('pStatusMsg').className = 'form-status ok'; $('pStatusMsg').textContent = '✓ 추가되었습니다.';
+        $('paymentForm').reset(); loadPayments(); loadDash();
+      } catch (e2) { if (e2.message !== '401') { $('pStatusMsg').className = 'form-status err'; $('pStatusMsg').textContent = '저장 실패'; } }
+    });
+
+    // ---- 문의 ----
+    async function loadContacts() {
+      const wrap = $('contactsWrap');
+      try {
+        const rows = await api('/api/admin/contacts');
+        wrap.innerHTML = !rows.length ? '<p style="color:var(--text-muted)">접수된 문의가 없습니다.</p>' :
+          '<table class="admin-table"><thead><tr><th>일시</th><th>이름</th><th>연락처</th><th>관심</th><th>내용</th><th>상태</th></tr></thead><tbody>' +
+          rows.map(c => `<tr><td>${fmt(c.created_at)}</td><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.interest)}</td><td>${esc(c.message)}</td>
+            <td><select data-cid="${c.id}" class="cstat">${['접수','처리중','완료'].map(s => `<option ${c.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`).join('') + '</tbody></table>';
+        wrap.querySelectorAll('select.cstat').forEach(sel => sel.addEventListener('change', async () => {
+          try { await api('/api/admin/contacts/' + sel.dataset.cid, { method: 'PATCH', body: JSON.stringify({ status: sel.value }) }); sel.style.borderColor = 'var(--gold)'; } catch {}
+        }));
+      } catch (e) { if (e.message !== '401') wrap.innerHTML = '<p style="color:var(--red)">불러오기 실패</p>'; }
+    }
+
+    // ---- 블로그 ----
+    async function loadPosts() {
+      const wrap = $('postsWrap');
+      try {
+        const rows = await api('/api/admin/posts');
+        wrap.innerHTML = !rows.length ? '<p style="color:var(--text-muted)">작성된 글이 없습니다.</p>' :
+          '<table class="admin-table"><thead><tr><th>ID</th><th>제목</th><th>카테고리</th><th>공개</th><th>일시</th><th>관리</th></tr></thead><tbody>' +
+          rows.map(p => `<tr><td>${p.id}</td><td>${esc(p.title)}</td><td>${esc(p.category)}</td><td>${p.published ? '✅' : '⛔'}</td><td>${fmt(p.created_at)}</td>
+            <td><div class="admin-actions"><button class="btn-edit" data-edit="${p.id}">수정</button><button class="btn-del" data-del="${p.id}">삭제</button></div></td></tr>`).join('') + '</tbody></table>';
+        wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editPost(rows.find(x => x.id == b.dataset.edit))));
+        wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => { if (confirm('삭제하시겠습니까?')) { await api('/api/admin/posts/' + b.dataset.del, { method: 'DELETE' }); loadPosts(); } }));
+      } catch (e) { if (e.message !== '401') wrap.innerHTML = '<p style="color:var(--red)">불러오기 실패</p>'; }
+    }
+    function editPost(p) { if (!p) return; $('postId').value = p.id; $('postTitle').value = p.title || ''; $('postCat').value = p.category || ''; $('postExcerpt').value = p.excerpt || ''; $('postContent').value = p.content || ''; $('postPublished').checked = !!p.published; $('postFormTitle').textContent = '글 수정 (ID ' + p.id + ')'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function resetPost() { $('postForm').reset(); $('postId').value = ''; $('postFormTitle').textContent = '새 글 작성'; $('postStatus').textContent = ''; }
+    $('postReset').addEventListener('click', resetPost);
+    $('postForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); const id = $('postId').value; $('postStatus').className = 'form-status'; $('postStatus').textContent = '저장 중...';
+      try {
+        await api(id ? '/api/admin/posts/' + id : '/api/admin/posts', { method: id ? 'PUT' : 'POST', body: JSON.stringify({
+          title: $('postTitle').value, category: $('postCat').value, excerpt: $('postExcerpt').value, content: $('postContent').value, published: $('postPublished').checked }) });
+        $('postStatus').className = 'form-status ok'; $('postStatus').textContent = '✓ 저장되었습니다.'; resetPost(); loadPosts();
+      } catch (e2) { if (e2.message !== '401') { $('postStatus').className = 'form-status err'; $('postStatus').textContent = '저장 실패'; } }
+    });
+
+    // ---- 자동 로그인 ----
+    if (token) { api('/api/admin/summary').then(() => showDash()).catch(() => logout()); }
+  })();
+  </script>
+</body>
+</html>

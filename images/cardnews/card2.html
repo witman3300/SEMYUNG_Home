@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#F5F7FA; --navy:#1A2B4C; --blue:#2563EB;
+    --coral:#FDEAE2; --orange:#F0663F; --card:#FFFFFF;
+    --num:#E4E9F1; --desc:#5A6675; --line:#E7ECF3;
+  }
+  html,body{background:var(--bg)}
+  body{font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
+  .canvas{width:1080px;height:1350px;background:var(--bg);position:relative;overflow:hidden;padding:76px 72px 132px;display:flex;flex-direction:column}
+  .blob{position:absolute;border-radius:50%;opacity:.55}
+  .blob-1{width:420px;height:420px;background:radial-gradient(circle at 30% 30%,#e8effc,transparent 70%);top:-120px;right:-120px}
+
+  .eyebrow{font-size:20px;font-weight:800;letter-spacing:7px;color:var(--orange);text-transform:uppercase;margin-bottom:22px}
+  .title-1{font-size:44px;font-weight:800;color:var(--navy);line-height:1.28;letter-spacing:-1px}
+  .title-2{font-size:60px;font-weight:900;color:var(--navy);line-height:1.15;letter-spacing:-1.5px;margin-top:4px}
+  .title-2 .circ{color:var(--blue)}
+  .tagline{font-size:23px;font-weight:600;color:var(--desc);margin-top:22px}
+  .tagline b{color:var(--blue);font-weight:800}
+
+  .cards{display:flex;flex-direction:column;flex:1;justify-content:space-between;margin-top:48px;padding-bottom:8px}
+  .feat{position:relative;background:var(--card);border-radius:26px;padding:42px 40px;display:flex;align-items:flex-start;gap:30px;box-shadow:0 14px 34px -20px rgba(26,43,76,.28)}
+  .icon{flex-shrink:0;width:92px;height:92px;border-radius:24px;background:var(--coral);display:grid;place-items:center;color:var(--orange)}
+  .icon svg{width:48px;height:48px}
+  .body{flex:1;padding-top:4px}
+  .body h3{font-size:31px;font-weight:800;color:var(--navy);letter-spacing:-.8px}
+  .body p{font-size:20.5px;font-weight:500;color:var(--desc);line-height:1.55;margin-top:11px;max-width:680px}
+  .no{position:absolute;top:24px;right:36px;font-size:86px;font-weight:900;color:var(--num);line-height:1;letter-spacing:-3px}
+
+  .footer{position:absolute;left:0;bottom:0;width:100%;padding:30px 72px 34px;border-top:1px solid var(--line)}
+  .footer p{font-size:20px;font-weight:600;color:var(--navy);text-align:center;letter-spacing:-.3px}
+  .footer .sep{color:var(--blue);margin:0 10px;font-weight:800}
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="blob blob-1"></div>
+
+    <p class="eyebrow">SEMYUNGJANGGYO BUSINESS CENTER</p>
+    <h1 class="title-1">세명장교 비즈니스센터</h1>
+    <h2 class="title-2">10대 특장점 <span class="circ">②</span></h2>
+    <p class="tagline">창업기업을 위한 <b>든든한 지원</b> 편</p>
+
+    <div class="cards">
+      <div class="feat">
+        <span class="no">04</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><circle cx="17" cy="17" r="6" stroke="currentColor" stroke-width="2.6"/><circle cx="33" cy="21" r="5" stroke="currentColor" stroke-width="2.6"/><path d="M7 40c0-6 4.5-10 10-10s10 4 10 10M27 40c0-4.5 2.5-8.5 8-9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+        <div class="body">
+          <h3>창업기업 협업 지원</h3>
+          <p>마케팅 지원부터 세무·경영·노무 상담까지, 초기 사업이 자리 잡도록 밀착 협업</p>
+        </div>
+      </div>
+
+      <div class="feat">
+        <span class="no">05</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="3" stroke="currentColor" stroke-width="2.6"/><path d="M8 20h32" stroke="currentColor" stroke-width="2.6"/><path d="M18 8v6M30 8v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M16 28h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+        <div class="body">
+          <h3>무료 회의·스터디 공간</h3>
+          <p>고용노동청 일자리센터 스터디룸·회의실 무료 이용 (만 39세 이하)</p>
+        </div>
+      </div>
+
+      <div class="feat">
+        <span class="no">06</span>
+        <div class="icon"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="18" width="28" height="16" rx="2" stroke="currentColor" stroke-width="2.6"/><path d="M14 18V8h20v10" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><rect x="16" y="30" width="16" height="10" stroke="currentColor" stroke-width="2.6"/><circle cx="32" cy="24" r="1.9" fill="currentColor"/></svg></div>
+        <div class="body">
+          <h3>사무 지원 서비스</h3>
+          <p>팩스·복사·제본 등 일상 사무를 무료 제공, 필요 시 실비 지원</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>세명장교 비즈니스센터<span class="sep">|</span>서울 중구 삼일대로 363, 장교빌딩 810호<span class="sep">|</span>☎ 02-762-3009</p>
+    </div>
+  </div>
+</body>
+</html>
