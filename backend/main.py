@@ -35,6 +35,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # ---- 환경변수 ----
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-5")
+CLAUDE_EFFORT = os.getenv("CLAUDE_EFFORT", "low")  # low|medium|high|xhigh|max
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
@@ -214,7 +215,8 @@ def chat(req: ChatRequest):
     messages = [{"role": t.role, "content": t.content} for t in req.history if t.role in ("user", "assistant")]
     messages.append({"role": "user", "content": req.message})
     try:
-        resp = client.messages.create(model=CLAUDE_MODEL, max_tokens=1024, system=SYSTEM_PROMPT, messages=messages)
+        resp = client.messages.create(model=CLAUDE_MODEL, max_tokens=1024, system=SYSTEM_PROMPT, messages=messages,
+                                      output_config={"effort": CLAUDE_EFFORT})
         reply = next((b.text for b in resp.content if b.type == "text"), "").strip()
         return {"reply": reply or "죄송합니다. 다시 한 번 질문해 주시겠어요?"}
     except Exception as e:  # noqa: BLE001
