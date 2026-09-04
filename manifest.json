@@ -1,0 +1,23 @@
+{
+  "name": "세명장교 비즈니스센터",
+  "short_name": "세명장교",
+  "description": "서울 을지로2가 AI특화 비즈니스센터 — 비상주사무실·창업컨설팅·AI교육·금융컨설팅",
+  "lang": "ko",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0D1B3E",
+  "theme_color": "#0D1B3E",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "입주 문의", "url": "./contact.html" },
+    { "name": "비상주사무실", "url": "./virtual.html" },
+    { "name": "블로그", "url": "./blog.html" }
+  ]
+}
