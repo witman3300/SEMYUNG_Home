@@ -1075,3 +1075,17 @@ input, textarea, select { font-family: inherit; font-size: 16.5px; }
   .btn-account { padding: 10px; }
   .hamburger { margin-left: 0; }
 }
+
+/* 마지막으로 사용한 로그인 수단 표시 */
+.soc-badge {
+  margin-left: auto; flex: none; font-family: var(--display);
+  font-size: 12.5px; font-weight: 700; letter-spacing: -.2px;
+  padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+}
+.soc-naver .soc-badge { background: rgba(255,255,255,.30); color: #fff; }
+.soc-kakao .soc-badge { background: rgba(25,22,0,.14); color: #191600; }
+.soc-google .soc-badge { background: var(--blue-050); color: var(--blue); }
+/* 눈이 먼저 가도록 테두리를 한 겹 더 준다 */
+.soc.is-last { box-shadow: 0 0 0 2px var(--blue); }
+.soc.is-last:hover { box-shadow: 0 0 0 2px var(--blue), 0 6px 18px -10px rgba(11,18,32,.5); }
+.auth-sep .soc-badge { margin-left: 0; background: var(--blue-050); color: var(--blue); }

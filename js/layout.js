@@ -54,6 +54,7 @@
     'acc.naver': ['네이버로 시작하기', 'Continue with Naver'],
     'acc.kakao': ['카카오로 시작하기', 'Continue with Kakao'],
     'acc.google': ['구글로 시작하기', 'Continue with Google'],
+    'acc.recent': ['최근 사용', 'Last used'],
     'acc.or': ['또는 이메일로', 'or use your email'],
     'acc.cta': ['로그인 · 회원가입', 'Sign in'],
     'acc.login': ['로그인', 'Sign in'],
@@ -340,17 +341,21 @@
 
       <div class="auth-social" id="authSocial">
         <button type="button" class="soc soc-naver" data-oauth="naver">
-          <span class="soc-ico" aria-hidden="true">N</span><span data-i18n="acc.naver">${tr('acc.naver')}</span></button>
+          <span class="soc-ico" aria-hidden="true">N</span><span data-i18n="acc.naver">${tr('acc.naver')}</span>
+          <span class="soc-badge" data-i18n="acc.recent" hidden>${tr('acc.recent')}</span></button>
         <button type="button" class="soc soc-kakao" data-oauth="kakao">
           <span class="soc-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.99 3 3 6.2 3 10.14c0 2.5 1.66 4.7 4.17 5.96l-1.05 3.86c-.1.35.3.63.6.43l4.62-3.05c.22.02.44.03.66.03 5.01 0 9-3.2 9-7.23S17.01 3 12 3z"/></svg>
-          </span><span data-i18n="acc.kakao">${tr('acc.kakao')}</span></button>
+          </span><span data-i18n="acc.kakao">${tr('acc.kakao')}</span>
+          <span class="soc-badge" data-i18n="acc.recent" hidden>${tr('acc.recent')}</span></button>
         <button type="button" class="soc soc-google" data-oauth="google">
           <span class="soc-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.05H12v3.88h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.23c1.89-1.74 2.99-4.3 2.99-7.35z"/><path fill="#34A853" d="M12 22c2.7 0 4.96-.9 6.61-2.42l-3.23-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H3.07v2.58A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.41 13.92a6 6 0 0 1 0-3.84V7.5H3.07a10 10 0 0 0 0 9l3.34-2.58z"/><path fill="#EA4335" d="M12 5.98c1.47 0 2.79.5 3.83 1.5l2.86-2.86C16.95 2.98 14.7 2 12 2A10 10 0 0 0 3.07 7.5l3.34 2.58C7.2 7.72 9.4 5.98 12 5.98z"/></svg>
-          </span><span data-i18n="acc.google">${tr('acc.google')}</span></button>
+          </span><span data-i18n="acc.google">${tr('acc.google')}</span>
+          <span class="soc-badge" data-i18n="acc.recent" hidden>${tr('acc.recent')}</span></button>
       </div>
-      <div class="auth-sep"><span data-i18n="acc.or">${tr('acc.or')}</span></div>
+      <div class="auth-sep"><span data-i18n="acc.or">${tr('acc.or')}</span>
+        <span class="soc-badge" id="emailBadge" data-i18n="acc.recent" hidden>${tr('acc.recent')}</span></div>
 
       <div class="auth-tabs" id="authTabs">
         <button type="button" class="on" data-tab="login" data-i18n="acc.login">${tr('acc.login')}</button>
@@ -600,6 +605,7 @@
         form.password.value = '';
       }
       statusEl.textContent = ''; statusEl.className = 'form-status';
+      markLastUsed();
     }
 
     function open(next) {
@@ -670,6 +676,7 @@
       try {
         if (mode === 'login') {
           setSession(await api('/auth/v1/token?grant_type=password', { body: { email, password: pw } }));
+          setLast('email'); markLastUsed();
           say(tr('acc.okLogin'), true);
           setTimeout(close, 700);
 
@@ -677,6 +684,7 @@
           const d = await api('/auth/v1/signup', {
             body: { email, password: pw, data: { name: form.name.value.trim(), phone: form.phone.value.trim() } },
           });
+          setLast('email'); markLastUsed();
           if (d.access_token) { setSession(d); say(tr('acc.okSignup'), true); setTimeout(close, 900); }
           else { say(tr('acc.okVerify'), true); }   // 이메일 확인이 켜진 프로젝트
 
@@ -697,6 +705,25 @@
       }
     });
 
+    /* ---- 마지막으로 사용한 로그인 수단 ---- */
+    // 재방문 이용자가 어느 수단으로 가입했는지 잊고 중복 가입하는 것을 막는다.
+    const LAST_KEY = 'sj-last-login';       // naver | kakao | google | email
+    const PENDING_KEY = 'sj-last-login-try'; // 소셜은 이동 후 돌아와야 성공을 알 수 있다
+    const getLast = () => { try { return localStorage.getItem(LAST_KEY) || ''; } catch (e) { return ''; } };
+    const setLast = (v) => { try { localStorage.setItem(LAST_KEY, v); } catch (e) {} };
+
+    function markLastUsed() {
+      const last = getLast();
+      document.querySelectorAll('[data-oauth]').forEach((b) => {
+        const hit = b.getAttribute('data-oauth') === last;
+        b.classList.toggle('is-last', hit);
+        const badge = b.querySelector('.soc-badge');
+        if (badge) badge.hidden = !hit;
+      });
+      const eb = $id('emailBadge');
+      if (eb) eb.hidden = last !== 'email';
+    }
+
     /* ---- 소셜 로그인 (네이버·카카오·구글) ---- */
     // 카카오·구글은 Supabase가 직접 지원한다. 네이버는 지원 목록에 없어
     // 백엔드(/api/auth/naver/*)가 네이버 OAuth를 처리한 뒤 세션을 만들어 준다.
@@ -704,6 +731,7 @@
 
     async function oauth(provider) {
       const back = location.origin + location.pathname;
+      try { localStorage.setItem(PENDING_KEY, provider); } catch (e) {}
       if (provider === 'naver') {
         location.href = '/api/auth/naver/start?redirect_to=' + encodeURIComponent(back);
         return;
@@ -732,6 +760,10 @@
       };
       try { session.user = await api('/auth/v1/user', { method: 'GET', auth: true }); } catch (e) {}
       save(session); render();
+      try {
+        const tried = localStorage.getItem(PENDING_KEY);
+        if (tried) { setLast(tried); localStorage.removeItem(PENDING_KEY); markLastUsed(); }
+      } catch (e) {}
       history.replaceState(null, '', location.pathname + location.search);
     }
 
@@ -757,6 +789,7 @@
     /* ---- 시작 ---- */
     session = load();
     render();
+    markLastUsed();
     consumeOAuthHash();
     showOAuthError();
     refreshIfNeeded();
