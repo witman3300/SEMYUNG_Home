@@ -84,12 +84,13 @@ vercel link           # 기존 프로젝트에 연결
 vercel --prod         # 수동 배포
 ```
 
-### ② API 연결 (선택 — 회원·챗봇·문의폼을 Vercel에서도 쓰려면)
-`vercel.json` 의 `rewrites` 맨 **앞**에 아래 한 줄을 추가하면 `/api/*` 요청이 Railway로 넘어갑니다.
+### ② API 연결 — **적용 완료**
+`vercel.json` 의 첫 rewrite 가 `/api/*` 를 Railway 백엔드로 넘깁니다.
 ```json
-{ "source": "/api/:path*", "destination": "https://<railway-앱주소>/api/:path*" }
+{ "source": "/api/:path*", "destination": "https://web-production-3f4b0.up.railway.app/api/:path*" }
 ```
-- 같은 출처로 보이므로 CORS 설정이 따로 필요 없습니다.
+- 브라우저에는 같은 출처로 보이므로 CORS 설정이 따로 필요 없습니다.
+- Railway 주소가 바뀌면 이 한 줄만 고치면 됩니다 (`railway variables` 의 `RAILWAY_PUBLIC_DOMAIN`).
 - 소셜 로그인을 쓴다면 Supabase **Redirect URLs** 에 Vercel 주소도 등록해야 합니다.
 
 ### ③ 검색 노출 정리 (권장)
@@ -114,16 +115,24 @@ Vercel 주소는 `semyung.co.kr` 과 내용이 같은 **중복 문서**입니다
   - [ ] `Site URL` = `https://semyung.co.kr`
   - [ ] `Redirect URLs` 에 `https://semyung.co.kr/**` 추가
         ⚠️ **빠뜨리면 소셜 로그인 후 엉뚱한 페이지로 돌아옵니다. 가장 흔한 실수**
-  - [ ] 도메인 연결(3단계) 전에 테스트한다면 Railway 임시 주소도 함께 등록
-        (예: `https://xxxx.up.railway.app/**`)
+  - [ ] 도메인 연결(3단계) 전에 테스트한다면 Railway·Vercel 주소도 함께 등록
+        `https://web-production-3f4b0.up.railway.app/**` · `https://semyung-home-qwpa.vercel.app/**`
 - [ ] **Settings → API** 에서 `URL`·`anon`·`service_role` 키 확보 (2단계에서 사용)
 
 ### 2단계 — Railway 환경변수 (필수)
-- [ ] `SUPABASE_URL` · `SUPABASE_ANON_KEY` · `SUPABASE_SERVICE_KEY`
-      (관리자 기능에 이미 쓰고 있다면 그대로 두면 됩니다)
-- [ ] 저장 후 재배포 → `/api/config` 가 `supabaseUrl`·`supabaseAnonKey` 를 반환하는지 확인
+> **현재 상태(2026-09-12 확인): 환경변수가 하나도 설정돼 있지 않습니다.**
+> `/api/health` 응답이 `claude:false, supabase:false, auth:false, email:false` 이고
+> `/api/config` 의 `supabaseUrl`·`supabaseAnonKey` 가 비어 있습니다.
+> 그래서 지금은 회원 기능뿐 아니라 **AI 챗봇·문의폼 저장·블로그·관리자도 동작하지 않습니다.**
+
+- [ ] `SUPABASE_URL` · `SUPABASE_ANON_KEY` · `SUPABASE_SERVICE_KEY` (회원·관리자·블로그)
+- [ ] `ANTHROPIC_API_KEY` (AI 챗봇 — 없으면 안내 문구만 표시)
+- [ ] 저장 후 재배포 → 아래로 확인
 ```bash
-curl -s https://<배포주소>/api/config
+curl -s https://web-production-3f4b0.up.railway.app/api/health
+# {"status":"ok","claude":true,"supabase":true,"auth":true,...} 가 되면 정상
+curl -s https://web-production-3f4b0.up.railway.app/api/config
+# supabaseUrl·supabaseAnonKey 에 값이 들어오면 정상
 ```
 
 ### 3단계 — 도메인 연결 (필수)
