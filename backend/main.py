@@ -79,6 +79,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# css/js/images/icons는 StaticFiles가 직접 응답하므로 캐시 헤더가 붙지 않는다.
+# 로딩 속도는 검색 순위에 반영되므로 여기서 한 번에 채워준다.
+_ASSET_PREFIXES = ("/css/", "/js/", "/images/", "/icons/")
+
+
+@app.middleware("http")
+async def _cache_static_assets(request, call_next):
+    response = await call_next(request)
+    if (request.url.path.startswith(_ASSET_PREFIXES)
+            and response.status_code == 200
+            and "cache-control" not in response.headers):
+        response.headers["Cache-Control"] = "public, max-age=604800, stale-while-revalidate=86400"
+    return response
+
 _client = None
 def get_claude():
     global _client
@@ -399,19 +413,50 @@ for sub in ("css", "js", "icons", "images"):
     if d.is_dir():
         app.mount(f"/{sub}", StaticFiles(directory=str(d)), name=sub)
 
-ALLOWED_SUFFIX = {".html", ".json", ".webmanifest", ".js", ".ico", ".png", ".txt", ".xml", ".svg"}
+ALLOWED_SUFFIX = {".html", ".json", ".webmanifest", ".js", ".ico", ".png", ".jpg", ".txt", ".xml", ".svg"}
+# robots/sitemap/llms는 오래 캐시할 이유가 없고, 나머지 정적 파일은 하루 캐시한다.
+SHORT_CACHE = {"robots.txt", "sitemap.xml", "llms.txt", "manifest.json", "service-worker.js"}
 
-@app.get("/{path:path}")
+
+def _file_response(p: Path, status: int = 200) -> FileResponse:
+    cache = "public, max-age=300" if p.name in SHORT_CACHE else "public, max-age=86400"
+    if p.suffix.lower() == ".html":
+        cache = "public, max-age=0, must-revalidate"
+    return FileResponse(str(p), status_code=status, headers={"Cache-Control": cache})
+
+
+@app.api_route("/{path:path}", methods=["GET", "HEAD"])
 def serve_frontend(path: str):
+    """정적 멀티페이지 서빙.
+
+    크롤러·모니터링이 HEAD로 찔러보는 경우가 많아 GET과 함께 받는다.
+
+    `/about` 같은 확장자 없는 주소도 `about.html`로 해석한다. 없는 주소에는
+    index.html을 200으로 돌려주지 않는다 — 소프트 404는 색인 품질을 떨어뜨린다.
+    """
     if path in ("", "/"):
-        return FileResponse(str(ROOT / "index.html"))
-    if "/" not in path and "\\" not in path and ".." not in path:
-        candidate = (ROOT / path).resolve()
-        if candidate.parent == ROOT and candidate.is_file() and candidate.suffix.lower() in ALLOWED_SUFFIX:
-            return FileResponse(str(candidate))
-    idx = ROOT / "index.html"
-    if idx.is_file():
-        return FileResponse(str(idx))
+        return _file_response(ROOT / "index.html")
+
+    if "/" in path or "\\" in path or ".." in path:
+        return _not_found()
+
+    candidate = (ROOT / path).resolve()
+    if candidate.parent == ROOT and candidate.is_file() and candidate.suffix.lower() in ALLOWED_SUFFIX:
+        return _file_response(candidate)
+
+    # 확장자 없는 정규 주소(/about, /virtual …)
+    if "." not in path:
+        html = (ROOT / f"{path}.html").resolve()
+        if html.parent == ROOT and html.is_file():
+            return _file_response(html)
+
+    return _not_found()
+
+
+def _not_found() -> FileResponse:
+    page = ROOT / "404.html"
+    if page.is_file():
+        return _file_response(page, status=404)
     raise HTTPException(status_code=404, detail="Not found")
 
 

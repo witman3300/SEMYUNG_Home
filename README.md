@@ -83,6 +83,31 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 | `location` 오시는 길 (1~5호선·버스·주차) | `index.html#location`, `contact.html#directions` |
 | 연락처·SNS·관련 사이트 | `js/layout.js` `CFG` → 공통 푸터 |
 
+## 반응형 · 기기 대응
+`css/style.css` 하단 "기기 대응" 블록. 브레이크포인트는 380 / 480 / 560 / 700–1024 / 1024 / 1025–1180 / 1240px.
+
+- **iOS**: 폼 입력 16px 고정(포커스 시 자동 확대 방지), `env(safe-area-inset-*)`로 노치·홈 인디케이터 회피,
+  `100dvh`로 주소창 높이 변화 대응, `-webkit-text-size-adjust:100%`
+- **Android·터치 공통**: `@media (pointer: coarse)`에서 탭 영역 최소 44px, hover 전용 효과 해제
+- **태블릿**: 세로(700–1024) 2열 그리드·풀폭 컨테이너, 가로(1025–1180) 4열 압축 레이아웃
+- **기타**: 폰 가로 모드(높이 ≤520px) 히어로 축소, 인쇄 스타일
+- 좌우 여백은 `--gutter` 변수로 관리 — 안전영역 규칙과 충돌 없이 브레이크포인트마다 값만 바꾼다.
+
+검증: 10개 뷰포트(360~1440) × 4개 페이지 = 40조합에서 가로 오버플로 0건.
+
+## SEO · AEO · GEO
+| 항목 | 위치 |
+|---|---|
+| 페이지별 title·description·canonical·OG·Twitter·geo 메타 | 공개 8개 페이지 `<head>` |
+| 구조화 데이터 JSON-LD | 각 페이지 `@graph` — Organization+LocalBusiness+ProfessionalService, WebSite, WebPage, BreadcrumbList, Service, OfferCatalog(요금 9종) |
+| **AEO** FAQ | `index.html#faq` 질문 10개 + `FAQPage` 스키마(본문과 동일 문안) + `speakable` |
+| **GEO** AI 인용용 요약 | `llms.txt` — 요금·주소·교통·인용 시 유의사항 |
+| 크롤러 정책 | `robots.txt` — 검색엔진(Yeti·Daumoa 포함) + GPTBot·ClaudeBot·PerplexityBot 등 명시 허용, `/admin.html`·`/api/` 차단 |
+| 사이트맵 | `sitemap.xml` (8 URL) |
+| 정규 주소 | `/about` 같은 확장자 없는 주소도 `about.html`로 응답, 없는 주소는 **실제 404**(`404.html`) — 소프트 404 제거 |
+| 성능 | 정적 자산 `Cache-Control` 미들웨어(7일), HTML은 must-revalidate |
+| OG 이미지 | `images/og-cover.jpg` (1200×630), 로고 `images/logo-512.png` |
+
 ## 확인 필요 / 남은 항목
 - 🔗 카카오 채널 실제 URL(`KAKAO_CHANNEL_URL`), 사업하자 연동 심도(현재 링크)
 - 🚀 Vercel 배포(`semyung-home-qwpa.vercel.app`)가 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404 — 최신 main 재연결 필요

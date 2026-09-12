@@ -1,0 +1,43 @@
+# 세명장교 비즈니스센터 — https://semyung.co.kr
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+# 검색엔진
+User-agent: Googlebot
+Allow: /
+User-agent: Yeti            # 네이버
+Allow: /
+User-agent: Daumoa          # 다음
+Allow: /
+User-agent: bingbot
+Allow: /
+
+# 생성형 AI · 답변엔진 — 사업 정보가 정확히 인용되도록 수집을 허용한다
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://semyung.co.kr/sitemap.xml

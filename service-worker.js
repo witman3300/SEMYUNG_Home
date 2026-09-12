@@ -1,10 +1,12 @@
 /* 세명장교 비즈니스센터 — Service Worker */
-const CACHE = 'sj-cache-v4';
+const CACHE = 'sj-cache-v5';
 const ASSETS = [
   './', './index.html', './about.html', './virtual.html', './consulting.html',
   './ai-edu.html', './insurance.html', './contact.html', './blog.html',
   './css/style.css', './js/layout.js', './js/main.js',
+  './404.html',
   './manifest.json', './favicon.ico', './images/hero-euljiro.jpg',
+  './images/semyung-logo.png',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
 ];
 
