@@ -8,10 +8,27 @@
   const CFG = {
     brand: '세명장교', sub: '비즈니스센터',
     tel: '027623009', telDisp: '02-762-3009',
+    mobile: '01089553300', mobileDisp: '010-8955-3300',
+    faxDisp: '02-763-3032',
+    hours: '24시간 연중무휴',
     kakao: 'https://pf.kakao.com/', sauphaja: 'https://sauphaja.ai.kr',
     addr: '서울특별시 중구 삼일대로 363, 장교빌딩 810호',
+    addrJibun: '서울특별시 중구 장교동 1번지 장교빌딩 810호',
     ceo: '이상진', email: 'witman@naver.com', bizNo: '168-45-00331',
     motto: '고객만족 · 행복추구 · 초지일관',
+    // 구 semyung.co.kr에서 운영하던 채널·제휴 사이트
+    sns: {
+      instagram: 'https://www.instagram.com/semyungcenter/',
+      youtube: 'https://www.youtube.com/@WSPC_semyungdab',
+      naverBlog: 'https://blog.naver.com/witman',
+    },
+    map: { naver: 'https://naver.me/xwm168bU', google: 'https://maps.app.goo.gl/PpJZwhHTUZXKf67t6' },
+    partners: [
+      { name: '세명동탄비즈니스센터', url: 'https://blog.naver.com/smdongtan' },
+      { name: '판촉물전문 유앤미기프트', url: 'http://unmi.co.kr' },
+      { name: '경비복전문 유앤미단체복', url: 'http://unmi.kr' },
+      { name: '유앤미 블로그', url: 'https://blog.naver.com/unmi0406' },
+    ],
   };
   window.SJ = window.SJ || {};
   window.SJ.CFG = CFG;
@@ -36,6 +53,9 @@
     'cta.inquire': ['입주 문의하기', 'Get Started'],
     'footer.services': ['서비스', 'Services'],
     'footer.quick': ['바로가기', 'Quick Links'],
+    'footer.partners': ['관련 사이트', 'Related Sites'],
+    'footer.mobile': [`휴대폰: <a href="tel:${CFG.mobile}">${CFG.mobileDisp}</a>`, `Mobile: <a href="tel:${CFG.mobile}">${CFG.mobileDisp}</a>`],
+    'footer.hours': [`영업시간: ${CFG.hours}`, 'Hours: Open 24/7, all year'],
     'footer.diag': ['사업하자 진단 ↗', 'Business Diagnosis ↗'],
     'footer.bizname': ['상호: 세명장교 비즈니스센터', 'Semyung Janggyo Business Center'],
     'footer.ceo': [`대표: ${CFG.ceo}`, `CEO: Lee Sang-jin`],
@@ -61,7 +81,12 @@
     'pr.g1s': ['주소지·사업자등록 중심 · 6개월 일시불 시 50% 할인 기준', 'Address & registration · 50% off on 6-month prepay'],
     'pr.g2t': ['상주 사무실', 'Resident Office'],
     'pr.g2s': ['고정석부터 1·2·3인 독립실까지', 'From a fixed desk to private rooms'],
-    'pr.note': ['※ 모든 금액 부가세 별도 · 상주 사무실은 보증금 별도 · 월 단위 계약', '※ VAT excluded · deposit applies to resident office · monthly contract'],
+    'pr.g3t': ['단기 상주 사무실', 'Short-term Office'],
+    'pr.g3s': ['하루부터 한 달까지, 필요한 기간만 · 사업자등록은 불가', 'From a day to a month — business registration not available'],
+    'pr.c7': ['하루', 'One day'], 'pr.c8': ['일주일', 'One week'], 'pr.c9': ['한 달', 'One month'],
+    'pr.per.day': ['/ 1일', '/ day'], 'pr.per.week': ['/ 7일', '/ 7 days'], 'pr.per.month': ['/ 1개월', '/ month'],
+    'pr.note': ['※ 모든 금액 부가세 별도 · 상주 사무실은 보증금 별도 · 월 단위 계약 · 단기 상주는 사업자등록 불가', '※ VAT excluded · deposit applies to resident office · monthly contract · no business registration for short-term'],
+    'pr.remote': ['※ 지방에 계신 분도 온라인으로 계약 가능합니다.', '※ Contracts can also be signed online from anywhere in Korea.'],
     'pr.apply': ['신청하기', 'Apply'],
     'pr.badge': ['추천', 'Best'],
     'pr.c1': ['개인 비상주', 'Personal Virtual'],
@@ -75,17 +100,20 @@
     'fr.label': ['FREE SERVICES', 'FREE SERVICES'],
     'fr.title': ['입주사에 드리는 무료 서비스', 'Free services for tenants'],
     'fr.desc': ['업무에 필요한 편의를 무료로 제공합니다', 'Everyday conveniences, all included'],
-    'fr.1t': ['사무기기 지원', 'Office Equipment'], 'fr.1d': ['팩스·인쇄·복사·제본 지원', 'Fax · print · copy · binding'],
-    'fr.2t': ['우편물 수령', 'Mail Handling'], 'fr.2d': ['우편·택배 수령 서비스', 'Mail & parcel receiving'],
-    'fr.3t': ['원두커피·음료', 'Coffee & Drinks'], 'fr.3d': ['갓 내린 원두커피 무료', 'Fresh coffee, free'],
-    'fr.4t': ['회의실 이용', 'Meeting Rooms'], 'fr.4d': ['회의실·스터디룸 이용', 'Meeting & study rooms'],
+    'fr.1t': ['회의실 서비스', 'Meeting Rooms'], 'fr.1d': ['상주·비상주 대표님 모두 이용 가능 · 최대 3시간 무료', 'For all tenants — up to 3 hours free'],
+    'fr.2t': ['애니워크 (비상주)', 'Anywork (Virtual)'], 'fr.2d': ['우편물·택배 수/발신, 스캔·사진 전송까지', 'Mail & parcel in/out, scan & photo forwarding'],
+    'fr.3t': ['OA 서비스', 'OA Services'], 'fr.3d': ['KT 기가 와이파이·원두커피 무료, 인쇄·스캔·팩스·제본 지원', 'Free KT Giga Wi-Fi & coffee; print, scan, fax, binding'],
+    'fr.4t': ['효율적인 업무 인프라', 'Business Infrastructure'], 'fr.4d': ['빌딩 내 400여 개 업체 · 은행·세무회계·법무법인·고용노동청 인접', '400+ firms in the building — banks, tax, law, labor office'],
     // 시설 갤러리
     'gal.label': ['GALLERY', 'GALLERY'],
     'gal.title': ['시설 갤러리', 'Facility Gallery'],
     'gal.desc': ['사무공간·회의공간을 미리 만나보세요', 'Preview our workspaces'],
-    'gal.c1': ['업무 공간', 'Workspace'],
-    'gal.c2': ['부대 서비스', 'Amenities'],
-    'gal.c3': ['도심 입지', 'Downtown Location'],
+    'gal.c1': ['1인실 — 도어락 보안', '1-Person Room — door lock'],
+    'gal.c2': ['다인실 — 2·3인실', 'Shared Room — 2 to 3 people'],
+    'gal.c3': ['회의실 — 최대 3시간 무료', 'Meeting Room — up to 3 hrs free'],
+    'gal.c4': ['고정석 — 오픈 데스크', 'Fixed Desk — open plan'],
+    'gal.c5': ['OA 서비스 — 인쇄·스캔·제본', 'OA — print, scan, binding'],
+    'gal.c6': ['을지로2가 장교빌딩 8층', 'Janggyo Bldg 8F, Euljiro'],
     // ----- 홈(index.html) -----
     'hero.tag': ['🤖 AI특화 비즈니스센터 · 세명장교', '🤖 AI-Powered Business Center · Semyung'],
     'hero.title': ['서울의 중심에 서다!<br><span class="hl">일의 중심</span>을 찾다!', 'Stand at the center of Seoul,<br>find the center of <span class="hl">work</span>!'],
@@ -134,10 +162,33 @@
     'loc.desc': ['고용노동부·서울지방고용노동청과 가까운 노동·노무 특화 입지', 'Near the Ministry of Employment & Labor — labor/HR specialized'],
     'loc.hl.t': ['🏛️ 고용노동부·서울고용노동청 인접', '🏛️ Next to the Seoul Labor Office'],
     'loc.hl.d': ['노동·노무·노사 관련 업무에 최적화된 입지. 관공서 방문과 행정 처리가 가까워 시간을 아낄 수 있습니다.', 'Optimized for labor/HR matters — government offices nearby save you time.'],
-    'loc.addr.t': ['주소', 'Address'], 'loc.addr.v': ['서울특별시 중구 삼일대로 363, 장교빌딩 810호', 'Janggyo Bldg #810, Samil-daero 363, Jung-gu, Seoul'],
-    'loc.sub.t': ['지하철', 'Subway'], 'loc.sub.v': ['을지로2가·을지로입구·명동역 인접 (1·2·3·4·5호선)', 'Near Euljiro & Myeongdong stations (lines 1-5)'],
+    'loc.addr.t': ['주소', 'Address'],
+    'loc.addr.v': ['서울특별시 중구 삼일대로 363, 장교빌딩 810호<br>(지번) 중구 장교동 1번지 장교빌딩 810호',
+      'Janggyo Bldg #810, Samil-daero 363, Jung-gu, Seoul<br>(Lot) 1 Janggyo-dong, Jung-gu, Seoul'],
+    'loc.sub.t': ['지하철', 'Subway'],
+    'loc.sub.v': ['을지로3가·을지로입구·종각·종로3가·명동역 (1·2·3·4·5호선)', 'Euljiro 3-ga · Euljiro 1-ga · Jonggak · Jongno 3-ga · Myeongdong (lines 1-5)'],
     'loc.tel.t': ['전화', 'Phone'],
-    'loc.navi': ['네이버 지도 길찾기', 'Directions (Naver Map)'],
+    'loc.hour.t': ['영업시간', 'Hours'], 'loc.hour.v': ['24시간 연중무휴', 'Open 24/7, all year'],
+    'loc.navi': ['네이버 지도로 보기', 'Open in Naver Map'],
+    'loc.gmap': ['구글 지도로 보기', 'Open in Google Maps'],
+    // 오시는 길 상세 (구 semyung.co.kr /location)
+    'rt.subway': ['지하철로 오시는 길', 'By subway'],
+    'rt.l2': ['을지로3가역 하차 후 을지로2가 1번 출구(그라츠 제과점)로 나오시면 장교빌딩 지하 상제리제 상가와 연결되어 있습니다. 엘리베이터를 타고 8층으로 오세요.',
+      'Get off at Euljiro 3-ga, take Euljiro 2-ga Exit 1 (Gratz Bakery); the Janggyo Building basement arcade connects directly. Take the elevator to the 8th floor.'],
+    'rt.l3': ['을지로3가역 하차 후 을지로2가 1번 출구(그라츠 제과점)로 나오시면 장교빌딩 지하와 직접 연결되어 있습니다. 8층으로 올라오시면 됩니다.',
+      'Get off at Euljiro 3-ga, take Euljiro 2-ga Exit 1 (Gratz Bakery) — it connects straight into the Janggyo Building basement. Come up to the 8th floor.'],
+    'rt.l1': ['종각역 12번 출구에서 을지로3가역 방향으로 도보 7분. 한화빌딩과 붙어 있는 “서울고용노동청”이라고 쓰인 흰색 큰 건물을 찾으시면 됩니다.',
+      'From Jonggak Exit 12, walk 7 minutes toward Euljiro 3-ga. Look for the large white building marked “Seoul Labor Office”, next to the Hanwha Building.'],
+    'rt.l4': ['명동역에서 도보로 오실 수 있으나, 1·2·3호선으로 환승해 오시는 편이 편리합니다.',
+      'Walkable from Myeongdong, but transferring to line 1, 2 or 3 is easier.'],
+    'rt.l5': ['종로3가역 4번 출구에서 도보로 오실 수 있으나, 1·2·3호선으로 환승해 오시는 것을 추천드립니다.',
+      'Walkable from Jongno 3-ga Exit 4, but transferring to line 1, 2 or 3 is recommended.'],
+    'rt.bus.b': ['버스', 'Bus'],
+    'rt.bus': ['을지로2가, 삼일교, IBK기업은행 본점, 서울고용노동청 정류장에서 하차 후 “서울고용노동청”을 찾으세요.',
+      'Get off at Euljiro 2-ga, Samilgyo, IBK Bank HQ, or Seoul Labor Office, then look for the “Seoul Labor Office”.'],
+    'rt.car.b': ['자가용', 'Car'],
+    'rt.car': ['내비게이션에 “장교빌딩 주차장”을 검색해 오세요. 반드시 <strong>지하 2층</strong>에 주차하시기 바랍니다. (지하 3층은 한화빌딩 주차장입니다.)',
+      'Search “Janggyo Building Parking” in your navigation. Please park on <strong>B2</strong> — B3 belongs to the Hanwha Building.'],
     'ct.label': ['GET IN TOUCH', 'GET IN TOUCH'],
     'ct.title': ['지금 바로 상담하세요', 'Talk to us now'],
     'ct.desc': ['전화, 카카오톡, 문의폼 중 편한 방법으로 연락 주세요. 빠르게 답변드리겠습니다.', 'Reach us by phone, KakaoTalk, or the form — we reply fast.'],
@@ -175,7 +226,7 @@
       { key: 'nav.consulting', href: 'consulting.html' },
       { key: 'nav.aiedu', href: 'ai-edu.html' },
       { key: 'nav.insurance', href: 'insurance.html' },
-      { key: 'nav.addon', href: 'index.html#free' },
+      { key: 'nav.addon', href: 'virtual.html#addon' },
       { key: 'nav.aichat', href: 'index.html#ai' },
     ]},
     { key: 'nav.location', href: 'index.html#location' },
@@ -242,9 +293,19 @@
         <address><span data-i18n="footer.bizname">상호: 세명장교 비즈니스센터</span><br>
           <span data-i18n="footer.ceo">대표: ${CFG.ceo}</span><br>
           <span>${CFG.addr}</span><br>
-          <span>전화: <a href="tel:${CFG.tel}">${CFG.telDisp}</a></span><br>
+          <span>전화: <a href="tel:${CFG.tel}">${CFG.telDisp}</a> · 팩스: ${CFG.faxDisp}</span><br>
+          <span data-i18n="footer.mobile">휴대폰: <a href="tel:${CFG.mobile}">${CFG.mobileDisp}</a></span><br>
           <span data-i18n="footer.email">이메일: <a href="mailto:${CFG.email}">${CFG.email}</a></span><br>
-          <span data-i18n="footer.bizno">사업자등록번호: ${CFG.bizNo}</span></address>
+          <span data-i18n="footer.bizno">사업자등록번호: ${CFG.bizNo}</span><br>
+          <span data-i18n="footer.hours">영업시간: ${CFG.hours}</span></address>
+        <div class="footer-sns">
+          <a href="${CFG.sns.instagram}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.7.8.9 1.4.17.4.37 1 .42 2.2.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.2-.22.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.17-1 .37-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.2-.42-.6-.22-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.17-.4-.37-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.2.22-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.17 1-.37 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.4a6.4 6.4 0 1 0 0 12.8 6.4 6.4 0 0 0 0-12.8zm0 10.6a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4zm6.6-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a>
+          <a href="${CFG.sns.youtube}" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5C.5 9.4.5 12 .5 12s0 2.6.5 4.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-4.5.5-4.5s0-2.6-.5-4.5zM9.8 15.4V8.6l5.9 3.4-5.9 3.4z"/></svg></a>
+          <a href="${CFG.sns.naverBlog}" target="_blank" rel="noopener" aria-label="네이버 블로그" title="네이버 블로그">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm5.2 4.6v8.8h2.5v-4.3l3 4.3h2.4V7.6h-2.5v4.3l-3-4.3H8.2z"/></svg></a>
+        </div>
       </div>
       <div class="footer-col"><h4 data-i18n="footer.services">서비스</h4><ul>
         <li><a href="virtual.html" data-i18n="nav.virtual">비상주사무실</a></li>
@@ -256,6 +317,9 @@
         <li><a href="blog.html" data-i18n="nav.blog">블로그</a></li>
         <li><a href="contact.html" data-i18n="nav.contact">고객지원</a></li>
         <li><a href="${CFG.sauphaja}" target="_blank" rel="noopener" data-i18n="footer.diag">사업하자 진단 ↗</a></li></ul></div>
+      <div class="footer-col"><h4 data-i18n="footer.partners">관련 사이트</h4><ul>
+        ${CFG.partners.map(p => `<li><a href="${p.url}" target="_blank" rel="noopener">${p.name} ↗</a></li>`).join('')}
+      </ul></div>
       </div>
       <div class="footer-bottom"><div class="container">
         <p class="copyright">© <span id="year"></span> 세명장교 비즈니스센터. All Rights Reserved.</p>

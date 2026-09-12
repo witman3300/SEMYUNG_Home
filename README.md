@@ -70,9 +70,22 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 
 관리자 API는 Supabase Auth 액세스 토큰(`Authorization: Bearer`)을 백엔드가 `/auth/v1/user`로 검증합니다.
 
+## 구 사이트(semyung.co.kr) 콘텐츠 이관
+기존 워드프레스 사이트의 실제 영업 정보를 신규 사이트 본문에 반영 완료.
+수집 원본은 `data/`(구조화 JSON + WP REST 원본), 이미지는 `images/legacy/` 참조.
+
+| 구 사이트 | 반영 위치 |
+|---|---|
+| `sm1` 센터소개 (최고의 위치·가격·지원) | `about.html` — 센터 소개 / 세 가지 약속 |
+| `sm2` 부가서비스 (회의실·애니워크·OA·인프라) | `virtual.html#addon` 상세 + `index.html#free` 요약 |
+| `sm3` 사무실안내 (1인실·다인실·회의실·고정석) | `virtual.html` 사무실 유형 + `index.html#gallery` |
+| `sm3` 가격표 (상주·비상주·**단기**) | `index.html#pricing`, `virtual.html` |
+| `location` 오시는 길 (1~5호선·버스·주차) | `index.html#location`, `contact.html#directions` |
+| 연락처·SNS·관련 사이트 | `js/layout.js` `CFG` → 공통 푸터 |
+
 ## 확인 필요 / 남은 항목
-- 🖼️ 로고 원본 `images/semyung-logo.png` 업로드 (현재 미존재 → SVG 폴백)
 - 🔗 카카오 채널 실제 URL(`KAKAO_CHANNEL_URL`), 사업하자 연동 심도(현재 링크)
+- 🚀 Vercel 배포(`semyung-home-qwpa.vercel.app`)가 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404 — 최신 main 재연결 필요
 - 🌐 하위 6개 서비스 페이지 본문 영문화(현재 홈+공통만 EN, 확장 가능)
 - 📧 SMTP 계정(자동이메일용)
 - ⚠️ **git remote의 GitHub 토큰(`ghp_...`) 폐기** — 저장소 URL에 노출됨(보안)
