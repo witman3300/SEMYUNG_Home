@@ -1,0 +1,272 @@
+{
+  "_meta": {
+    "source": "http://semyung.co.kr/ (WordPress, VWThemes Sales Landing Page)",
+    "fetched_at": "2026-09-12",
+    "method": "WordPress REST API (/wp-json/wp/v2/pages|posts|media) + 홈페이지 HTML 파싱",
+    "note": "기존 운영 사이트의 실제 콘텐츠 원본. 신규 정적 사이트(HTML) 본문 반영용 기준 데이터.",
+    "raw_export": "data/raw/{pages,posts,media}.json",
+    "images_dir": "images/legacy/"
+  },
+
+  "site": {
+    "name": "세명장교비즈니스센터",
+    "name_en": "Semyung Janggyo Business Center",
+    "tagline": "서울의 중심에 서다!",
+    "subtitle": "비상주, 상주 1~3인을 위한 전문 비즈니스센터",
+    "slogan": "당신이 꿈꾸는 꿈의 가치를 찾아드립니다.",
+    "catchphrase": "세명장교 비즈니스센터는 사업성공의 다른 이름입니다!",
+    "intro": "서울 을지로 명동 서울고용노동청에 위치한 세명장교비즈니스센터는 1인 스타트업 기업 대표님들과 1인 창업을 준비하는 분들이 역량을 키워가고 소통을 통하여 공유경제를 열어가는 전문 비즈니스센터입니다.",
+    "footer_intro": "세명장교비즈니스센터는 서울 중심부 최고의 입지와 5개 지하철 노선이 연결되는 초역세권에 위치해 있습니다. 창업기업의 성공적인 성장을 위한 전문 경영 상담, 네트워킹 지원, 그리고 합리적인 사무 서비스를 제공하며, 여러분의 비즈니스 성공 파트너가 되어드리겠습니다."
+  },
+
+  "contact": {
+    "tel": ["02-762-3009", "02-763-3032"],
+    "mobile": "010-8955-3300",
+    "fax": "02-763-3032",
+    "email": "witman@naver.com",
+    "hours": "24시간 영업 연중무휴",
+    "address_jibun": "서울특별시 중구 장교동 1번지 장교빌딩 810호",
+    "address_road": "서울특별시 중구 삼일대로 363, 810호",
+    "google_maps_link": "https://maps.app.goo.gl/PpJZwhHTUZXKf67t6",
+    "naver_maps_link": "https://naver.me/xwm168bU",
+    "google_maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1880.4254625436236!2d126.98510909429433!3d37.56717062343534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e5fa0b71a5%3A0xdecc3a99ada8936e!2z7ISc7Jq47Yq567OE7IucIOykkeq1rCDsgrzsnbzrjIDroZwgMzYz!5e0!3m2!1sko!2skr!4v1739952369255",
+    "coordinates": { "lat": 37.56717062343534, "lng": 126.98510909429433 },
+    "gtm_id": "GTM-526K4FFN"
+  },
+
+  "social": {
+    "instagram": "https://www.instagram.com/semyungcenter/",
+    "youtube": "https://www.youtube.com/@WSPC_semyungdab",
+    "naver_blog": "https://blog.naver.com/witman"
+  },
+
+  "related_sites": [
+    { "name": "세명동탄비즈니스센터", "url": "https://blog.naver.com/smdongtan" },
+    { "name": "판촉물전문 유앤미기프트", "url": "http://unmi.co.kr" },
+    { "name": "경비복전문 유앤미단체복", "url": "http://unmi.kr" },
+    { "name": "세명장교 블로그", "url": "https://blog.naver.com/witman" },
+    { "name": "유앤미 블로그", "url": "https://blog.naver.com/unmi0406" }
+  ],
+
+  "nav": [
+    { "label": "홈", "slug": "main", "path": "/" },
+    { "label": "세명장교비즈니스센터", "slug": "sm1", "path": "/sm1/" },
+    { "label": "사무실안내", "slug": "sm3", "path": "/sm3/" },
+    { "label": "부가서비스", "slug": "sm2", "path": "/sm2/" },
+    { "label": "오시는 길", "slug": "location", "path": "/location/" },
+    { "label": "블로그", "slug": "blog", "path": "/blog/" }
+  ],
+
+  "highlights": [
+    {
+      "title": "최적의 입지 지하철 초역세권",
+      "desc": "을지로입구 | 을지로3가 | 종각 | 종로3가 | 명동",
+      "icon": "images/legacy/icon1.png"
+    },
+    {
+      "title": "초초초역세권",
+      "desc": "지하철역 1,2,3,4,5호선! 시내, 광역버스 등 최고의 문전 연결성!",
+      "icon": "images/legacy/icon2.png"
+    },
+    {
+      "title": "최고의 주소지",
+      "desc": "서울특별시 중구 장교동 1번지 장교빌딩 810호",
+      "icon": "images/legacy/icon3.png"
+    },
+    {
+      "title": "사무활동 지원 서비스",
+      "desc": "인터넷, 팩스, 인쇄, 복사, 제본 등 사무활용 무료 및 실비 지원",
+      "icon": null
+    }
+  ],
+
+  "hero": {
+    "title": "세명장교비즈니스센터",
+    "body": "비즈니스센터로 최고의 주소지! 합리적 비용으로 사업 성공을 꿈꾸신다면 세명장교비즈니스 센터에서 시작하세요. 세명장교 비즈니스센터는 사업성공의 다른 이름입니다.",
+    "image": "images/legacy/메인2.jpg"
+  },
+
+  "pages": {
+    "sm1": {
+      "title": "세명장교비즈니스센터 (센터소개)",
+      "eyebrow": "Semyung Janggyo Business Center",
+      "lead": "당신이 꿈꾸는 꿈의 가치를 찾아드립니다.",
+      "intro": "서울 을지로 명동 서울고용노동청에 위치한 세명장교비즈니스센터는 1인 스타트업 기업 대표님들과 1인 창업을 준비하는 분들이 역량을 키워가고 소통을 통하여 공유경제를 열어가는 전문 비즈니스센터입니다.",
+      "features": [
+        {
+          "title": "최고의 위치",
+          "desc": "을지로 2가, 청계천, 명동의 장교빌딩 8층에 위치한 세명장교비즈니스센터! 대한민국의 중심, 최고의 위치 서울 중구에서 성공사업을 시작하세요!",
+          "cta": { "label": "위치 더보기", "path": "/location/" },
+          "image": "images/legacy/2a.jpg"
+        },
+        {
+          "title": "최적의 가격",
+          "desc": "비상주사무실 월 5만원(6개월 일시불 50% 할인 기준), 상주 1인실 월 40만원부터의 착한 가격으로 마케팅까지 도와드리는 가성비 최고의 비즈니스센터!",
+          "cta": { "label": "사무실안내", "path": "/sm3/" },
+          "image": "images/legacy/2b.jpg"
+        },
+        {
+          "title": "최선의 지원",
+          "desc": "인터넷, 팩스, 인쇄, 복사, 제본 등 각종 사무활동 무료 및 실비지원! 창업기업 네트워킹, 경영 상담 등을 통한 협업지원까지!",
+          "cta": { "label": "부가서비스", "path": "/sm2/" },
+          "image": "images/legacy/2c.jpg"
+        }
+      ]
+    },
+
+    "sm2": {
+      "title": "부가서비스",
+      "eyebrow": "Semyung Janggyo Business Center",
+      "lead": "세명장교 비즈니스센터는 사업성공의 다른 이름입니다!",
+      "hero_image": "images/legacy/제목을-입력해주세요_-4-4a.jpg",
+      "services": [
+        {
+          "title": "회의실 서비스",
+          "desc": "상주·비상주 대표님들 모두 사용 가능한 회의실 제공! 최대 3시간까지 제공.",
+          "image": "images/legacy/2a-1.jpg"
+        },
+        {
+          "title": "애니워크(비상주 서비스)",
+          "desc": "사업자등록증 주소만 필요한 비상주 대표님들을 위한 맞춤 서비스! 우편물 및 택배 수/발신, 스캔/사진 전송 서비스.",
+          "image": "images/legacy/2b-1.jpg"
+        },
+        {
+          "title": "OA 서비스",
+          "desc": "함께 쓰는 사무지원 서비스. KT 기가 와이파이, 원두 커피, 음료 무료 지원! 인쇄, 스캔, 팩스, 제본 등 사무활용 무료 및 실비 지원!",
+          "image": "images/legacy/2c-1.jpg"
+        },
+        {
+          "title": "효율적인 업무 인프라",
+          "desc": "빌딩 내 400여개의 다양한 업체(은행, 세무회계, 법무법인, 고용노동청) 인근 금융기관(우리, 국민, IBK기업, 하나, 신한) 남대문세무서, 중구청까지 최고의 인프라!",
+          "image": "images/legacy/2d.jpg"
+        }
+      ]
+    },
+
+    "sm3": {
+      "title": "사무실안내",
+      "eyebrow": "Semyung Janggyo Business Center",
+      "lead": "세명장교비즈니스센터",
+      "intro": "대한민국 최고의 상권, 최적의 위치, 최저 임대료! 더 이상 무슨 말이 필요할까요? 24시간 업무 가능한 비즈니스 센터! 상주, 비상주 모든 입주하신 모든 대표님께 업무 제휴를 지원합니다.",
+      "note": "*지방에 계신 분도 온라인으로 계약 가능합니다.",
+      "hero_image": "images/legacy/제목을-입력해주세요_-4-3a.jpg",
+      "room_types": [
+        {
+          "title": "1인실",
+          "desc": "도어락으로 보안이 철저하고, 집중력 높게 업무를 보실 수 있습니다.",
+          "image": "images/legacy/3a.jpg"
+        },
+        {
+          "title": "다인실",
+          "desc": "도어락으로 보안이 철저하며, 2인실부터 3인실까지 준비되어 있습니다.",
+          "image": "images/legacy/3b.jpg"
+        },
+        {
+          "title": "다인실/회의실",
+          "desc": "외부 클라이언트를 만나야 할 때, 회의실을 무료로 3시간까지 제공합니다.",
+          "image": "images/legacy/3c.jpg"
+        },
+        {
+          "title": "고정석",
+          "desc": "오픈 데스크 형태의 고정석으로 가성비 좋은 가격으로 사무실을 이용할 수 있습니다.",
+          "image": "images/legacy/3d.jpg"
+        }
+      ],
+      "gallery": [
+        "images/legacy/3e.jpg",
+        "images/legacy/3f.jpg",
+        "images/legacy/3g.jpg",
+        "images/legacy/3h.jpg"
+      ]
+    },
+
+    "location": {
+      "title": "오시는 길",
+      "address_jibun": "서울특별시 중구 장교동 1번지 장교빌딩 810호",
+      "address_road": "서울특별시 중구 삼일대로 363, 810호",
+      "links": [
+        { "label": "구글 지도로 보기", "url": "https://maps.app.goo.gl/PpJZwhHTUZXKf67t6" },
+        { "label": "네이버 지도로 보기", "url": "https://naver.me/xwm168bU" }
+      ],
+      "directions": {
+        "subway": [
+          {
+            "line": "2호선",
+            "desc": "을지로3가역 하차 후 을지로2가 1번 출구(그라츠 제과점)로 나오시면 장교빌딩 지하 상제리제 상가와 연결되어 있으며, 엘리베이터 탑승 후 8층으로 오시면 됩니다."
+          },
+          {
+            "line": "3호선",
+            "desc": "을지로3가역 하차 후 을지로2가 1번 출구(그라츠 제과점)로 나오시면 장교빌딩 지하와 직접 연결되어 있으니 오셔서 8층으로 올라오시면 됩니다."
+          },
+          {
+            "line": "1호선",
+            "desc": "종각역 12번 출구로 나와서 을지로3가역 방향 도보로 7분. 한화빌딩과 붙어있는 “서울 고용노동청”이라고 쓰여진 흰색 큰 건물을 찾으시면 됩니다."
+          },
+          {
+            "line": "4호선",
+            "desc": "명동역에서 도보로 오실 수 있으나 1·2·3호선으로 환승하셔서 찾아오시는 것이 편리합니다."
+          },
+          {
+            "line": "5호선",
+            "desc": "종로3가역 4번 출구로 나오셔서 도보로 오실 수 있으나 1·2·3호선으로 환승하셔서 오시는 것을 추천드립니다."
+          }
+        ],
+        "bus": "을지로2가, 삼일교, IBK 기업은행 본점, 서울 고용노동청에서 내리셔서 “서울고용노동청”을 찾으세요.",
+        "car": "네비게이션에 “장교빌딩 주차장” 검색 후 찾아오세요. (꼭 지하2층에 주차하세요. 지하3층은 한화빌딩 주차장입니다.)"
+      }
+    },
+
+    "blog": {
+      "title": "블로그",
+      "note": "기존 사이트 블로그 페이지는 본문 없이 목록만 출력. 글 6건 중 5건은 테마 더미(영문 lorem).",
+      "external": "https://blog.naver.com/witman"
+    }
+  },
+
+  "pricing": {
+    "currency": "KRW",
+    "resident": {
+      "label": "상주 사무실 가격",
+      "period": "월",
+      "items": [
+        { "name": "1인실", "price": 400000 },
+        { "name": "2인실", "price": 500000 },
+        { "name": "3인실", "price": 600000 },
+        { "name": "고정석", "price": 300000 }
+      ]
+    },
+    "non_resident": {
+      "label": "비상주 사무실 가격",
+      "period": "월",
+      "items": [
+        { "name": "개인", "price": 50000 },
+        { "name": "법인", "price": 75000 }
+      ],
+      "note": "※6개월 일시불 50% 할인 기준"
+    },
+    "short_term": {
+      "label": "단기 상주 사무실 가격",
+      "items": [
+        { "name": "하루", "price": 15000 },
+        { "name": "일주일", "price": 90000 },
+        { "name": "한 달", "price": 400000 }
+      ],
+      "note": "※사업자등록 불가"
+    }
+  },
+
+  "logos": {
+    "full": "images/legacy/logo_full.png",
+    "square_450": "images/legacy/logo450.png",
+    "cropped": "images/legacy/cropped-logo2.png"
+  },
+
+  "posts": [
+    { "title": "안녕하세요!", "date": "2024-09-04", "usable": true },
+    { "title": "Improve him believe opinion offered", "date": "2025-02-10", "usable": false, "reason": "테마 더미" },
+    { "title": "Can curiosity may end shameless explained", "date": "2025-02-10", "usable": false, "reason": "테마 더미" },
+    { "title": "Fat son how smiling natural", "date": "2025-02-10", "usable": false, "reason": "테마 더미" },
+    { "title": "Perfectly on furniture", "date": "2025-02-10", "usable": false, "reason": "테마 더미" },
+    { "title": "Appearance guide", "date": "2025-02-10", "usable": false, "reason": "테마 더미" }
+  ]
+}
