@@ -60,6 +60,43 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 시작 `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`(railway.json/Procfile) → 헬스체크 `/api/health` →
 커스텀 도메인 `semyung.co.kr` 연결.
 
+## Vercel 배포 (정적 미러)
+`vercel.json` 이 정적 서빙 규칙을 담고 있습니다 — 확장자 없는 주소 8개 rewrite,
+`404.html` 자동 처리, Railway와 동일한 캐시 정책(코드는 재검증 / 이미지는 7일).
+
+> ⚠️ **Vercel은 FastAPI 백엔드를 실행하지 않습니다.** `railway.json`·`Procfile` 은 Railway 전용입니다.
+> 따라서 Vercel 주소에서는 `/api/*` 가 없어 **AI 챗봇·문의폼·블로그·관리자·회원 기능이 동작하지 않습니다.**
+> 전부 동작시키려면 아래 '② API 연결' 을 함께 적용하세요.
+
+### ① 저장소 재연결 (대시보드 작업)
+현재 배포는 `7c234d5`(2026-06)에 고정되어 서브페이지가 전부 404입니다.
+1. [ ] Vercel → 해당 프로젝트 → **Settings → Git**
+2. [ ] 연결이 끊겨 있으면 `witman3300/SEMYUNG_Home` 다시 연결, Production Branch = `main`
+3. [ ] **Settings → Build & Deployment** → Framework Preset **Other**,
+       Build Command·Output Directory 는 비워 둘 것 (저장소 루트를 그대로 서빙)
+4. [ ] **Deployments → Redeploy** (또는 main에 푸시하면 자동 배포)
+5. [ ] 확인: `/virtual.html` `/contact.html` `/robots.txt` `/sitemap.xml` 이 200 인지
+
+CLI로 할 경우 (브라우저 로그인 필요):
+```bash
+vercel login          # 토큰 만료 시 필수
+vercel link           # 기존 프로젝트에 연결
+vercel --prod         # 수동 배포
+```
+
+### ② API 연결 (선택 — 회원·챗봇·문의폼을 Vercel에서도 쓰려면)
+`vercel.json` 의 `rewrites` 맨 **앞**에 아래 한 줄을 추가하면 `/api/*` 요청이 Railway로 넘어갑니다.
+```json
+{ "source": "/api/:path*", "destination": "https://<railway-앱주소>/api/:path*" }
+```
+- 같은 출처로 보이므로 CORS 설정이 따로 필요 없습니다.
+- 소셜 로그인을 쓴다면 Supabase **Redirect URLs** 에 Vercel 주소도 등록해야 합니다.
+
+### ③ 검색 노출 정리 (권장)
+Vercel 주소는 `semyung.co.kr` 과 내용이 같은 **중복 문서**입니다.
+모든 페이지의 canonical 이 `semyung.co.kr` 을 가리키고 있어 대체로 정리되지만,
+확실히 하려면 Vercel 프로젝트를 **미리보기 전용**으로 두거나 Deployment Protection 을 켜세요.
+
 ## 회원 기능 설정 체크리스트
 코드는 배포돼 있지만 **아래를 설정하기 전에는 동작하지 않습니다.**
 설정 전에 회원가입을 누르면 "회원 기능이 아직 설정되지 않았습니다" 안내만 표시됩니다.
@@ -193,7 +230,9 @@ curl -s https://<배포주소>/api/config
 - 🔐 **회원 기능 설정 미완료** — 위 체크리스트 1~3단계를 마쳐야 회원가입이 동작합니다.
   소셜 로그인은 자격증명이 없어 실제 OAuth 왕복이 미검증 상태입니다(미설정 시 안내 표시까지만 확인).
 - 🔗 카카오 채널 실제 URL(`KAKAO_CHANNEL_URL`), 사업하자 연동 심도(현재 링크)
-- 🚀 Vercel 배포(`semyung-home-qwpa.vercel.app`)가 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404 — 최신 main 재연결 필요
+- 🚀 **Vercel 재연결 대기** — `vercel.json`(정적 서빙 규칙)은 준비됐으나,
+  저장소 재연결은 대시보드 작업이라 미완. 위 'Vercel 배포' ①단계 참고.
+  현재 `semyung-home-qwpa.vercel.app` 은 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404
 - 🌐 하위 6개 서비스 페이지 본문 영문화(현재 홈+공통만 EN, 확장 가능)
 - 📧 SMTP 계정(자동이메일용)
 - ⚠️ **git remote의 GitHub 토큰(`ghp_...`) 폐기** — 저장소 URL에 노출됨(보안)
