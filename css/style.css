@@ -64,6 +64,8 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 address { font-style: normal; }
 img { max-width: 100%; display: block; }
+/* display를 지정한 클래스가 브라우저 기본 [hidden] 규칙을 덮어쓰므로 명시적으로 막는다 */
+[hidden] { display: none !important; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
 /* 16px 미만이면 iOS Safari가 포커스 시 화면을 확대한다 — 터치 기기에서는 16px 고정 */
 input, textarea, select { font-family: inherit; font-size: 16.5px; }
@@ -965,4 +967,111 @@ input, textarea, select { font-family: inherit; font-size: 16.5px; }
 }
 @media (min-width: 1600px) {
   .hslides { height: clamp(420px, 44vh, 620px); }
+}
+
+/* ===========================================================
+   계정 — 헤더 버튼 · 드롭다운 · 인증 모달
+   =========================================================== */
+.account { position: relative; flex-shrink: 0; }
+.btn-account {
+  display: inline-flex; align-items: center; gap: 9px; max-width: 220px;
+  background: var(--blue); color: #fff; font-weight: 700; font-size: 15.5px;
+  padding: 11px 20px; border-radius: 999px; transition: background .2s, box-shadow .2s; white-space: nowrap;
+}
+.btn-account:hover { background: var(--blue-600); box-shadow: var(--shadow-blue); }
+.btn-account .acc-ico { width: 19px; height: 19px; flex: none; }
+.btn-account .acc-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 로그인 상태에서는 톤을 낮춰 CTA와 구분 */
+.btn-account.signed-in { background: var(--bg-white); color: var(--text); border: 1.5px solid var(--border-strong); }
+.btn-account.signed-in:hover { border-color: var(--blue); color: var(--blue); background: var(--bg-white); box-shadow: none; }
+
+.acc-menu {
+  position: absolute; top: calc(100% + 10px); right: 0; z-index: 940; min-width: 216px;
+  background: var(--bg-white); border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 24px 50px -24px rgba(11,18,32,.45); padding: 8px; display: flex; flex-direction: column;
+}
+.acc-menu .acc-who {
+  padding: 10px 14px 12px; font-size: 14px; color: var(--text-light);
+  border-bottom: 1px solid var(--border); margin-bottom: 6px; word-break: break-all;
+}
+.acc-menu button {
+  text-align: left; padding: 12px 14px; border-radius: 10px; font-size: 15.5px;
+  font-weight: 600; color: var(--text); transition: background .15s, color .15s;
+}
+.acc-menu button:hover { background: var(--blue-050); color: var(--blue); }
+#accLogout { color: var(--red); }
+#accLogout:hover { background: rgba(204,0,0,.07); color: var(--red-dark); }
+
+/* ---- 모달 ---- */
+.auth-backdrop { position: fixed; inset: 0; z-index: 970; background: rgba(11,18,32,.55); backdrop-filter: blur(3px); }
+.auth-modal {
+  position: fixed; z-index: 980; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow-y: auto;
+  background: var(--bg-white); border-radius: var(--radius-lg); border: 1px solid var(--border);
+  box-shadow: 0 40px 90px -30px rgba(11,18,32,.55); padding: 34px 32px 30px;
+}
+.auth-close {
+  position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 10px;
+  color: var(--text-light); font-size: 17px; display: grid; place-items: center;
+}
+.auth-close:hover { background: var(--bg); color: var(--text); }
+.auth-title { font-family: var(--display); font-size: 25.5px; font-weight: 700; letter-spacing: -1px; margin-bottom: 22px; }
+
+.auth-tabs { display: flex; gap: 6px; background: var(--bg); border-radius: 999px; padding: 5px; margin-bottom: 24px; }
+.auth-tabs button {
+  flex: 1; padding: 11px; border-radius: 999px; font-weight: 700; font-size: 15.5px;
+  color: var(--text-muted); transition: all .2s;
+}
+.auth-tabs button.on { background: var(--bg-white); color: var(--blue); box-shadow: 0 2px 10px -4px rgba(11,18,32,.3); }
+
+.auth-form { display: flex; flex-direction: column; gap: 15px; }
+.af-row { display: flex; flex-direction: column; gap: 7px; }
+.af-row > span { font-size: 14.5px; font-weight: 700; color: var(--text-muted); }
+.af-row input {
+  padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--bg); color: var(--text); transition: border-color .2s, background .2s;
+}
+.af-row input:focus { outline: none; border-color: var(--blue); background: var(--bg-white); }
+.auth-form .btn-block { margin-top: 8px; }
+
+@media (max-width: 1024px) {
+  /* 햄버거 메뉴가 나오는 폭에서는 헤더 계정 버튼을 아이콘만 남긴다 */
+  .btn-account { padding: 11px; gap: 0; }
+  .btn-account .acc-label { display: none; }
+  .acc-menu { right: -8px; }
+}
+@media (max-width: 480px) {
+  .auth-modal { padding: 30px 22px 26px; }
+  .auth-title { font-size: 22.5px; }
+}
+
+/* ---- 소셜 로그인 (네이버·카카오·구글) ---- */
+.auth-social { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.soc {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 13px 18px; border-radius: 12px; font-weight: 700; font-size: 15.5px;
+  border: 1px solid transparent; transition: filter .2s, box-shadow .2s, border-color .2s;
+}
+.soc:hover { filter: brightness(.96); box-shadow: 0 6px 18px -10px rgba(11,18,32,.5); }
+.soc .soc-ico { width: 22px; height: 22px; flex: none; display: grid; place-items: center; }
+.soc .soc-ico svg { width: 20px; height: 20px; }
+.soc-naver { background: #03C75A; color: #fff; }
+.soc-naver .soc-ico { font-family: var(--display); font-weight: 800; font-size: 17px; color: #fff; }
+.soc-kakao { background: #FEE500; color: #191600; }
+.soc-google { background: var(--bg-white); color: var(--text); border-color: var(--border-strong); }
+.soc-google:hover { border-color: var(--text-light); }
+
+.auth-sep { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--text-light); font-size: 14px; }
+.auth-sep::before, .auth-sep::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* 소형 단말(360px 내외): 로고 + 언어토글 + 계정 + 햄버거가 한 줄에 들어가도록 밀도 조정 */
+@media (max-width: 400px) {
+  .header-inner { gap: 8px; }
+  .header-actions { gap: 6px; }
+  .logo { min-width: 0; }
+  .logo-text { min-width: 0; overflow: hidden; }
+  .logo-text b, .logo-text em { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .lang-toggle { padding: 8px 9px; letter-spacing: 0; }
+  .btn-account { padding: 10px; }
+  .hamburger { margin-left: 0; }
 }

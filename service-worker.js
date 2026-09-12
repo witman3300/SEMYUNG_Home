@@ -1,5 +1,5 @@
 /* 세명장교 비즈니스센터 — Service Worker */
-const CACHE = 'sj-cache-v5';
+const CACHE = 'sj-cache-v6';
 const ASSETS = [
   './', './index.html', './about.html', './virtual.html', './consulting.html',
   './ai-edu.html', './insurance.html', './contact.html', './blog.html',

@@ -35,7 +35,7 @@
     const next = document.getElementById('hNext');
     const pause = document.getElementById('hPause');
     let cur = 0, playing = true, timer = null;
-    const DUR = 5000;
+    const DUR = 3000;   // 슬라이드 5장을 3초 간격으로 자동 전환
 
     function go(i) {
       slides[cur].classList.remove('active');

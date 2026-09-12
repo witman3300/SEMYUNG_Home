@@ -50,6 +50,38 @@
     'nav.location': ['오시는 길', 'Location'],
     'nav.blog': ['블로그', 'Blog'],
     'nav.contact': ['고객지원', 'Contact'],
+    // 계정 (회원가입·로그인·회원정보수정)
+    'acc.naver': ['네이버로 시작하기', 'Continue with Naver'],
+    'acc.kakao': ['카카오로 시작하기', 'Continue with Kakao'],
+    'acc.google': ['구글로 시작하기', 'Continue with Google'],
+    'acc.or': ['또는 이메일로', 'or use your email'],
+    'acc.cta': ['로그인 · 회원가입', 'Sign in'],
+    'acc.login': ['로그인', 'Sign in'],
+    'acc.signup': ['회원가입', 'Create account'],
+    'acc.profile': ['회원정보 수정', 'Account settings'],
+    'acc.logout': ['로그아웃', 'Sign out'],
+    'acc.save': ['저장하기', 'Save changes'],
+    'acc.name': ['이름', 'Name'],
+    'acc.phone': ['연락처', 'Phone'],
+    'acc.email': ['이메일', 'Email'],
+    'acc.password': ['비밀번호', 'Password'],
+    'acc.password2': ['비밀번호 확인', 'Confirm password'],
+    'acc.pwHint': ['6자 이상', 'At least 6 characters'],
+    'acc.pwKeep': ['변경할 때만 입력하세요', 'Leave blank to keep current'],
+    'acc.wait': ['처리 중입니다...', 'Working...'],
+    'acc.okLogin': ['로그인되었습니다.', 'Signed in.'],
+    'acc.okSignup': ['가입이 완료되었습니다. 환영합니다!', 'Account created. Welcome!'],
+    'acc.okVerify': ['가입 확인 메일을 보냈습니다. 메일함을 확인해 주세요.', 'Check your inbox to confirm your email.'],
+    'acc.okSave': ['회원정보가 저장되었습니다.', 'Your details have been saved.'],
+    'acc.errEmail': ['이메일을 입력해 주세요.', 'Please enter your email.'],
+    'acc.errPw': ['비밀번호는 6자 이상이어야 합니다.', 'Password must be at least 6 characters.'],
+    'acc.errPw2': ['비밀번호가 서로 다릅니다.', 'Passwords do not match.'],
+    'acc.errCred': ['이메일 또는 비밀번호가 올바르지 않습니다.', 'Incorrect email or password.'],
+    'acc.errCfg': ['회원 기능이 아직 설정되지 않았습니다. 02-762-3009로 문의해 주세요.', 'Accounts are not configured yet. Please call +82-2-762-3009.'],
+    'acc.errNaverCfg': ['네이버 로그인이 아직 설정되지 않았습니다. 02-762-3009로 문의해 주세요.', 'Naver sign-in is not configured yet. Please call +82-2-762-3009.'],
+    'acc.errNaverEmail': ['네이버 계정의 이메일 제공에 동의해야 가입할 수 있습니다.', 'Please allow Naver to share your email address.'],
+    'acc.errRetry': ['로그인이 완료되지 않았습니다. 다시 시도해 주세요.', 'Sign-in did not complete. Please try again.'],
+    'acc.errGeneric': ['처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'Something went wrong. Please try again.'],
     'cta.inquire': ['입주 문의하기', 'Get Started'],
     'footer.services': ['서비스', 'Services'],
     'footer.quick': ['바로가기', 'Quick Links'],
@@ -285,6 +317,63 @@
     });
   }
 
+  /* ---------- 계정(회원가입·로그인·정보수정) ---------- */
+  function accountBlock() {
+    return `<div class="account" id="account">
+      <button type="button" class="btn-account" id="accountBtn" aria-haspopup="true" aria-expanded="false">
+        <svg class="acc-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="1.9"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        <span class="acc-label" data-i18n="acc.cta">${tr('acc.cta')}</span>
+      </button>
+      <div class="acc-menu" id="accMenu" role="menu" hidden>
+        <p class="acc-who" id="accWho"></p>
+        <button type="button" role="menuitem" data-account-open="profile" data-i18n="acc.profile">${tr('acc.profile')}</button>
+        <button type="button" role="menuitem" id="accLogout" data-i18n="acc.logout">${tr('acc.logout')}</button>
+      </div>
+    </div>`;
+  }
+
+  function buildAuthModal() {
+    return `<div class="auth-backdrop" id="authBackdrop" hidden></div>
+    <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+      <button type="button" class="auth-close" id="authClose" aria-label="닫기">✕</button>
+      <h2 class="auth-title" id="authTitle" data-i18n="acc.login">${tr('acc.login')}</h2>
+
+      <div class="auth-social" id="authSocial">
+        <button type="button" class="soc soc-naver" data-oauth="naver">
+          <span class="soc-ico" aria-hidden="true">N</span><span data-i18n="acc.naver">${tr('acc.naver')}</span></button>
+        <button type="button" class="soc soc-kakao" data-oauth="kakao">
+          <span class="soc-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.99 3 3 6.2 3 10.14c0 2.5 1.66 4.7 4.17 5.96l-1.05 3.86c-.1.35.3.63.6.43l4.62-3.05c.22.02.44.03.66.03 5.01 0 9-3.2 9-7.23S17.01 3 12 3z"/></svg>
+          </span><span data-i18n="acc.kakao">${tr('acc.kakao')}</span></button>
+        <button type="button" class="soc soc-google" data-oauth="google">
+          <span class="soc-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.23c0-.71-.06-1.4-.18-2.05H12v3.88h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.23c1.89-1.74 2.99-4.3 2.99-7.35z"/><path fill="#34A853" d="M12 22c2.7 0 4.96-.9 6.61-2.42l-3.23-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H3.07v2.58A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.41 13.92a6 6 0 0 1 0-3.84V7.5H3.07a10 10 0 0 0 0 9l3.34-2.58z"/><path fill="#EA4335" d="M12 5.98c1.47 0 2.79.5 3.83 1.5l2.86-2.86C16.95 2.98 14.7 2 12 2A10 10 0 0 0 3.07 7.5l3.34 2.58C7.2 7.72 9.4 5.98 12 5.98z"/></svg>
+          </span><span data-i18n="acc.google">${tr('acc.google')}</span></button>
+      </div>
+      <div class="auth-sep"><span data-i18n="acc.or">${tr('acc.or')}</span></div>
+
+      <div class="auth-tabs" id="authTabs">
+        <button type="button" class="on" data-tab="login" data-i18n="acc.login">${tr('acc.login')}</button>
+        <button type="button" data-tab="signup" data-i18n="acc.signup">${tr('acc.signup')}</button>
+      </div>
+
+      <form class="auth-form" id="authForm" novalidate>
+        <label class="af-row" data-field="name" hidden><span data-i18n="acc.name">${tr('acc.name')}</span>
+          <input type="text" name="name" autocomplete="name" placeholder="홍길동"></label>
+        <label class="af-row" data-field="phone" hidden><span data-i18n="acc.phone">${tr('acc.phone')}</span>
+          <input type="tel" name="phone" autocomplete="tel" placeholder="010-0000-0000"></label>
+        <label class="af-row" data-field="email"><span data-i18n="acc.email">${tr('acc.email')}</span>
+          <input type="email" name="email" autocomplete="email" required placeholder="name@example.com"></label>
+        <label class="af-row" data-field="password"><span data-i18n="acc.password">${tr('acc.password')}</span>
+          <input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="6자 이상"></label>
+        <label class="af-row" data-field="password2" hidden><span data-i18n="acc.password2">${tr('acc.password2')}</span>
+          <input type="password" name="password2" autocomplete="new-password" minlength="6" placeholder="비밀번호 확인"></label>
+        <button type="submit" class="btn btn-gold btn-block" id="authSubmit" data-i18n="acc.login">${tr('acc.login')}</button>
+        <p class="form-status" id="authStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>`;
+  }
+
   function buildHeader() {
     const items = NAV.map(n => {
       const active = (n.children ? n.children.some(c => c.href === page) : n.href === page) ? 'active' : '';
@@ -301,12 +390,12 @@
       <nav class="gnb" aria-label="주 메뉴"><ul class="gnb-list">${items}</ul></nav>
       <div class="header-actions">
         <button class="lang-toggle" id="langToggle" aria-label="Language"><span class="lang-ko">KO</span><span class="lang-sep">·</span><span class="lang-en">EN</span></button>
-        <a href="contact.html" class="btn-inquire" data-i18n="cta.inquire">${tr('cta.inquire')}</a>
+        ${accountBlock()}
         <button class="hamburger" id="hamburger" aria-label="메뉴" aria-expanded="false"><span></span><span></span><span></span></button>
       </div></div></header>
       <div class="gnb-overlay" id="gnbOverlay"></div>
       <nav class="mobile-nav" id="mobileNav" aria-label="모바일 메뉴">${mobileLinks()}
-        <a href="contact.html" class="mobile-cta" data-i18n="cta.inquire">${tr('cta.inquire')}</a></nav>`;
+        <button type="button" class="mobile-cta" data-account-open data-i18n="acc.cta">${tr('acc.cta')}</button></nav>`;
   }
   function mobileLinks() {
     let h = '';
@@ -377,6 +466,7 @@
   const h = document.getElementById('site-header'); if (h) h.outerHTML = buildHeader();
   const f = document.getElementById('site-footer'); if (f) f.outerHTML = buildFooter();
   if (!document.getElementById('no-chat')) { const c = document.createElement('div'); c.innerHTML = buildChat(); document.body.appendChild(c); }
+  { const m = document.createElement('div'); m.innerHTML = buildAuthModal(); document.body.appendChild(m); }
   wireLogoFallback();
   applyLang();
   const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
@@ -384,6 +474,294 @@
   document.getElementById('langToggle')?.addEventListener('click', () => {
     lang = lang === 'ko' ? 'en' : 'ko'; localStorage.setItem('sj-lang', lang); applyLang();
   });
+
+
+  /* ===========================================================
+     계정 — Supabase Auth (관리자 로그인과 같은 방식)
+     회원가입 / 로그인 / 회원정보수정 / 로그아웃
+     =========================================================== */
+  (function accountModule() {
+    const KEY = 'sj-account';
+    let cfg = null;              // { supabaseUrl, supabaseAnonKey }
+    let session = null;          // { access_token, refresh_token, expires_at, user }
+    let mode = 'login';          // login | signup | profile
+
+    const $id = (id) => document.getElementById(id);
+    const modal = $id('authModal'), backdrop = $id('authBackdrop'), form = $id('authForm');
+    const statusEl = $id('authStatus'), titleEl = $id('authTitle'), tabsEl = $id('authTabs');
+    const submitEl = $id('authSubmit'), accBtn = $id('accountBtn'), accMenu = $id('accMenu');
+    if (!modal || !form) return;
+
+    const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } };
+    const save = (v) => { try { v ? localStorage.setItem(KEY, JSON.stringify(v)) : localStorage.removeItem(KEY); } catch (e) {} };
+
+    async function getCfg() {
+      if (cfg) return cfg;
+      try { cfg = await (await fetch('/api/config')).json(); } catch (e) { cfg = {}; }
+      return cfg;
+    }
+    const ready = (c) => !!(c && c.supabaseUrl && c.supabaseAnonKey);
+
+    async function api(path, opts) {
+      opts = opts || {};
+      const c = await getCfg();
+      if (!ready(c)) throw new Error('NOT_CONFIGURED');
+      const headers = Object.assign({ 'Content-Type': 'application/json', apikey: c.supabaseAnonKey }, opts.headers || {});
+      if (opts.auth && session) headers.Authorization = 'Bearer ' + session.access_token;
+      const r = await fetch(c.supabaseUrl + path, {
+        method: opts.method || 'POST', headers,
+        body: opts.body ? JSON.stringify(opts.body) : undefined,
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        const err = new Error(d.msg || d.error_description || d.message || 'ERROR');
+        err.data = d; err.status = r.status; throw err;
+      }
+      return d;
+    }
+
+    function setSession(d) {
+      if (!d || !d.access_token) return;
+      session = {
+        access_token: d.access_token, refresh_token: d.refresh_token,
+        expires_at: Date.now() + (d.expires_in || 3600) * 1000,
+        user: d.user || (session && session.user),
+      };
+      save(session); render();
+    }
+    function clearSession() { session = null; save(null); render(); }
+
+    async function refreshIfNeeded() {
+      if (!session || !session.refresh_token) return;
+      if (Date.now() < session.expires_at - 60000) return;
+      try {
+        setSession(await api('/auth/v1/token?grant_type=refresh_token', { body: { refresh_token: session.refresh_token } }));
+      } catch (e) { clearSession(); }
+    }
+
+    function displayName() {
+      const u = session && session.user;
+      if (!u) return '';
+      const md = u.user_metadata || {};
+      return md.name || md.full_name || u.email || '';
+    }
+
+    function render() {
+      const on = !!session;
+      const label = document.querySelector('#accountBtn .acc-label');
+      if (label) {
+        // 로그인 상태에서는 사용자 이름을 쓰므로 번역 대상에서 뺀다
+        if (on) { label.removeAttribute('data-i18n'); label.textContent = displayName(); }
+        else { label.setAttribute('data-i18n', 'acc.cta'); label.textContent = tr('acc.cta'); }
+      }
+      if (accBtn) accBtn.classList.toggle('signed-in', on);
+      const who = $id('accWho');
+      if (who) who.textContent = on ? ((session.user && session.user.email) || '') : '';
+      if (accMenu && !on) { accMenu.hidden = true; if (accBtn) accBtn.setAttribute('aria-expanded', 'false'); }
+      const mob = document.querySelector('.mobile-cta[data-account-open]');
+      if (mob) {
+        if (on) { mob.removeAttribute('data-i18n'); mob.textContent = tr('acc.profile'); }
+        else { mob.setAttribute('data-i18n', 'acc.cta'); mob.textContent = tr('acc.cta'); }
+      }
+    }
+
+    /* ---- 모달 ---- */
+    function setMode(next) {
+      mode = next;
+      const key = { login: 'acc.login', signup: 'acc.signup', profile: 'acc.profile' }[mode];
+      titleEl.setAttribute('data-i18n', key); titleEl.textContent = tr(key);
+      const sKey = mode === 'profile' ? 'acc.save' : key;
+      submitEl.setAttribute('data-i18n', sKey); submitEl.textContent = tr(sKey);
+      tabsEl.hidden = mode === 'profile';
+      const social = $id('authSocial'), sep = document.querySelector('.auth-sep');
+      if (social) social.hidden = mode === 'profile';
+      if (sep) sep.hidden = mode === 'profile';
+      tabsEl.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.tab === mode));
+
+      const show = {
+        name: mode !== 'login', phone: mode !== 'login', email: true,
+        password: true, password2: mode === 'signup',
+      };
+      form.querySelectorAll('.af-row').forEach((row) => {
+        const f = row.dataset.field;
+        row.hidden = !show[f];
+        const input = row.querySelector('input');
+        input.required = !row.hidden && (f === 'email' || (f === 'password' && mode !== 'profile'));
+      });
+      const pw = form.querySelector('[name=password]');
+      pw.autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+      pw.placeholder = mode === 'profile' ? tr('acc.pwKeep') : tr('acc.pwHint');
+
+      if (mode === 'profile' && session && session.user) {
+        const u = session.user, md = u.user_metadata || {};
+        form.email.value = u.email || '';
+        form.name.value = md.name || '';
+        form.phone.value = md.phone || '';
+        form.password.value = '';
+      }
+      statusEl.textContent = ''; statusEl.className = 'form-status';
+    }
+
+    function open(next) {
+      setMode(next || 'login');
+      backdrop.hidden = false; modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const first = modal.querySelector('.af-row:not([hidden]) input');
+        if (first) first.focus();
+      }, 60);
+    }
+    function close() {
+      backdrop.hidden = true; modal.hidden = true;
+      document.body.style.overflow = '';
+      form.reset(); statusEl.textContent = '';
+    }
+    function say(msg, ok) {
+      statusEl.className = 'form-status ' + (ok ? 'ok' : 'err');
+      statusEl.textContent = msg;
+    }
+
+    /* ---- 이벤트 ---- */
+    if (accBtn) accBtn.addEventListener('click', () => {
+      if (!session) { open('login'); return; }
+      const shown = !accMenu.hidden;
+      accMenu.hidden = shown;
+      accBtn.setAttribute('aria-expanded', String(!shown));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (accMenu && !accMenu.hidden && !e.target.closest('#account')) {
+        accMenu.hidden = true;
+        if (accBtn) accBtn.setAttribute('aria-expanded', 'false');
+      }
+      const opener = e.target.closest('[data-account-open]');
+      if (opener) {
+        e.preventDefault();
+        if (accMenu) accMenu.hidden = true;
+        const want = opener.getAttribute('data-account-open');
+        open(want === 'profile' || session ? (session ? 'profile' : 'login') : 'login');
+      }
+    });
+
+    const logoutBtn = $id('accLogout');
+    if (logoutBtn) logoutBtn.addEventListener('click', async () => {
+      try { await api('/auth/v1/logout', { auth: true }); } catch (e) { /* 토큰이 이미 만료된 경우 무시 */ }
+      clearSession();
+      if (accMenu) accMenu.hidden = true;
+    });
+
+    $id('authClose').addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) close(); });
+    tabsEl.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-tab]');
+      if (b) setMode(b.dataset.tab);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim(), pw = form.password.value;
+      if (!email) { say(tr('acc.errEmail')); return; }
+      if (mode !== 'profile' && pw.length < 6) { say(tr('acc.errPw')); return; }
+      if (mode === 'signup' && pw !== form.password2.value) { say(tr('acc.errPw2')); return; }
+
+      submitEl.disabled = true;
+      say(tr('acc.wait'), true);
+      try {
+        if (mode === 'login') {
+          setSession(await api('/auth/v1/token?grant_type=password', { body: { email, password: pw } }));
+          say(tr('acc.okLogin'), true);
+          setTimeout(close, 700);
+
+        } else if (mode === 'signup') {
+          const d = await api('/auth/v1/signup', {
+            body: { email, password: pw, data: { name: form.name.value.trim(), phone: form.phone.value.trim() } },
+          });
+          if (d.access_token) { setSession(d); say(tr('acc.okSignup'), true); setTimeout(close, 900); }
+          else { say(tr('acc.okVerify'), true); }   // 이메일 확인이 켜진 프로젝트
+
+        } else {
+          const body = { email, data: { name: form.name.value.trim(), phone: form.phone.value.trim() } };
+          if (pw) body.password = pw;
+          const u = await api('/auth/v1/user', { method: 'PUT', auth: true, body });
+          session.user = u; save(session); render();
+          say(tr('acc.okSave'), true);
+          setTimeout(close, 900);
+        }
+      } catch (err) {
+        if (err.message === 'NOT_CONFIGURED') say(tr('acc.errCfg'));
+        else if (err.status === 400 && mode === 'login') say(tr('acc.errCred'));
+        else say(err.message || tr('acc.errGeneric'));
+      } finally {
+        submitEl.disabled = false;
+      }
+    });
+
+    /* ---- 소셜 로그인 (네이버·카카오·구글) ---- */
+    // 카카오·구글은 Supabase가 직접 지원한다. 네이버는 지원 목록에 없어
+    // 백엔드(/api/auth/naver/*)가 네이버 OAuth를 처리한 뒤 세션을 만들어 준다.
+    const SUPABASE_PROVIDERS = { google: 'google', kakao: 'kakao' };
+
+    async function oauth(provider) {
+      const back = location.origin + location.pathname;
+      if (provider === 'naver') {
+        location.href = '/api/auth/naver/start?redirect_to=' + encodeURIComponent(back);
+        return;
+      }
+      const c = await getCfg();
+      if (!ready(c)) { say(tr('acc.errCfg')); return; }
+      location.href = c.supabaseUrl + '/auth/v1/authorize?provider=' + SUPABASE_PROVIDERS[provider] +
+        '&redirect_to=' + encodeURIComponent(back);
+    }
+
+    document.querySelectorAll('[data-oauth]').forEach((b) => {
+      b.addEventListener('click', () => oauth(b.getAttribute('data-oauth')));
+    });
+
+    // OAuth 복귀 시 토큰이 URL 해시로 돌아온다 → 세션으로 저장하고 주소창을 정리
+    async function consumeOAuthHash() {
+      if (!location.hash || location.hash.indexOf('access_token=') === -1) return;
+      const p = new URLSearchParams(location.hash.slice(1));
+      const access_token = p.get('access_token');
+      if (!access_token) return;
+      session = {
+        access_token,
+        refresh_token: p.get('refresh_token'),
+        expires_at: Date.now() + (parseInt(p.get('expires_in'), 10) || 3600) * 1000,
+        user: null,
+      };
+      try { session.user = await api('/auth/v1/user', { method: 'GET', auth: true }); } catch (e) {}
+      save(session); render();
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+
+    // 백엔드가 ?auth_error=... 로 돌려보낸 실패 사유를 안내한다
+    function showOAuthError() {
+      const q = new URLSearchParams(location.search);
+      const code = q.get('auth_error');
+      if (!code) return;
+      const msg = {
+        naver_not_configured: tr('acc.errNaverCfg'),
+        naver_email_required: tr('acc.errNaverEmail'),
+        invalid_state: tr('acc.errRetry'),
+        token_exchange_failed: tr('acc.errRetry'),
+        session_issue_failed: tr('acc.errRetry'),
+      }[code] || tr('acc.errGeneric');
+      open('login');
+      say(msg);
+      q.delete('auth_error');
+      const qs = q.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    }
+
+    /* ---- 시작 ---- */
+    session = load();
+    render();
+    consumeOAuthHash();
+    showOAuthError();
+    refreshIfNeeded();
+    window.SJ.account = { open, close, oauth, get session() { return session; } };
+  })();
 
   /* ---------- header scroll ---------- */
   const header = document.getElementById('header');

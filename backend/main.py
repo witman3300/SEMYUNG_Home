@@ -10,16 +10,19 @@ from __future__ import annotations
 
 import os
 import ssl
+import time
 import asyncio
 import logging
+import secrets
 import smtplib
+from urllib.parse import quote
 from email.message import EmailMessage
 from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -42,6 +45,7 @@ SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")           # 있으면 이 이메일만 관리자 허용
 KAKAO_CHANNEL_URL = os.getenv("KAKAO_CHANNEL_URL", "https://pf.kakao.com/")
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*")
+PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", "https://semyung.co.kr").rstrip("/")
 TARGET_CUSTOMERS = int(os.getenv("TARGET_CUSTOMERS", "1000"))
 # SMTP (문의 자동이메일)
 SMTP_HOST = os.getenv("SMTP_HOST", "")
@@ -79,18 +83,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# css/js/images/icons는 StaticFiles가 직접 응답하므로 캐시 헤더가 붙지 않는다.
-# 로딩 속도는 검색 순위에 반영되므로 여기서 한 번에 채워준다.
-_ASSET_PREFIXES = ("/css/", "/js/", "/images/", "/icons/")
+# StaticFiles가 직접 응답하는 경로에는 캐시 헤더가 붙지 않으므로 여기서 채운다.
+# 파일명에 해시가 없으므로 css/js를 길게 캐시하면 수정이 이용자에게 전달되지 않는다.
+# 내용이 잘 바뀌지 않는 이미지·아이콘만 길게 두고, 코드는 매번 재검증한다.
+_IMMUTABLE_PREFIXES = ("/images/", "/icons/")
+_REVALIDATE_PREFIXES = ("/css/", "/js/")
 
 
 @app.middleware("http")
 async def _cache_static_assets(request, call_next):
     response = await call_next(request)
-    if (request.url.path.startswith(_ASSET_PREFIXES)
-            and response.status_code == 200
-            and "cache-control" not in response.headers):
-        response.headers["Cache-Control"] = "public, max-age=604800, stale-while-revalidate=86400"
+    path = request.url.path
+    if response.status_code == 200 and "cache-control" not in response.headers:
+        if path.startswith(_IMMUTABLE_PREFIXES):
+            response.headers["Cache-Control"] = "public, max-age=604800, stale-while-revalidate=86400"
+        elif path.startswith(_REVALIDATE_PREFIXES):
+            response.headers["Cache-Control"] = "public, max-age=0, must-revalidate"
     return response
 
 _client = None
@@ -403,6 +411,105 @@ async def admin_post_delete(pid: int, authorization: str | None = Header(default
     await verify_admin(authorization); require_supabase()
     await _mutate("DELETE", f"{SUPABASE_URL}/rest/v1/posts?id=eq.{pid}")
     return {"ok": True}
+
+
+
+# ===========================================================
+# 네이버 로그인
+# 카카오·구글은 Supabase가 직접 지원하지만 네이버는 제공 목록에 없다.
+# 그래서 네이버 OAuth는 서버가 처리하고, 받은 프로필로 Supabase 사용자를
+# 만들거나 찾은 뒤 매직링크로 세션을 발급해 프론트로 돌려보낸다.
+# 필요한 환경변수: NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, (SUPABASE_URL/SERVICE_KEY)
+# 네이버 개발자센터에 등록할 콜백 주소: https://semyung.co.kr/api/auth/naver/callback
+# ===========================================================
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
+NAVER_REDIRECT_URI = os.getenv("NAVER_REDIRECT_URI", "")
+_naver_states: dict[str, tuple[str, float]] = {}          # state -> (돌아갈 주소, 만료시각)
+_NAVER_STATE_TTL = 600
+
+
+def _naver_ready() -> bool:
+    return bool(NAVER_CLIENT_ID and NAVER_CLIENT_SECRET and SUPABASE_URL and SUPABASE_KEY)
+
+
+def _naver_fail(redirect_to: str, reason: str) -> RedirectResponse:
+    logger.warning("네이버 로그인 실패: %s", reason)
+    sep = "&" if "?" in redirect_to else "?"
+    return RedirectResponse(f"{redirect_to}{sep}auth_error={quote(reason)}", status_code=302)
+
+
+@app.get("/api/auth/naver/start")
+def naver_start(redirect_to: str = ""):
+    """네이버 동의 화면으로 보낸다."""
+    back = redirect_to or "/"
+    if not _naver_ready():
+        return _naver_fail(back, "naver_not_configured")
+
+    now = time.time()
+    for k in [k for k, (_, exp) in _naver_states.items() if exp < now]:
+        _naver_states.pop(k, None)
+
+    state = secrets.token_urlsafe(24)
+    _naver_states[state] = (back, now + _NAVER_STATE_TTL)
+    callback = NAVER_REDIRECT_URI or f"{PUBLIC_BASE_URL}/api/auth/naver/callback"
+    url = ("https://nid.naver.com/oauth2.0/authorize?response_type=code"
+           f"&client_id={quote(NAVER_CLIENT_ID)}"
+           f"&redirect_uri={quote(callback, safe='')}"
+           f"&state={state}")
+    return RedirectResponse(url, status_code=302)
+
+
+@app.get("/api/auth/naver/callback")
+async def naver_callback(code: str = "", state: str = "", error: str = ""):
+    """네이버 코드 → 프로필 → Supabase 세션 발급."""
+    back, exp = _naver_states.pop(state, ("", 0))
+    if not back or exp < time.time():
+        return _naver_fail("/", "invalid_state")
+    if error or not code:
+        return _naver_fail(back, error or "no_code")
+    if not _naver_ready():
+        return _naver_fail(back, "naver_not_configured")
+
+    async with httpx.AsyncClient(timeout=15) as client:
+        tok = await client.get("https://nid.naver.com/oauth2.0/token", params={
+            "grant_type": "authorization_code", "client_id": NAVER_CLIENT_ID,
+            "client_secret": NAVER_CLIENT_SECRET, "code": code, "state": state})
+        access = tok.json().get("access_token") if tok.status_code == 200 else None
+        if not access:
+            return _naver_fail(back, "token_exchange_failed")
+
+        me = await client.get("https://openapi.naver.com/v1/nid/me",
+                              headers={"Authorization": f"Bearer {access}"})
+        profile = (me.json() or {}).get("response") or {}
+
+    email = (profile.get("email") or "").strip().lower()
+    if not email:
+        # 네이버 앱에서 이메일 제공 항목을 필수로 설정해야 한다
+        return _naver_fail(back, "naver_email_required")
+
+    name = profile.get("name") or profile.get("nickname") or ""
+    phone = profile.get("mobile") or ""
+    hdr = {"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}",
+           "Content-Type": "application/json"}
+
+    async with httpx.AsyncClient(timeout=15) as client:
+        # 없으면 만들고, 있으면 그대로 쓴다 (이미 있으면 422가 돌아온다)
+        await client.post(f"{SUPABASE_URL}/auth/v1/admin/users", headers=hdr, json={
+            "email": email, "email_confirm": True,
+            "user_metadata": {"name": name, "phone": phone, "provider": "naver"}})
+
+        link = await client.post(f"{SUPABASE_URL}/auth/v1/admin/generate_link", headers=hdr,
+                                 json={"type": "magiclink", "email": email,
+                                       "options": {"redirect_to": back}})
+        if link.status_code != 200:
+            return _naver_fail(back, "session_issue_failed")
+        action_link = (link.json() or {}).get("action_link")
+        if not action_link:
+            return _naver_fail(back, "session_issue_failed")
+
+    # 매직링크를 따라가면 Supabase가 세션 토큰을 붙여 back 주소로 돌려보낸다
+    return RedirectResponse(action_link, status_code=302)
 
 
 # ===========================================================
