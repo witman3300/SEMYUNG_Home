@@ -112,7 +112,7 @@
     'gal.c2': ['다인실 — 2·3인실', 'Shared Room — 2 to 3 people'],
     'gal.c3': ['회의실 — 최대 3시간 무료', 'Meeting Room — up to 3 hrs free'],
     'gal.c4': ['고정석 — 오픈 데스크', 'Fixed Desk — open plan'],
-    'gal.c5': ['OA 서비스 — 인쇄·스캔·제본', 'OA — print, scan, binding'],
+    'gal.c5': ['센터 복도 — 도어락 독립실', 'Corridor — private rooms with door locks'],
     'gal.c6': ['을지로2가 장교빌딩 8층', 'Janggyo Bldg 8F, Euljiro'],
     // ----- 홈(index.html) -----
     'hero.tag': ['🤖 AI특화 비즈니스센터 · 세명장교', '🤖 AI-Powered Business Center · Semyung'],
