@@ -21,6 +21,8 @@
 - ✅ 히어로 실시간 AI 상담창 + 전 페이지 플로팅 AI 챗봇(Claude) · 자동 창업진단 프롬프트
 - ✅ 사업하자(sauphaja.ai.kr) 연동 · 구글맵 · 고용노동부 인접(노동·노무 특화)
 - ✅ 문의폼 → Supabase 저장 **+ 자동 이메일 알림**(SMTP) · 카카오채널 링크
+- ✅ **회원 기능**(헤더 계정 버튼): 회원가입·로그인·회원정보 수정·로그아웃,
+  네이버·카카오·구글 소셜 로그인, 마지막 사용 수단 '최근 사용' 배지
 - ✅ 블로그 Supabase CRUD · 스크롤 애니메이션
 - ✅ **관리자 대시보드**(Supabase Auth 로그인): 매출·이번달매출·고객수·**1,000개 진척률**,
   고객 현황, 계약·결제, 문의 처리(상태), 블로그 관리
@@ -49,11 +51,88 @@ uvicorn backend.main:app --reload --port 8000         # http://localhost:8000
 | `KAKAO_CHANNEL_URL` | 카카오채널 링크 |
 | `SMTP_HOST/PORT/USER/PASS/MAIL_FROM/MAIL_TO` | 문의 자동이메일(선택) |
 | `TARGET_CUSTOMERS` | 진척률 목표(기본 1000) |
+| `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` | 네이버 로그인(선택) |
+| `NAVER_REDIRECT_URI` | 네이버 콜백 `https://semyung.co.kr/api/auth/naver/callback` |
+| `PUBLIC_BASE_URL` | 네이버 콜백 기본값 계산(기본 `https://semyung.co.kr`) |
 
 ## Railway 배포
 GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등록 →
 시작 `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`(railway.json/Procfile) → 헬스체크 `/api/health` →
 커스텀 도메인 `semyung.co.kr` 연결.
+
+## 회원 기능 설정 체크리스트
+코드는 배포돼 있지만 **아래를 설정하기 전에는 동작하지 않습니다.**
+설정 전에 회원가입을 누르면 "회원 기능이 아직 설정되지 않았습니다" 안내만 표시됩니다.
+
+> 프론트는 시작할 때 `/api/config`에서 Supabase 주소·anon 키를 받아옵니다(`js/layout.js`).
+> 이 주소는 **Railway 백엔드에만** 있으므로, 정적 호스팅(Vercel)만으로는 회원 기능이 동작하지 않습니다.
+
+**DB 스키마 변경은 필요 없습니다.** 회원은 Supabase가 관리하는 `auth.users`에 쌓이고,
+이름·연락처는 `user_metadata`에 저장됩니다. `schema.sql`의 4개 테이블은 그대로 두면 됩니다.
+
+### 1단계 — Supabase (필수)
+- [ ] **Authentication → Providers → Email** 활성화 확인
+      `Confirm email` 켬 = 가입 후 확인 메일 발송 / 끔 = 즉시 로그인. **코드는 양쪽 다 처리**
+- [ ] **Authentication → URL Configuration**
+  - [ ] `Site URL` = `https://semyung.co.kr`
+  - [ ] `Redirect URLs` 에 `https://semyung.co.kr/**` 추가
+        ⚠️ **빠뜨리면 소셜 로그인 후 엉뚱한 페이지로 돌아옵니다. 가장 흔한 실수**
+  - [ ] 도메인 연결(3단계) 전에 테스트한다면 Railway 임시 주소도 함께 등록
+        (예: `https://xxxx.up.railway.app/**`)
+- [ ] **Settings → API** 에서 `URL`·`anon`·`service_role` 키 확보 (2단계에서 사용)
+
+### 2단계 — Railway 환경변수 (필수)
+- [ ] `SUPABASE_URL` · `SUPABASE_ANON_KEY` · `SUPABASE_SERVICE_KEY`
+      (관리자 기능에 이미 쓰고 있다면 그대로 두면 됩니다)
+- [ ] 저장 후 재배포 → `/api/config` 가 `supabaseUrl`·`supabaseAnonKey` 를 반환하는지 확인
+```bash
+curl -s https://<배포주소>/api/config
+```
+
+### 3단계 — 도메인 연결 (필수)
+- [ ] `semyung.co.kr` 을 Railway 커스텀 도메인으로 연결
+      현재 이 도메인은 구 워드프레스를 가리키고 있어, 옮기기 전까지는
+      **Railway 임시 주소에서만** 회원 기능이 동작합니다.
+
+### 4단계 — 구글 로그인 (선택)
+- [ ] Google Cloud Console → OAuth 클라이언트 ID 생성
+- [ ] 승인된 리디렉션 URI: `https://<프로젝트>.supabase.co/auth/v1/callback`
+- [ ] Supabase → Authentication → Providers → **Google** 활성화 후 Client ID·Secret 입력
+
+### 5단계 — 카카오 로그인 (선택)
+- [ ] Kakao Developers → 애플리케이션 등록 → **카카오 로그인** 활성화
+- [ ] Redirect URI: `https://<프로젝트>.supabase.co/auth/v1/callback`
+- [ ] 동의항목에서 **이메일**을 필수/선택으로 설정 (이메일이 없으면 계정 생성 불가)
+- [ ] Supabase → Providers → **Kakao** 활성화 후 REST API 키·Client Secret 입력
+
+### 6단계 — 네이버 로그인 (선택, 코드가 직접 처리)
+> 네이버는 Supabase 지원 목록에 없어 백엔드(`/api/auth/naver/*`)가 OAuth를 직접 처리한 뒤
+> Supabase 사용자 생성 → 매직링크로 세션을 발급합니다. 그래서 `SUPABASE_SERVICE_KEY`가 필요합니다.
+
+- [ ] [네이버 개발자센터](https://developers.naver.com) → 애플리케이션 등록
+- [ ] 사용 API: **네이버 로그인**
+- [ ] 제공 정보에 **이메일 주소를 '필수'로 체크**
+      ⚠️ **이메일이 없으면 가입이 막힙니다**(`auth_error=naver_email_required`)
+- [ ] 서비스 URL `https://semyung.co.kr`
+- [ ] Callback URL `https://semyung.co.kr/api/auth/naver/callback`
+- [ ] Railway 변수 추가: `NAVER_CLIENT_ID` `NAVER_CLIENT_SECRET` `NAVER_REDIRECT_URI` `PUBLIC_BASE_URL`
+
+### 7단계 — 동작 확인
+- [ ] 헤더 **로그인 · 회원가입** → 이메일로 가입 → Supabase **Authentication → Users** 에 계정 생성 확인
+- [ ] 로그인 후 헤더에 이름 표시 → 드롭다운 **회원정보 수정** → 이름·연락처 저장 확인
+- [ ] 소셜 버튼 각각 로그인 → 되돌아왔을 때 로그인 상태 + **'최근 사용' 배지** 표시 확인
+- [ ] 로그아웃 → 다시 열었을 때 직전 수단에 배지가 남아 있는지 확인
+
+**문제가 생기면** 주소창의 `?auth_error=` 값을 확인하세요 (네이버 흐름에서만 발생).
+
+| 값 | 뜻 |
+|---|---|
+| `naver_not_configured` | `NAVER_CLIENT_ID/SECRET` 또는 Supabase 변수 누락 |
+| `naver_email_required` | 네이버 앱에서 이메일 제공을 필수로 설정하지 않음 |
+| `invalid_state` | 요청이 10분을 넘겼거나 서버가 재시작됨 (state는 메모리 보관) |
+| `no_code` | 이용자가 네이버 동의 화면에서 취소 |
+| `token_exchange_failed` | 네이버 토큰 발급 실패 — Client Secret·Callback URL 확인 |
+| `session_issue_failed` | Supabase 사용자 생성/세션 발급 실패 — `SUPABASE_SERVICE_KEY` 확인 |
 
 ## API
 | 메서드 | 경로 | 인증 | 설명 |
@@ -61,6 +140,8 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 | GET | `/api/health` `/api/config` | - | 상태 / 공개설정 |
 | POST | `/api/chat` | - | Claude 챗봇(+창업진단) |
 | POST | `/api/contact` | - | 문의 저장 + 이메일 |
+| GET | `/api/auth/naver/start` | - | 네이버 동의 화면으로 이동 |
+| GET | `/api/auth/naver/callback` | - | 네이버 코드 → Supabase 세션 발급 |
 | GET | `/api/blog[/{id}]` | - | 공개 블로그 |
 | GET | `/api/admin/summary` | Bearer | 매출·고객·진척률 |
 | GET/PATCH | `/api/admin/contacts[/{id}]` | Bearer | 문의 조회·상태 |
@@ -109,6 +190,8 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 | OG 이미지 | `images/og-cover.jpg` (1200×630), 로고 `images/logo-512.png` |
 
 ## 확인 필요 / 남은 항목
+- 🔐 **회원 기능 설정 미완료** — 위 체크리스트 1~3단계를 마쳐야 회원가입이 동작합니다.
+  소셜 로그인은 자격증명이 없어 실제 OAuth 왕복이 미검증 상태입니다(미설정 시 안내 표시까지만 확인).
 - 🔗 카카오 채널 실제 URL(`KAKAO_CHANNEL_URL`), 사업하자 연동 심도(현재 링크)
 - 🚀 Vercel 배포(`semyung-home-qwpa.vercel.app`)가 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404 — 최신 main 재연결 필요
 - 🌐 하위 6개 서비스 페이지 본문 영문화(현재 홈+공통만 EN, 확장 가능)
