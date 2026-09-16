@@ -69,13 +69,29 @@ GitHub 연결(NIXPACKS + `requirements.txt` 자동) → Variables에 위 키 등
 > 전부 동작시키려면 아래 '② API 연결' 을 함께 적용하세요.
 
 ### ① 저장소 재연결 (대시보드 작업)
-현재 배포는 `7c234d5`(2026-06)에 고정되어 서브페이지가 전부 404입니다.
-1. [ ] Vercel → 해당 프로젝트 → **Settings → Git**
-2. [ ] 연결이 끊겨 있으면 `witman3300/SEMYUNG_Home` 다시 연결, Production Branch = `main`
-3. [ ] **Settings → Build & Deployment** → Framework Preset **Other**,
-       Build Command·Output Directory 는 비워 둘 것 (저장소 루트를 그대로 서빙)
-4. [ ] **Deployments → Redeploy** (또는 main에 푸시하면 자동 배포)
+배포가 `7c234d5`(2026-06)에 고정되어 서브페이지가 전부 404이던 문제.
+
+**원인 (2026-09-16 규명):** Vercel GitHub App 이 `Only select repositories` 로 설정돼 있었고
+선택된 저장소가 `witman3300/bosunara` **하나뿐**이었습니다. `SEMYUNG_Home` 이 목록에 없어
+Vercel 이 저장소를 읽지 못했고, Settings → Git 에 `Error: Project Link not found` 가 떠 있었습니다.
+이 상태에서는 대시보드의 **Reconnect 버튼을 눌러도 아무 반응이 없습니다.**
+
+1. [x] GitHub → Settings → Applications → **Installed GitHub Apps** → Vercel → Configure
+       → Repository access 에 `witman3300/SEMYUNG_Home` 추가 (`bosunara` 유지, `All repositories` 로 바꾸지 않음)
+2. [x] Vercel → **Settings → Git** 에서 에러 사라지고 `witman3300/SEMYUNG_Home` **Connected** 확인
+3. [x] **Settings → Build & Deployment** 확인 — Framework Preset `Other`,
+       Build·Output·Install Command 전부 Override 꺼짐(비어 있음), Root Directory `/`. **변경 불필요**
+4. [ ] **Deployments → ⋯ → Create Deployment** → `main` 선택 → **Deploy to Production**
+       (저장소에 커밋을 추가하지 않고 최신 `main` 을 배포하는 경로. Redeploy 는 그 배포의 옛 커밋을 다시 올릴 뿐)
 5. [ ] 확인: `/virtual.html` `/contact.html` `/robots.txt` `/sitemap.xml` 이 200 인지
+
+> ⛔ **4단계 진행 중 막힌 지점 (2026-09-16):** Deploy to Production 을 누르면
+> `There is no GitHub account connected to this Vercel account.` 오류가 납니다.
+> GitHub 쪽은 정상입니다 — Authorized GitHub Apps 에 Vercel 있음, Vercel Sign-in Methods 에도 GitHub `witman3300` 있음.
+> Vercel 이 보관한 GitHub 토큰이 만료·스코프 상실된 것으로 보입니다.
+> **해결:** Vercel → **Settings → Authentication → Sign-in Methods → GitHub 행 `⋯` → `Re-authenticate`**
+> 를 눌러 GitHub 승인 화면을 끝까지 통과시킬 것. 팝업 차단 시 조용히 실패하므로 주소창의 차단 아이콘을 확인하세요.
+> (Email·Google 로그인 수단이 남아 있어 계정 접근이 막히지는 않습니다.)
 
 CLI로 할 경우 (브라우저 로그인 필요):
 ```bash
@@ -97,6 +113,50 @@ vercel --prod         # 수동 배포
 Vercel 주소는 `semyung.co.kr` 과 내용이 같은 **중복 문서**입니다.
 모든 페이지의 canonical 이 `semyung.co.kr` 을 가리키고 있어 대체로 정리되지만,
 확실히 하려면 Vercel 프로젝트를 **미리보기 전용**으로 두거나 Deployment Protection 을 켜세요.
+
+> ⚠️ 위 정리는 `semyung.co.kr` 이 신규 사이트를 서빙한다는 전제입니다.
+> **현재 전제가 깨져 있습니다 — 아래 '도메인·색인 현황' 참고.**
+
+### ④ Vercel 프로젝트 중복
+같은 저장소를 보는 Vercel 프로젝트가 **두 개** 있습니다. 둘 다 `7c234d5`(Jun 5)에 멈춰 있었습니다.
+
+| 프로젝트 | 주소 | 커스텀 도메인 |
+|---|---|---|
+| `semyung-home-qwpa` | `semyung-home-qwpa.vercel.app` | 없음 |
+| `semyung-home` | `semyung-home.vercel.app` | 없음 |
+
+**`semyung-home-qwpa` 를 사용하고 `semyung-home` 은 정리(삭제 또는 Deployment Protection)합니다.**
+
+> 이 계정은 **Hobby 플랜**입니다. Vercel Hobby 는 약관상 개인·비상업 용도이므로,
+> 상업 사이트의 canonical 도메인을 Vercel 에 얹으려면 **Pro 전환이 전제**입니다.
+> 색인된 도메인이 정지되면 회복에 수개월이 걸리므로, 전환 전까지 Vercel 은 미러로만 둡니다.
+
+## 도메인·색인 현황 (2026-09-16 실측)
+**SEO·AEO·GEO 작업의 결과가 현재 0으로 수렴하고 있습니다.**
+
+| 호스트 | 실제 내용 | 상태 |
+|---|---|---|
+| `semyung.co.kr` (183.111.183.35, openresty) | **구 워드프레스 사이트** — "세명장교비즈니스센터 – 서울의 중심에 서다!" | HTTP 200 / **HTTPS 연결 실패** |
+| `web-production-3f4b0.up.railway.app` | **신규 사이트 최신판**, 전 페이지 200, `/about` rewrite 동작 | 정상 |
+| `semyung-home-qwpa.vercel.app` | 구버전 Jun 5, 서브페이지 404 | 고장 |
+| `semyung-home.vercel.app` | 구버전 Jun 5 | 고장 |
+
+신규 사이트의 canonical·og:url 8개, `sitemap.xml` 의 8개 URL, `robots.txt` 의 Sitemap 선언,
+`llms.txt` 의 인용 링크 8개가 **전부** `https://semyung.co.kr` 을 가리킵니다. 그 결과:
+
+- **SEO** — 크롤러가 신규 콘텐츠를 읽어도 canonical 이 `semyung.co.kr` 로 넘기고, 거기엔 구 워드프레스가 있습니다. 신규 콘텐츠는 색인되지 않습니다.
+- **HTTPS 붕괴** — `https://semyung.co.kr` 과 `https://www.semyung.co.kr` 모두 TLS 핸드셰이크 실패. Googlebot·Yeti 가 https 로 접근하지 못합니다.
+- **AEO/GEO** — GPTBot·ClaudeBot·PerplexityBot 등은 https 로만 수집합니다. `robots.txt` 에서 열어둔 AI 크롤러 14종이 전부 막히고, `llms.txt`·FAQPage 스키마·`speakable` 작업이 무효가 됩니다.
+
+### 복구 순서 (우선순위)
+1. [ ] **`semyung.co.kr` 을 신규 사이트로 전환 + HTTPS 복구** — 나머지는 이게 안 되면 의미가 없습니다.
+       canonical 호스트는 **Railway** 권장 (이미 최신 서빙 + API 동작 + 플랜 제약 없음).
+       Vercel 을 쓰려면 Pro 전환이 선행돼야 합니다.
+2. [ ] 구 워드프레스 URL → 신규 URL **301 리다이렉트** 매핑 (기존 링크 자산 보존)
+3. [ ] `*.vercel.app` · `*.railway.app` 에 `X-Robots-Tag: noindex` 또는 canonical 호스트로 301
+4. [ ] Vercel `semyung-home` 프로젝트 정리 (위 ④)
+5. [ ] Railway 환경변수 설정 (아래 체크리스트 2단계)
+6. [ ] Search Console · 네이버 서치어드바이저에 sitemap 재제출
 
 ## 회원 기능 설정 체크리스트
 코드는 배포돼 있지만 **아래를 설정하기 전에는 동작하지 않습니다.**
@@ -239,9 +299,13 @@ curl -s https://web-production-3f4b0.up.railway.app/api/config
 - 🔐 **회원 기능 설정 미완료** — 위 체크리스트 1~3단계를 마쳐야 회원가입이 동작합니다.
   소셜 로그인은 자격증명이 없어 실제 OAuth 왕복이 미검증 상태입니다(미설정 시 안내 표시까지만 확인).
 - 🔗 카카오 채널 실제 URL(`KAKAO_CHANNEL_URL`), 사업하자 연동 심도(현재 링크)
-- 🚀 **Vercel 재연결 대기** — `vercel.json`(정적 서빙 규칙)은 준비됐으나,
-  저장소 재연결은 대시보드 작업이라 미완. 위 'Vercel 배포' ①단계 참고.
-  현재 `semyung-home-qwpa.vercel.app` 은 `7c234d5`(2026-06)에 고정되어 서브페이지 전부 404
+- 🔥 **`semyung.co.kr` 이 구 워드프레스를 서빙 + HTTPS 깨짐** — 최우선 과제.
+  canonical·sitemap·llms.txt 가 전부 이 도메인을 가리켜 SEO·AEO·GEO 가 전부 무효화된 상태.
+  위 '도메인·색인 현황' 의 복구 순서 참고
+- 🚀 **Vercel 재연결 — 부분 완료** — GitHub App 저장소 권한 누락이 원인이었고 해결됨(Git 연결 복구 확인).
+  남은 것은 **Vercel 계정의 GitHub 재인증(`Re-authenticate`)** 후 프로덕션 배포.
+  위 'Vercel 배포' ①단계의 ⛔ 항목 참고.
+  그때까지 `semyung-home-qwpa.vercel.app` 은 `7c234d5`(2026-06) 고정, 서브페이지 전부 404
 - 🌐 하위 6개 서비스 페이지 본문 영문화(현재 홈+공통만 EN, 확장 가능)
 - 📧 SMTP 계정(자동이메일용)
 - ⚠️ **git remote의 GitHub 토큰(`ghp_...`) 폐기** — 저장소 URL에 노출됨(보안)
